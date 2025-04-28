@@ -107,4 +107,6 @@ MIT License ©️ Tallinn IT Class – 2025
 ## 🙌 Contributors
 
 Made with ❤️ by the students of the **Tallinn HTML / UI / UX Course**  
+html-class-1
 (Names and GitHub profiles can be listed here)
+
