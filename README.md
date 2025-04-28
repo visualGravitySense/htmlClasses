@@ -69,7 +69,7 @@ A collaborative web-based project created by students of the Tallinn IT program.
 
 1. Clone the repository  
    ```bash
-   git clone https://github.com/yourusername/community-hub-project.git
+   git clone https://github.com/visualGravitySense/htmlClasses.git
    cd community-hub-project
    ```
 
@@ -107,8 +107,6 @@ MIT License ©️ Tallinn IT Class – 2025
 ## 🙌 Contributors
 
 Made with ❤️ by the students of the **Tallinn HTML / UI / UX Course**  
+html-class-1
 (Names and GitHub profiles can be listed here)
 
-```
-
-Let me know if you want this customized with real student names, a specific folder structure, or live demo links!
