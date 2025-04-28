@@ -1,8 +1,3 @@
-Sure! Here's a clean and professional `README.md` file template tailored for an **HTML / UI / UX class project**. It includes sections like project overview, structure, how to use, and technologies used — perfect for GitHub:
-
----
-
-```markdown
 # 🎨 HTML / UI / UX Class Project – Community Resource Hub
 
 A collaborative web-based project created by students of the Tallinn IT program. This project focuses on applying HTML, CSS, and UI/UX design principles to build a **Community Resource Hub** — a centralized platform for discovering local tech services, events, and resources.
@@ -74,7 +69,7 @@ A collaborative web-based project created by students of the Tallinn IT program.
 
 1. Clone the repository  
    ```bash
-   git clone https://github.com/yourusername/community-hub-project.git
+   git clone https://github.com/visualGravitySense/htmlClasses.git
    cd community-hub-project
    ```
 
@@ -113,9 +108,3 @@ MIT License ©️ Tallinn IT Class – 2025
 
 Made with ❤️ by the students of the **Tallinn HTML / UI / UX Course**  
 (Names and GitHub profiles can be listed here)
-
-```
-
----
-
-Let me know if you want this customized with real student names, a specific folder structure, or live demo links!
