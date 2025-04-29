@@ -69,21 +69,25 @@ Create a comprehensive resource website for your local community with interactiv
 **Core Production Team (5 students)**
 
 1. **UX Lead** - Student with strongest user experience interest/background
-    
     - Responsible for: User personas, journey maps, wireframing
     - Background match: Design-oriented with analytical thinking
-2. **UI Designer** - Student with visual design aptitude
-    
+
+2. **UI Designer** - Student with visual design aptitude 
     - Responsible for: Visual design system, UI components, mockups
     - Background match: Creative with attention to detail
-3. **Front-End Developer (Navigation & Core)** - Student with HTML/CSS/JS strength
-    
+
+3. **Front-End Developer (Navigation & Core)** - Student with HTML/CSS/JS strength 
     - Responsible for: Homepage, navigation, overall structure
     - Background match: Strong coding fundamentals
-4. **Interactive Features Developer** - Student with JavaScript interest
-    
+
+4. **Interactive Features Developer** - Student with JavaScript interest 
     - Responsible for: Map implementation, calendar functionality
     - Background match: Problem-solver with programming interest
+
+
+---
+
+
 5. **Data Structure Specialist** - Student with analytics background
     
     - Responsible for: Service directory, resource organization, data schema
