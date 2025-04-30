@@ -1,5 +1,5 @@
 >[!NOTE]
->Cursor | Figma
+>Cursor | Figma | Notion
 
 
 |                   |         |
