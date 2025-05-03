@@ -481,4 +481,3 @@ body {
 ---
 
 # Thank You!
-## Questions?

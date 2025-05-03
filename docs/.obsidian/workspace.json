@@ -8,45 +8,31 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a394ee925fc125dd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Class 2 html.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Class 2 html"
-            }
-          },
-          {
-            "id": "37c8ecfab1d89ae5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "GitHub-Marketing.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "GitHub-Marketing"
-            }
-          },
-          {
             "id": "7e24fac730e006ab",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "html-presentation-1.md",
+                "file": "HW/GitHub Readme for Designers.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "html-presentation-1"
+              "title": "GitHub Readme for Designers"
+            }
+          },
+          {
+            "id": "aa6c28606faf776b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "HW/GitHub Readme for Front-End Devs.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "GitHub Readme for Front-End Devs"
             }
           },
           {
@@ -55,16 +41,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Class-1-html.md",
+                "file": "HW/temp.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Class-1-html"
+              "title": "temp"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -137,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Class 1 html.md",
+                "file": "HW/GitHub Readme for Designers.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +132,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Class 1 html"
+              "title": "Backlinks for GitHub Readme for Designers"
             }
           },
           {
@@ -198,7 +183,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
@@ -208,22 +193,38 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c04d64b2e94c6e78",
+  "active": "7e24fac730e006ab",
   "lastOpenFiles": [
+    "HW/GitHub Readme for Front-End Devs.md",
+    "HW/GitHub Readme for Designers.md",
+    "html-presentation-1.md",
+    "HW/temp.md",
+    "HW",
+    "Untitled 1.md",
+    "design-roles-description.md",
     "design-roles-scripts.md",
+    "Program-1.md",
+    "Project-1-task.md",
+    "Class-1-html.md",
+    "Guides/GitHub-Mastery-Guide-ru.pdf",
+    "Guides/GitHub-Marketing-Guide.md",
+    "Guides/Markdown-guide.md",
+    "Guides/Figma-Guide.md",
+    "Excalidraw/Drawing 2025-05-02 19.35.57.excalidraw.md",
+    "Class-2-html.md",
+    "Excalidraw",
+    "Guides/HTML-CSS-Guide.md",
+    "Guides/LinkedIn-Marketing-Guide.md",
+    "Guides",
+    "guides.md",
     "roadmap-design-process.html",
     "user-profile-card-design-process-visualisation.html",
     "design-process-visualisation.html",
-    "html-presentation-1.md",
-    "Markdown-guide.md",
-    "Markdown-guide.pdf",
-    "Project-1-task.md",
-    "GitHub-Marketing.md",
-    "LinkedIn-Marketing.md",
-    "design-roles-description.md",
+    "Guides/Markdown-guide.pdf",
     "Class 2 html.md",
     "Class 1 html.md",
     "Class 3 html.md"
