@@ -3,8 +3,8 @@ body {
     font-family: "Comic Sans MS", "Papyrus", "Impact", "Webdings", cursive, sans-serif;
     background: repeating-linear-gradient(45deg, #ffb6c1, #87cefa, #98fb98);
     color: #ff69b4;
-    text-shadow: 3px 3px 0 #ffd700, -3px -3px 0 #87ceeb;
-    margin: 0;
+    /* text-shadow: 3px 3px 0 #ffd700, -3px -3px 0 #87ceeb; */
+    /* margin: 0; */
     padding: 0;
     cursor: url('/api/placeholder/32/32'), auto;
     overflow-x: hidden;

@@ -1,6 +1,19 @@
+HTML Presentation 1
+GitHub Presentation 1 + GitHub Readme fail x2 + Generate Leonardo AI img
+Obsidian Presentation + Video Youtube https://youtu.be/unvwJRgX2bs?si=3Su3nKJfP7YnBt7N&t=353
+Cursor
+HTML Practise 1, 2, 3 + UX UI Practise Fogg model
+
+
+DE
+Futuristic and clean network interface design for a GitHub profile homepage of a UX/UI designer — visually representing creativity, usability, and personal branding. Include nodes and connections symbolizing design thinking, projects, and collaborations. Central profile section with avatar, name, and short bio. Interactive UI elements such as project cards, skill badges (HTML, CSS, JS, Figma), and minimalistic navigation bar. Color palette: dark mode with neon blue and violet highlights. Design style: modern, anti-design meets tech minimalism. Perspective: front-facing web layout, suitable for desktop. No clutter, high visual hierarchy.
+
+FE
+Modern and dynamic network-style interface design for the main page of a React front-end developer’s GitHub profile — showcasing interactive nodes and connections symbolizing repositories, components, and contributions. Central section with developer avatar, name, short intro, and prominent GitHub stats. Include tech badges for React, JavaScript, TypeScript, HTML, CSS, and Tailwind CSS. Clean grid-based layout with animated project cards and glowing connection lines. Design style: futuristic tech aesthetic with a developer vibe, inspired by code editors and modern dashboards. Color palette: dark mode with electric blue, green, and soft purple accents. Perspective: clean desktop UI mockup with focus on interactivity and clarity.
+
+
 >[!NOTE]
 >Cursor | Figma | Notion
-
 
 |                   |         |
 | ----------------- | ------- |
