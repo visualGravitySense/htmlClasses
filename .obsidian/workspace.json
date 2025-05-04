@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/Class-1-html.md",
+                "file": "Lesson-2/Class-2-html.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Class-1-html"
+              "title": "Class-2-html"
             }
           },
           {
@@ -207,10 +207,35 @@
   },
   "active": "1b1edc6b4f074605",
   "lastOpenFiles": [
-    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
+    "Lesson-2/Lesson 2 HTML.md",
+    "docs/success-stories-task.md",
+    "Lesson-1/Введение в основы HTML.pdf",
+    "Lesson-2/GitHub Readme for Front-End Devs.md",
+    "Lesson-2/GitHub Readme for Designers.md",
+    "Lesson-1",
+    "docs/Lesson-1",
+    "Lesson-3/Lesson-1",
+    "Lesson-3/html-practice-wizard.md",
+    "Lesson-3/course-wizard.html",
+    "Lesson-3/course-wizard-task.md",
+    "Lesson-3",
+    "Lesson 2/success-stories-task.md",
+    "Lesson-2/success-stories.html",
+    "Lesson-2/success-stories-task.md",
+    "Lesson-2/spectrum-thinking.html",
+    "Lesson-2/html-tasks.html",
+    "Lesson-2/lesson2.html",
+    "Lesson-2/Class-2-html.md",
+    "Lesson 2/Class-2-html.md",
+    "Lesson 2/course-wizard-task.md",
+    "Lesson 3/html-practice-wizard.md",
+    "Lesson 3/course-wizard-task.md",
+    "Lesson 2/html-practice-wizard.md",
+    "docs/course-wizard-task.md",
+    "docs/Class-2-html.md",
+    "docs/Program-1.md",
     "docs/Class-1-html.md",
     "docs/HW/GitHub Readme for Front-End Devs.md",
-    "docs/HW/GitHub Readme for Designers.md",
-    "docs/Class-2-html.md"
+    "docs/HW/GitHub Readme for Designers.md"
   ]
 }

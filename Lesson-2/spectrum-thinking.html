@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спектр когнитивных вмешательств</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Roboto:wght@700;900&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Pastel Color Palette */
+            --primary: #FFB6C1; /* Light Pink */
+            --secondary: #98FB98; /* Pale Green */
+            --accent: #87CEEB; /* Sky Blue */
+            --background: #FFF5EE; /* Seashell */
+            --white: #FFFAF0; /* Floral White */
+            --text: #000000;
+            --gray: #E6E6FA; /* Lavender */
+            --light-shadow: rgba(255, 182, 193, 0.3);
+            
+            /* Modern Typography */
+            --heading-font: 'Montserrat', sans-serif;
+            --body-font: 'Roboto', sans-serif;
+            --accent-font: 'Oswald', sans-serif;
+            
+            /* Text Colors */
+            --heading-color: #000000;
+            --body-color: #333333;
+            --accent-color: #000000;
+            
+            /* Pastel Spectrum Colors */
+            --habit-color: linear-gradient(135deg, #FFB6C1, #FFC0CB);
+            --intuitive-color: linear-gradient(135deg, #98FB98, #90EE90);
+            --mindset-color: linear-gradient(135deg, #87CEEB, #B0E0E6);
+            --heuristic-color: linear-gradient(135deg, #DDA0DD, #EE82EE);
+            --conscious-color: linear-gradient(135deg, #FFE4B5, #FFDAB9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            font-weight: 700;
+            color: var(--body-color);
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            background-color: var(--background);
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="20" fill="rgba(255,182,193,0.1)">WATERMARK</text></svg>'),
+                linear-gradient(45deg, #FFB6C1 25%, transparent 25%),
+                linear-gradient(-45deg, #98FB98 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #87CEEB 75%),
+                linear-gradient(-45deg, transparent 75%, #DDA0DD 75%);
+            background-size: 100px 100px, 20px 20px, 20px 20px, 20px 20px, 20px 20px;
+            animation: pastel 10s linear infinite;
+        }
+
+        @keyframes pastel {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            text-shadow: 2px 2px 0 var(--primary),
+                        -2px -2px 0 var(--secondary);
+        }
+
+        h2 {
+            font-size: 3rem;
+            text-shadow: 1px 1px 0 var(--primary);
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 0 var(--secondary);
+        }
+
+        p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--body-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-logo {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            text-decoration: none;
+            text-shadow: 2px 2px 0 var(--primary),
+                        -2px -2px 0 var(--secondary);
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-family: var(--body-font);
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--heading-color);
+            text-shadow: 1px 1px 0 var(--white);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .card-title {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 2rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--body-color);
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--heading-color);
+        }
+
+        .spectrum-marker {
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-title {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--body-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .calculate-btn {
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--heading-color);
+        }
+
+        footer p {
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-icon {
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--heading-color);
+            text-transform: uppercase;
+        }
+
+        /* Minimal Navigation */
+        nav {
+            background: var(--white);
+            padding: 1rem 2rem;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--heading-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--body-color);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Soft Hero Section */
+        .hero {
+            background: repeating-radial-gradient(
+                circle at center,
+                #FFB6C1,
+                #98FB98 20%,
+                #87CEEB 40%,
+                #DDA0DD 60%,
+                #FFE4B5 80%,
+                #FFB6C1 100%
+            );
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 5px double #FFC0CB;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 0 #DDA0DD, -3px -3px 0 #98FB98;
+            transform: rotate(-1deg);
+            animation: soft-shake 1s infinite;
+        }
+
+        @keyframes soft-shake {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            transform: rotate(0.5deg);
+            background: rgba(255, 255, 255, 0.3);
+            padding: 1rem;
+            border: 2px dotted #FFE4B5;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: #DDA0DD;
+            color: #FFFAF0;
+            padding: 1rem 2rem;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 1rem;
+            transform: skew(-5deg);
+            border: 2px solid #98FB98;
+            animation: soft-pulse 2s infinite;
+        }
+
+        @keyframes soft-pulse {
+            0% { transform: skew(-5deg) scale(1); }
+            50% { transform: skew(-5deg) scale(1.05); }
+            100% { transform: skew(-5deg) scale(1); }
+        }
+
+        /* Soft Spectrum Visual */
+        .spectrum-visual {
+            position: relative;
+            height: 120px;
+            background: repeating-linear-gradient(
+                90deg,
+                #FFB6C1,
+                #98FB98 20%,
+                #87CEEB 40%,
+                #DDA0DD 60%,
+                #FFE4B5 80%,
+                #FFB6C1 100%
+            );
+            border-radius: 0;
+            margin: 3rem 0;
+            border: 3px dashed #FFC0CB;
+            transform: rotate(0.5deg);
+        }
+
+        .spectrum-marker {
+            position: absolute;
+            bottom: -40px;
+            transform: translateX(-50%) rotate(-2deg);
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            color: var(--text);
+            text-shadow: 1px 1px 0 #FFFAF0;
+            background: #FFE4B5;
+            padding: 0.5rem;
+            border: 2px solid #87CEEB;
+        }
+
+        /* Soft Cards */
+        .spectrum-card {
+            flex: 1 1 300px;
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: 5px 5px 0 #DDA0DD;
+            transition: all 0.3s;
+            background: #FFFAF0;
+            border: 3px solid #FFB6C1;
+            transform: rotate(-0.5deg);
+            margin: 1rem;
+        }
+
+        .spectrum-card:hover {
+            transform: rotate(2deg) scale(1.02);
+            box-shadow: -5px -5px 0 #98FB98;
+            border-color: #87CEEB;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            color: var(--white);
+            font-weight: bold;
+            background: repeating-linear-gradient(
+                45deg,
+                #FFB6C1,
+                #FFB6C1 10px,
+                #87CEEB 10px,
+                #87CEEB 20px
+            );
+            text-shadow: 1px 1px 0 #DDA0DD;
+        }
+
+        /* Soft Interactive Elements */
+        .habit-day {
+            width: 45px;
+            height: 45px;
+            border-radius: 0;
+            border: 2px solid #FFB6C1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #FFFAF0;
+            transform: rotate(2deg);
+        }
+
+        .habit-day:hover {
+            transform: rotate(-2deg) scale(1.1);
+            background: #DDA0DD;
+            border-color: #98FB98;
+        }
+
+        .habit-day.active {
+            background: repeating-linear-gradient(
+                45deg,
+                #FFB6C1,
+                #FFB6C1 5px,
+                #98FB98 5px,
+                #98FB98 10px
+            );
+            border-color: #87CEEB;
+            transform: rotate(-2deg);
+        }
+
+        /* Soft Calculator */
+        .calculator {
+            background: #FFFAF0;
+            border-radius: 0;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 3px solid #87CEEB;
+            transform: rotate(1deg);
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #FFB6C1;
+            border-radius: 0;
+            background: #FFE4B5;
+            color: #DDA0DD;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #98FB98;
+            background: #DDA0DD;
+            color: #FFFAF0;
+        }
+
+        .calculate-btn:hover {
+            background: #FFB6C1;
+            transform: skew(5deg) scale(1.05);
+            color: #FFFAF0;
+        }
+
+        /* Soft Modal */
+        .modal-content {
+            background: #FFFAF0;
+            border-radius: 0;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 5px 5px 0 #DDA0DD;
+            border: 3px solid #FFB6C1;
+            transform: rotate(-1deg);
+        }
+
+        /* Soft Footer */
+        footer {
+            background: repeating-linear-gradient(
+                90deg,
+                #FFB6C1,
+                #98FB98 25%,
+                #87CEEB 50%,
+                #DDA0DD 75%,
+                #FFB6C1 100%
+            );
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 5px double #87CEEB;
+            transform: rotate(0.5deg);
+        }
+
+        .social-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #FFB6C1;
+            border-radius: 0;
+            color: #FFFAF0;
+            margin: 0 1rem;
+            line-height: 50px;
+            text-align: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 2px solid #87CEEB;
+            transform: rotate(2deg);
+        }
+
+        .social-icon:hover {
+            transform: rotate(-2deg) scale(1.1);
+            background: #98FB98;
+            border-color: #DDA0DD;
+        }
+
+        /* Enhanced Interactive Examples */
+        .interactive-section {
+            padding: 4rem 2rem;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 182, 193, 0.1),
+                rgba(152, 251, 152, 0.1) 20%,
+                rgba(135, 206, 235, 0.1) 40%,
+                rgba(221, 160, 221, 0.1) 60%,
+                rgba(255, 228, 181, 0.1) 80%,
+                rgba(255, 182, 193, 0.1) 100%
+            );
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .interactive-column {
+            flex: 1 1 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Enhanced Habit Widget */
+        .habit-widget {
+            background: var(--white);
+            padding: 2rem;
+            border: 3px solid var(--primary);
+            box-shadow: 5px 5px 0 var(--primary);
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+        }
+
+        .habit-widget:hover {
+            transform: rotate(1deg) scale(1.02);
+            box-shadow: -5px -5px 0 var(--secondary);
+        }
+
+        .habit-tracker {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .habit-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--heading-color);
+            background: var(--white);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .habit-day:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .habit-day.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+
+        /* Enhanced Notification */
+        .notification {
+            background: var(--white);
+            padding: 1.5rem;
+            border: 3px solid var(--secondary);
+            box-shadow: 5px 5px 0 var(--secondary);
+            transform: rotate(1deg);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .notification:hover {
+            transform: rotate(-1deg) scale(1.02);
+            box-shadow: -5px -5px 0 var(--primary);
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 1.3rem;
+            color: var(--heading-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-text {
+            font-family: var(--body-font);
+            font-weight: 700;
+            color: var(--body-color);
+        }
+
+        /* Enhanced Mindset Toggle */
+        .mindset-toggle {
+            background: var(--white);
+            padding: 2rem;
+            border: 3px solid var(--accent);
+            box-shadow: 5px 5px 0 var(--accent);
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+        }
+
+        .mindset-toggle:hover {
+            transform: rotate(1deg) scale(1.02);
+            box-shadow: -5px -5px 0 var(--primary);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+
+        .toggle-label {
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--body-color);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--white);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--secondary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Enhanced Rating Widget */
+        .rating-widget {
+            background: var(--white);
+            padding: 2rem;
+            border: 3px solid var(--secondary);
+            box-shadow: 5px 5px 0 var(--secondary);
+            transform: rotate(1deg);
+            transition: all 0.3s;
+        }
+
+        .rating-widget:hover {
+            transform: rotate(-1deg) scale(1.02);
+            box-shadow: -5px -5px 0 var(--primary);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+            color: var(--secondary);
+        }
+
+        .star.active {
+            color: var(--secondary);
+        }
+
+        /* Enhanced Calculator */
+        .calculator {
+            background: var(--white);
+            padding: 2rem;
+            border: 3px solid var(--accent);
+            box-shadow: 5px 5px 0 var(--accent);
+            transform: rotate(-1deg);
+            transition: all 0.3s;
+        }
+
+        .calculator:hover {
+            transform: rotate(1deg) scale(1.02);
+            box-shadow: -5px -5px 0 var(--primary);
+        }
+
+        .calculator-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 1rem;
+            border: 2px solid var(--primary);
+            background: var(--white);
+            color: var(--body-color);
+            font-family: var(--body-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .calculate-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            font-family: var(--accent-font);
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            font-family: var(--heading-font);
+            font-weight: 900;
+            font-size: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .interactive-section {
+                padding: 2rem 1rem;
+            }
+
+            .flex-container {
+                gap: 1.5rem;
+            }
+
+            .interactive-column {
+                flex: 1 1 100%;
+            }
+
+            .habit-tracker {
+                gap: 0.5rem;
+            }
+
+            .habit-day {
+                font-size: 1rem;
+            }
+
+            .notification {
+                padding: 1rem;
+            }
+
+            .notification-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 1.2rem;
+            }
+
+            .toggle-switch {
+                width: 50px;
+                height: 28px;
+            }
+
+            .toggle-slider:before {
+                height: 20px;
+                width: 20px;
+            }
+
+            input:checked + .toggle-slider:before {
+                transform: translateX(22px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Спектр мышления</a>
+            <ul class="nav-links">
+                <li><a href="#overview">Обзор</a></li>
+                <li><a href="#examples">Примеры</a></li>
+                <li><a href="#design-patterns">Шаблоны</a></li>
+                <li><a href="#resources">Ресурсы</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Спектр когнитивных вмешательств</h1>
+            <p>Понимание процесса принятия решений пользователями и проектирование интерфейсов, соответствующих естественным когнитивным процессам</p>
+            <div>
+                <a href="#overview" class="hero-btn">Узнать больше</a>
+                <a href="#" class="hero-btn" id="open-modal-btn">Получить руководство</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2 class="section-title">Понимание спектра</h2>
+            <p><strong>Спектр когнитивных вмешательств</strong> предоставляет структуру для понимания различных типов процессов принятия решений, иллюстрируя, как наш разум реагировал бы <em>по умолчанию, с минимальными затратами энергии</em>, если бы мы сознательно не делали что-то иное. Этот спектр охватывает ситуации от требующих минимального мышления до требующих интенсивного мышления и включает механизмы ("вмешательства"), которые наш разум, вероятно, будет использовать.</p>
+            
+            <!-- Spectrum Visual -->
+            <div class="spectrum-visual">
+                <div class="spectrum-marker marker-habits">Привычки</div>
+                <div class="spectrum-marker marker-intuitive">Интуитивные реакции</div>
+                <div class="spectrum-marker marker-mindset">Активное мышление</div>
+                <div class="spectrum-marker marker-heuristics">Эвристики</div>
+                <div class="spectrum-marker marker-conscious">Сознательные расчеты</div>
+            </div>
+
+            <!-- Spectrum Cards -->
+            <div class="spectrum-cards">
+                <!-- Habits Card -->
+                <div class="spectrum-card">
+                    <div class="card-header">Минимальные умственные усилия</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Привычки</h3>
+                        <p class="card-text">Запуск усвоенной рутины на основе знакомых сигналов. Это автоматические реакции, требующие почти никакого сознательного мышления.</p>
+                        <p class="example-title">Влияние на дизайн:</p>
+                        <p>Создавайте последовательные сигналы для запуска желаемого поведения и установления рутин.</p>
+                    </div>
+                </div>
+
+                <!-- Intuitive Responses Card -->
+                <div class="spectrum-card">
+                    <div class="card-header">Низкие умственные усилия</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Другие интуитивные реакции</h3>
+                        <p class="card-text">Используются в знакомых или частично знакомых ситуациях, с реакциями, основанными на прошлом опыте и распознавании паттернов.</p>
+                        <p class="example-title">Влияние на дизайн:</p>
+                        <p>Используйте знакомые паттерны и применяйте распознавание вместо запоминания.</p>
+                    </div>
+                </div>
+
+                <!-- Active Mindset Card -->
+                <div class="spectrum-card">
+                    <div class="card-header">Умеренные умственные усилия</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Активное мышление или самооценка</h3>
+                        <p class="card-text">Используется в неоднозначных сценариях с множеством возможных интерпретаций. То, как мы видим себя, влияет на наш выбор.</p>
+                        <p class="example-title">Влияние на дизайн:</p>
+                        <p>Формулируйте выбор в соответствии с идентичностью и самооценкой пользователей.</p>
+                    </div>
+                </div>
+
+                <!-- Heuristics Card -->
+                <div class="spectrum-card">
+                    <div class="card-header">Высокие умственные усилия</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Эвристики</h3>
+                        <p class="card-text">Используются в ситуациях, требующих сознательного внимания, но где решения могут быть приняты легче с помощью ментальных сокращений.</p>
+                        <p class="example-title">Влияние на дизайн:</p>
+                        <p>Предоставляйте упрощенные рамки принятия решений и полезные сокращения.</p>
+                    </div>
+                </div>
+
+                <!-- Conscious Calculation Card -->
+                <div class="spectrum-card">
+                    <div class="card-header">Максимальные умственные усилия</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Сфокусированные, сознательные расчеты</h3>
+                        <p class="card-text">Используются в незнакомых сценариях или важных решениях, где требуется целенаправленное внимание и анализ.</p>
+                        <p class="example-title">Влияние на дизайн:</p>
+                        <p>Минимизируйте отвлекающие факторы и предоставляйте четкую, структурированную информацию для сложного принятия решений.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Interactive Examples Section -->
+        <section id="examples" class="interactive-section">
+            <h2 class="section-title">Интерактивные примеры</h2>
+            <p>Опыт каждого уровня спектра мышления через эти интерактивные элементы, демонстрирующие, как различные компоненты UX соответствуют когнитивным процессам.</p>
+            
+            <div class="flex-container">
+                <div class="interactive-column">
+                    <!-- Enhanced Habit Example -->
+                    <div class="habit-widget">
+                        <h3>Формирование привычек</h3>
+                        <p>Отслеживание создает сигналы и укрепляет привычки через визуальный прогресс.</p>
+                        <div class="habit-tracker">
+                            <div class="habit-day" data-day="П">П</div>
+                            <div class="habit-day" data-day="В">В</div>
+                            <div class="habit-day" data-day="С">С</div>
+                            <div class="habit-day" data-day="Ч">Ч</div>
+                            <div class="habit-day" data-day="П">П</div>
+                            <div class="habit-day" data-day="С">С</div>
+                            <div class="habit-day" data-day="В">В</div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Notification Example -->
+                    <div class="notification">
+                        <div class="notification-icon">!</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Новое сообщение</div>
+                            <div class="notification-text">У вас новое сообщение от контакта.</div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Mindset Toggle -->
+                    <div class="mindset-toggle">
+                        <h3>Настройки предпочтений</h3>
+                        <p>Настройки, отражающие идентичность и самооценку, влияют на поведение.</p>
+                        <div class="toggle-container">
+                            <span class="toggle-label">Экспертный режим</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="mindset-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-column">
+                    <!-- Enhanced Rating Widget -->
+                    <div class="rating-widget">
+                        <h3>Система оценок</h3>
+                        <p>Звезды предоставляют эвристическое сокращение для оценки качества.</p>
+                        <div class="rating-stars">
+                            <div class="star" data-rating="1">★</div>
+                            <div class="star" data-rating="2">★</div>
+                            <div class="star" data-rating="3">★</div>
+                            <div class="star" data-rating="4">★</div>
+                            <div class="star" data-rating="5">★</div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Calculator -->
+                    <div class="calculator">
+                        <h3>Калькулятор решений</h3>
+                        <p>Инструменты, помогающие пользователям с сознательными расчетами для сложных решений.</p>
+                        <div class="calculator-inputs">
+                            <div class="input-group">
+                                <label for="option1">Оценка варианта 1 (1-10)</label>
+                                <input type="number" id="option1" min="1" max="10" value="5">
+                            </div>
+                            <div class="input-group">
+                                <label for="option2">Оценка варианта 2 (1-10)</label>
+                                <input type="number" id="option2" min="1" max="10" value="7">
+                            </div>
+                            <div class="input-group">
+                                <label for="importance">Фактор важности</label>
+                                <select id="importance">
+                                    <option value="1">Низкий</option>
+                                    <option value="2" selected>Средний</option>
+                                    <option value="3">Высокий</option>
+                                </select>
+                            </div>
+                            <button class="calculate-btn">Рассчитать</button>
+                            <div class="result" id="calculator-result"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Pattern Section -->
+        <section id="design-patterns" class="pattern-section">
+            <h2 class="section-title">Шаблоны дизайна</h2>
+            <p>Изучите различные шаблоны дизайна, соответствующие каждому уровню спектра мышления.</p>
+            
+            <div class="pattern-grid">
+                <!-- Habit Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-img">Привычки</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Триггеры привычек</h3>
+                        <p class="pattern-text">Создавайте последовательные визуальные и контекстные сигналы для запуска желаемого поведения.</p>
+                        <span class="pattern-tag tag-habit">Привычки</span>
+                    </div>
+                </div>
+
+                <!-- Intuitive Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-img">Интуиция</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Распознавание паттернов</h3>
+                        <p class="pattern-text">Используйте знакомые визуальные элементы и взаимодействия для быстрого распознавания.</p>
+                        <span class="pattern-tag tag-intuitive">Интуиция</span>
+                    </div>
+                </div>
+
+                <!-- Mindset Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-img">Мышление</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Фрейминг идентичности</h3>
+                        <p class="pattern-text">Формулируйте выбор и действия в соответствии с самооценкой пользователя.</p>
+                        <span class="pattern-tag tag-mindset">Мышление</span>
+                    </div>
+                </div>
+
+                <!-- Heuristic Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-img">Эвристики</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Упрощенные решения</h3>
+                        <p class="pattern-text">Предоставляйте четкие, структурированные рамки для принятия решений.</p>
+                        <span class="pattern-tag tag-heuristic">Эвристики</span>
+                    </div>
+                </div>
+
+                <!-- Conscious Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-img">Сознание</div>
+                    <div class="pattern-content">
+                        <h3 class="pattern-title">Структурированный анализ</h3>
+                        <p class="pattern-text">Создавайте четкие, пошаговые процессы для сложных решений.</p>
+                        <span class="pattern-tag tag-conscious">Сознание</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <h2 class="cta-title">Начните применять спектр мышления</h2>
+            <p class="cta-text">Узнайте, как применять принципы спектра мышления в ваших проектах и создавать более эффективные пользовательские интерфейсы.</p>
+            <a href="#" class="cta-btn" id="cta-btn">Получить руководство</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 Спектр мышления. Все права защищены.</p>
+            <ul class="footer-links">
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Контакты</a></li>
+                <li><a href="#">Политика конфиденциальности</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">t</a>
+                <a href="#" class="social-icon">in</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="guide-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2 class="modal-title">Получить руководство</h2>
+            <p>Заполните форму ниже, чтобы получить полное руководство по спектру мышления.</p>
+            <form class="modal-form">
+                <div class="input-group">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <button type="submit" class="calculate-btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner">
+        <p class="cookie-text">Мы используем файлы cookie для улучшения вашего опыта. Продолжая использовать сайт, вы соглашаетесь с нашей политикой использования файлов cookie.</p>
+        <div class="cookie-btns">
+            <button class="cookie-btn accept-btn">Принять</button>
+            <button class="cookie-btn decline-btn">Отклонить</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <p>Спасибо за ваш интерес! Мы отправили руководство на ваш email.</p>
+    </div>
+
+    <script>
+        // Enhanced Interactive Elements Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Habit Tracker
+            const habitDays = document.querySelectorAll('.habit-day');
+            habitDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Mindset Toggle
+            const mindsetToggle = document.getElementById('mindset-toggle');
+            mindsetToggle.addEventListener('change', function() {
+                const label = this.parentElement.previousElementSibling;
+                if (this.checked) {
+                    label.textContent = 'Экспертный режим (включен)';
+                } else {
+                    label.textContent = 'Экспертный режим';
+                }
+            });
+
+            // Rating Stars
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.dataset.rating;
+                    stars.forEach(s => {
+                        if (s.dataset.rating <= rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Calculator
+            const calculateBtn = document.querySelector('.calculate-btn');
+            const result = document.getElementById('calculator-result');
+            
+            calculateBtn.addEventListener('click', function() {
+                const option1 = parseInt(document.getElementById('option1').value);
+                const option2 = parseInt(document.getElementById('option2').value);
+                const importance = parseInt(document.getElementById('importance').value);
+                
+                const score = ((option1 + option2) / 2) * importance;
+                result.textContent = `Результат: ${score.toFixed(1)}`;
+                result.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
