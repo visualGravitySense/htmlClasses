@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 COURSE REGISTRATION WIZARD! 🌟</title>
+    <style>
+        :root {
+            --primary: #FF00FF;
+            --secondary: #00FFFF;
+            --accent: #FFFF00;
+            --text: #000000;
+            --bg: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: url('https://i.imgur.com/8QZQZQZ.gif');
+            background-repeat: repeat;
+            animation: rainbow 5s linear infinite;
+            padding: 20px;
+        }
+
+        @keyframes rainbow {
+            0% { background-color: #FF0000; }
+            20% { background-color: #FF00FF; }
+            40% { background-color: #0000FF; }
+            60% { background-color: #00FFFF; }
+            80% { background-color: #00FF00; }
+            100% { background-color: #FF0000; }
+        }
+
+        .wizard-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 5px dashed var(--primary);
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: rotate(-1deg);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0 #FF0000, 4px 4px 0 #00FF00, 6px 6px 0 #0000FF;
+            animation: blink 1s infinite;
+        }
+
+        .wizard-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            border: 3px solid white;
+        }
+
+        .step-indicator {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 3px solid black;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active {
+            background-color: var(--accent);
+            color: black;
+            transform: scale(1.2);
+            box-shadow: 0 0 20px var(--primary);
+            animation: pulse 1s infinite;
+        }
+
+        .step-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border: 3px solid var(--secondary);
+            margin-bottom: 20px;
+            transform: rotate(1deg);
+        }
+
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            transform: rotate(-0.5deg);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary);
+            font-weight: bold;
+            text-shadow: 1px 1px 0 var(--secondary);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed var(--primary);
+            background-color: white;
+            font-family: 'Comic Sans MS', cursive;
+            font-size: 1.1rem;
+        }
+
+        .wizard-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .anti-btn {
+            padding: 15px 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            transform: skew(-10deg);
+        }
+
+        .anti-btn-primary {
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            color: white;
+            animation: shimmer 1s infinite;
+        }
+
+        .anti-btn-secondary {
+            background-color: black;
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .anti-btn:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 5px 5px 0 var(--primary);
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 black;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @media (max-width: 768px) {
+            .wizard-container {
+                padding: 10px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .step-indicator {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="wizard-container" aria-label="Course Registration Wizard">
+        <h2 class="section-title">🌟 COURSE REGISTRATION WIZARD! 🌟</h2>
+        
+        <div class="wizard-steps">
+            <div class="step-indicator active" data-step="1">1</div>
+            <div class="step-indicator" data-step="2">2</div>
+            <div class="step-indicator" data-step="3">3</div>
+            <div class="step-indicator" data-step="4">4</div>
+        </div>
+
+        <!-- Step 1: Personal Information -->
+        <div class="step-content active" data-step="1">
+            <h3 style="color: var(--primary); text-shadow: 2px 2px 0 var(--secondary);">Step 1: Personal Information 🎓</h3>
+            <div class="form-group">
+                <label for="name">Your Name 👤</label>
+                <input type="text" id="name" placeholder="Enter your amazing name!">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address 📧</label>
+                <input type="email" id="email" placeholder="your.email@example.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number 📱</label>
+                <input type="tel" id="phone" placeholder="+1 (555) 123-4567">
+            </div>
+        </div>
+
+        <!-- Step 2: Course Selection -->
+        <div class="step-content" data-step="2">
+            <h3 style="color: var(--primary); text-shadow: 2px 2px 0 var(--secondary);">Step 2: Course Selection 📚</h3>
+            <div class="form-group">
+                <label for="course">Select Your Course 🎯</label>
+                <select id="course">
+                    <option value="">-- Choose your destiny! --</option>
+                    <option value="web-dev">Web Development Bootcamp</option>
+                    <option value="ui-ux">UI/UX Design Masterclass</option>
+                    <option value="data-science">Data Science Intensive</option>
+                    <option value="mobile-dev">Mobile App Development</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Schedule Preference ⏰</label>
+                <div>
+                    <input type="radio" id="morning" name="schedule" value="morning">
+                    <label for="morning">Morning 🌅</label>
+                    <input type="radio" id="afternoon" name="schedule" value="afternoon">
+                    <label for="afternoon">Afternoon 🌞</label>
+                    <input type="radio" id="evening" name="schedule" value="evening">
+                    <label for="evening">Evening 🌙</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="level">Skill Level 🚀</label>
+                <select id="level">
+                    <option value="">-- How awesome are you? --</option>
+                    <option value="beginner">Beginner 🌱</option>
+                    <option value="intermediate">Intermediate 🌟</option>
+                    <option value="advanced">Advanced 💫</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Step 3: Payment Information -->
+        <div class="step-content" data-step="3">
+            <h3 style="color: var(--primary); text-shadow: 2px 2px 0 var(--secondary);">Step 3: Payment Information 💰</h3>
+            <div class="form-group">
+                <label for="payment-method">Payment Method 💳</label>
+                <select id="payment-method">
+                    <option value="">-- Choose your payment method --</option>
+                    <option value="credit">Credit Card</option>
+                    <option value="debit">Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Card Number 🔢</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="form-group">
+                <label for="promo-code">Promo Code 🎁</label>
+                <input type="text" id="promo-code" placeholder="Enter your magical code!">
+            </div>
+        </div>
+
+        <!-- Step 4: Confirmation -->
+        <div class="step-content" data-step="4">
+            <h3 style="color: var(--primary); text-shadow: 2px 2px 0 var(--secondary);">Step 4: Confirmation 🎉</h3>
+            <div id="summary" style="margin-bottom: 20px;">
+                <!-- Summary will be populated by JavaScript -->
+            </div>
+            <div style="text-align: center;">
+                <img src="https://via.placeholder.com/200" alt="Success" style="max-width: 200px; margin: 20px auto;">
+                <p style="color: var(--primary); font-size: 1.5rem; animation: pulse 1s infinite;">Congratulations! 🎊</p>
+                <p>You're about to start your amazing journey! 🚀</p>
+            </div>
+        </div>
+
+        <div class="wizard-buttons">
+            <button class="anti-btn anti-btn-secondary" id="prev-step" disabled>◀️ Previous</button>
+            <button class="anti-btn anti-btn-primary" id="next-step">Next ▶️</button>
+        </div>
+    </section>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        function updateStepUI() {
+            // Update indicators
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            document.querySelector(`.step-indicator[data-step="${currentStep}"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelector(`.step-content[data-step="${currentStep}"]`).classList.add('active');
+            
+            // Update buttons
+            document.getElementById('prev-step').disabled = currentStep === 1;
+            document.getElementById('next-step').textContent = currentStep === totalSteps ? 'Finish! 🎉' : 'Next ▶️';
+            
+            // Add random rotation to active step
+            const activeStep = document.querySelector('.step-content.active');
+            const randomRotation = -2 + Math.random() * 4;
+            activeStep.style.transform = `rotate(${randomRotation}deg)`;
+        }
+        
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    return name && email && phone;
+                case 2:
+                    const course = document.getElementById('course').value;
+                    const schedule = document.querySelector('input[name="schedule"]:checked');
+                    const level = document.getElementById('level').value;
+                    return course && schedule && level;
+                case 3:
+                    const paymentMethod = document.getElementById('payment-method').value;
+                    const cardNumber = document.getElementById('card-number').value;
+                    return paymentMethod && cardNumber;
+                default:
+                    return true;
+            }
+        }
+        
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            const name = document.getElementById('name').value;
+            const course = document.getElementById('course').value;
+            const schedule = document.querySelector('input[name="schedule"]:checked').value;
+            const level = document.getElementById('level').value;
+            
+            summary.innerHTML = `
+                <p>Name: ${name}</p>
+                <p>Course: ${course}</p>
+                <p>Schedule: ${schedule}</p>
+                <p>Level: ${level}</p>
+            `;
+        }
+        
+        document.getElementById('next-step').addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    if (currentStep === totalSteps) {
+                        updateSummary();
+                    }
+                    updateStepUI();
+                } else {
+                    alert('Please fill in all required fields! 🚨');
+                }
+            } else {
+                alert('CONGRATULATIONS! 🎉 Your registration is complete!');
+            }
+        });
+        
+        document.getElementById('prev-step').addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'n' && currentStep < totalSteps) {
+                document.getElementById('next-step').click();
+            } else if (e.key === 'p' && currentStep > 1) {
+                document.getElementById('prev-step').click();
+            }
+        });
+
+        // Add random rotation to all form groups
+        document.querySelectorAll('.form-group').forEach(group => {
+            const randomRotation = -1 + Math.random() * 2;
+            group.style.transform = `rotate(${randomRotation}deg)`;
+        });
+    </script>
+</body>
+</html> 

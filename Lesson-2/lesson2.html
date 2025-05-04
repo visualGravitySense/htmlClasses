@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 2: Основы HTML5 и семантическая структура</title>
+    <style>
+        :root {
+            --primary: #FF00FF;
+            --cue: #00FFFF;
+            --reaction: #FFFF00;
+            --evaluation: #FF00FF;
+            --ability: #00FF00;
+            --timing: #FF0000;
+            --execution: #0000FF;
+            --text: #000000;
+            --bg: #FFFFFF;
+            --card-bg: #F0F0F0;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.2;
+            background-image: url('https://i.imgur.com/8QZQZQZ.gif');
+            background-repeat: repeat;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-color: #FF0000; }
+            20% { background-color: #FF00FF; }
+            40% { background-color: #0000FF; }
+            60% { background-color: #00FFFF; }
+            80% { background-color: #00FF00; }
+            100% { background-color: #FF0000; }
+        }
+
+        .presentation {
+            max-width: 100%;
+            margin: 0;
+            padding: 10px;
+            transform: rotate(-2deg);
+        }
+
+        .slide {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: 0;
+            box-shadow: 10px 10px 0 var(--shadow);
+            padding: 20px;
+            margin-bottom: 30px;
+            min-height: 500px;
+            border: 5px dashed #FF0000;
+            transform: rotate(1deg);
+        }
+
+        .slide.active {
+            display: block;
+            animation: shake 0.5s infinite;
+        }
+
+        /* @keyframes shake {
+            0% { transform: rotate(1deg); }
+            25% { transform: rotate(-1deg); }
+            50% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+            100% { transform: rotate(1deg); }
+        } */
+
+        .slide-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-align: center;
+            text-shadow: 2px 2px 0 #FF0000, 4px 4px 0 #00FF00, 6px 6px 0 #0000FF;
+            transform: skew(-20deg);
+            font-weight: bold;
+            letter-spacing: 5px;
+            animation: blink 1s infinite;
+        }
+
+        .slide-content {
+            font-size: 1.5rem;
+            text-align: justify;
+            column-count: 3;
+            column-gap: 20px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            transform: rotate(5deg);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 5px 5px 0 #000;
+        }
+
+        .btn:hover {
+            background-color: #000;
+            color: #FFF;
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #000;
+            border-radius: 0;
+            margin: 20px 0;
+            overflow: hidden;
+            transform: skew(-20deg);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF0000, #00FF00, #0000FF);
+            transition: width 0.3s ease;
+        }
+
+        .stage-dots {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            transform: rotate(10deg);
+        }
+
+        .dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 0;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: rotate(45deg);
+            border: 2px solid #FFF;
+        }
+
+        .dot.active {
+            transform: scale(1.5) rotate(45deg);
+        }
+
+        .dot:nth-child(1).active {
+            background-color: var(--cue);
+        }
+
+        .dot:nth-child(2).active {
+            background-color: var(--reaction);
+        }
+
+        .dot:nth-child(3).active {
+            background-color: var(--evaluation);
+        }
+
+        .dot:nth-child(4).active {
+            background-color: var(--ability);
+        }
+
+        .dot:nth-child(5).active {
+            background-color: var(--timing);
+        }
+
+        .dot:nth-child(6).active {
+            background-color: var(--execution);
+        }
+
+        .dot:nth-child(7).active {
+            background-color: var(--primary);
+        }
+
+        .dot:nth-child(8).active {
+            background-color: var(--primary);
+        }
+
+        .dot:hover {
+            transform: scale(1.2);
+        }
+
+        .funnel {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto;
+            position: relative;
+            transform: rotate(5deg);
+        }
+
+        .funnel-section {
+            height: 60px;
+            width: 100%;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            opacity: 0.7;
+            text-shadow: 2px 2px 0 #000;
+            border: 2px solid #FFF;
+        }
+
+        .funnel-section:hover, .funnel-section.active {
+            transform: scale(1.1) rotate(5deg);
+            opacity: 1;
+        }
+
+        .funnel-section:nth-child(1) {
+            width: 100%;
+            background-color: var(--cue);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .funnel-section:nth-child(2) {
+            width: 93%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--reaction);
+        }
+
+        .funnel-section:nth-child(3) {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--evaluation);
+        }
+
+        .funnel-section:nth-child(4) {
+            width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--ability);
+        }
+
+        .funnel-section:nth-child(5) {
+            width: 65%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--timing);
+        }
+
+        .funnel-section:nth-child(6) {
+            width: 55%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--execution);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            transform: rotate(-5deg);
+        }
+
+        .card {
+            width: 30%;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 0;
+            box-shadow: 5px 5px 0 #000;
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            border: 3px solid #000;
+        }
+
+        .card:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .card-content {
+            font-size: 1.2rem;
+            text-align: justify;
+        }
+
+        .example-box {
+            background-color: #FFF;
+            border-left: 10px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0;
+            transform: skew(-10deg);
+        }
+
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .slide-content ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+            list-style-type: none;
+        }
+
+        .slide-content li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .slide-content li:before {
+            content: "★";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .highlight {
+            background-color: #FFFF00;
+            padding: 2px 5px;
+            border-radius: 0;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 10px;
+            }
+
+            .slide-title {
+                font-size: 2rem;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .slide-content {
+                column-count: 1;
+            }
+        }
+
+        /* Add some random animations */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Add some random borders */
+        * {
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Add some random background patterns */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgur.com/8QZQZQZ.gif');
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="stage-dots" id="stageDots">
+            <div class="dot" data-slide="0">1</div>
+            <div class="dot" data-slide="1">2</div>
+            <div class="dot" data-slide="2">UX</div>
+            <div class="dot" data-slide="3">DEV</div>
+            <div class="dot" data-slide="4">PR</div>
+        </div>
+
+        <!-- Slide 1: Introduction -->
+        <div class="slide active" id="slide-0">
+            <h1 class="slide-title">Урок 2: Основы HTML5 и семантическая структура</h1>
+            <div class="slide-content">
+                <p>Изучение основ HTML5 и принципов семантической разметки для создания доступных и эффективных веб-приложений.</p>
+                
+                <div class="funnel">
+                    <div class="funnel-section">UX/UI ДИЗАЙНЕРЫ</div>
+                    <div class="funnel-section">ФРОНТЕНД РАЗРАБОТЧИКИ</div>
+                    <div class="funnel-section">ПРАКТИЧЕСКОЕ ЗАДАНИЕ</div>
+                </div>
+                
+                <p>Этот урок поможет вам понять, как правильно структурировать HTML-документы и создавать доступные веб-интерфейсы.</p>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn" disabled>Назад</button>
+                <button class="btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+
+        <!-- Slide 2: Overview -->
+        <div class="slide" id="slide-1">
+            <h1 class="slide-title">Обзор урока</h1>
+            <div class="slide-content">
+                <p>В этом уроке мы рассмотрим:</p>
+                
+                <ul>
+                    <li><strong style="color: var(--cue);">Семантическая структура:</strong> Основы HTML5 и его влияние на пользовательский опыт</li>
+                    <li><strong style="color: var(--reaction);">Доступность:</strong> Как семантический HTML улучшает доступность веб-сайтов</li>
+                    <li><strong style="color: var(--evaluation);">Производительность:</strong> Влияние структуры HTML на производительность</li>
+                    <li><strong style="color: var(--ability);">Практика:</strong> Применение знаний на реальных проектах</li>
+                </ul>
+                
+                <div class="example-box">
+                    <div class="example-title">Цели обучения:</div>
+                    <ul>
+                        <li>Понимание семантической структуры HTML5</li>
+                        <li>Освоение принципов доступности</li>
+                        <li>Изучение лучших практик организации HTML</li>
+                        <li>Применение знаний на практике</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn">Назад</button>
+                <button class="btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: UX/UI Designers -->
+        <div class="slide" id="slide-2">
+            <h1 class="slide-title" style="color: var(--cue);">Для UX/UI-дизайнеров</h1>
+            <div class="slide-content">
+                <p>Как структура HTML влияет на пользовательский опыт и доступность веб-интерфейсов.</p>
+                
+                <div class="example-box">
+                    <div class="example-title">Ключевые аспекты:</div>
+                    <ul>
+                        <li>Влияние HTML-структуры на пользовательский опыт</li>
+                        <li>Семантический HTML и его роль в доступности</li>
+                        <li>Иерархия контента и её связь со структурой HTML</li>
+                        <li>Особенности проектирования HTML-элементов</li>
+                        <li>Технические ограничения HTML</li>
+                    </ul>
+                </div>
+                
+                <h3>Соображения по дизайну:</h3>
+                <ul>
+                    <li><strong>Семантика:</strong> Как выбор правильных тегов влияет на UX?</li>
+                    <li><strong>Доступность:</strong> Как сделать интерфейс доступным для всех?</li>
+                    <li><strong>Иерархия:</strong> Как структура HTML отражает визуальную иерархию?</li>
+                    <li><strong>Ограничения:</strong> Какие технические ограничения нужно учитывать?</li>
+                </ul>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn">Назад</button>
+                <button class="btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Frontend Developers -->
+        <div class="slide" id="slide-3">
+            <h1 class="slide-title" style="color: var(--reaction);">Для фронтенд-разработчиков</h1>
+            <div class="slide-content">
+                <p>Технические аспекты HTML5 и семантической структуры для разработчиков.</p>
+                
+                <div class="example-box">
+                    <div class="example-title">Семантические элементы:</div>
+                    <ul>
+                        <li><code>&lt;header&gt;</code> - заголовок страницы или секции</li>
+                        <li><code>&lt;nav&gt;</code> - навигационные ссылки</li>
+                        <li><code>&lt;main&gt;</code> - основной контент</li>
+                        <li><code>&lt;section&gt;</code> - тематическая группа контента</li>
+                        <li><code>&lt;article&gt;</code> - независимый контент</li>
+                        <li><code>&lt;aside&gt;</code> - дополнительный контент</li>
+                        <li><code>&lt;footer&gt;</code> - подвал страницы или секции</li>
+                    </ul>
+                </div>
+                
+                <h3>Технические аспекты:</h3>
+                <ul>
+                    <li><strong>Структура документа:</strong> DOCTYPE и метаданные</li>
+                    <li><strong>Текстовые элементы:</strong> Заголовки, параграфы, списки</li>
+                    <li><strong>Организация кода:</strong> Лучшие практики</li>
+                    <li><strong>Производительность:</strong> Процесс рендеринга в браузере</li>
+                </ul>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn">Назад</button>
+                <button class="btn" id="nextBtn">Далее</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Practical Task -->
+        <div class="slide" id="slide-4">
+            <h1 class="slide-title" style="color: var(--evaluation);">Практическое задание</h1>
+            <div class="slide-content">
+                <p>Применение полученных знаний на практике.</p>
+                
+                <div class="example-box">
+                    <div class="example-title">Задачи:</div>
+                    <ul>
+                        <li>Преобразование дизайн-макета в семантическую структуру HTML</li>
+                        <li>Проверка HTML на доступность и семантику</li>
+                        <li>Проведение взаимной проверки структуры HTML</li>
+                    </ul>
+                </div>
+                
+                <h3>Критерии оценки:</h3>
+                <ul>
+                    <li><strong>Семантика:</strong> Правильное использование HTML-тегов</li>
+                    <li><strong>Доступность:</strong> Соответствие стандартам WCAG</li>
+                    <li><strong>Структура:</strong> Логическая организация кода</li>
+                    <li><strong>Производительность:</strong> Оптимизация загрузки</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>Помните:</strong> Хорошая структура HTML - основа качественного веб-приложения.</p>
+            </div>
+            <div class="navigation">
+                <button class="btn" id="prevBtn">Назад</button>
+                <button class="btn" id="nextBtn" disabled>Далее</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelectorAll('#prevBtn');
+            const nextBtn = document.querySelectorAll('#nextBtn');
+            const progressBar = document.getElementById('progressBar');
+            const stageDots = document.getElementById('stageDots');
+            const dots = document.querySelectorAll('.dot');
+            const funnelSections = document.querySelectorAll('.funnel-section');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            
+            // Initialize progress bar
+            updateProgressBar();
+            updateDots();
+            
+            // Previous button event listeners
+            prevBtn.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentSlide > 0) {
+                        showSlide(currentSlide - 1);
+                    }
+                });
+            });
+            
+            // Next button event listeners
+            nextBtn.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentSlide < totalSlides - 1) {
+                        showSlide(currentSlide + 1);
+                    }
+                });
+            });
+            
+            // Stage dots event listeners
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const slideIndex = parseInt(dot.getAttribute('data-slide'));
+                    showSlide(slideIndex);
+                });
+            });
+            
+            // Funnel sections event listeners
+            funnelSections.forEach((section, index) => {
+                section.addEventListener('click', () => {
+                    // +2 because first two slides are intro and overview
+                    showSlide(index + 2);
+                });
+            });
+            
+            function showSlide(index) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Show current slide
+                slides[index].classList.add('active');
+                
+                // Update current slide index
+                currentSlide = index;
+                
+                // Update button states
+                updateButtonStates();
+                
+                // Update progress bar
+                updateProgressBar();
+                
+                // Update dots
+                updateDots();
+            }
+            
+            function updateButtonStates() {
+                // Update prev buttons
+                prevBtn.forEach(btn => {
+                    btn.disabled = currentSlide === 0;
+                });
+                
+                // Update next buttons
+                nextBtn.forEach(btn => {
+                    btn.disabled = currentSlide === totalSlides - 1;
+                });
+            }
+            
+            function updateProgressBar() {
+                const progressPercentage = ((currentSlide + 1) / totalSlides) * 100;
+                progressBar.style.width = progressPercentage + '%';
+            }
+            
+            function updateDots() {
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
