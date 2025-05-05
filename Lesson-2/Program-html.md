@@ -1,6 +1,3 @@
-About Big Project 
-Home work management + Design Roles Description
-
 [[Program-1]]
 # Учебный курс по HTML/CSS для UX/UI-дизайнеров и фронтенд-разработчиков
 
