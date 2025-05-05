@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДУМАЙ БЫСТРО И МЕДЛЕННО: ДВОЙНАЯ ЖИЗНЬ ТВОЕГО МОЗГА!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Nunito:wght@400;700&display=swap');
+        
+        :root {
+            --color-system1: #FF3366;
+            --color-system2: #3399FF;
+            --color-bg: #FDFBF9;
+            --color-text: #111111;
+            --color-accent: #FFD166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--color-system1) 0%, var(--color-system2) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "🧠";
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+            top: -20px;
+            right: -20px;
+            transform: rotate(15deg);
+        }
+        
+        header::after {
+            content: "⚡";
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+            bottom: -20px;
+            left: -20px;
+            transform: rotate(-15deg);
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+        
+        .intro {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.05;
+            right: -30px;
+            top: -30px;
+        }
+        
+        .system1::before {
+            content: "🔥";
+        }
+        
+        .system2::before {
+            content: "🕵️";
+        }
+        
+        .design::before {
+            content: "🚀";
+        }
+        
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .system1 h2 {
+            color: var(--color-system1);
+        }
+        
+        .system2 h2 {
+            color: var(--color-system2);
+        }
+        
+        .design h2 {
+            background: linear-gradient(90deg, var(--color-system1), var(--color-system2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        ul {
+            list-style: none;
+            margin-left: 10px;
+        }
+        
+        li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .system1 li::before {
+            content: "•";
+            color: var(--color-system1);
+            font-size: 2rem;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+        }
+        
+        .system2 li::before {
+            content: "•";
+            color: var(--color-system2);
+            font-size: 2rem;
+            position: absolute;
+            left: 10px;
+            top: -10px;
+        }
+        
+        .design li {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 15px 15px 15px 50px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .design li::before {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+        
+        .design li:nth-child(1)::before { content: "💡"; }
+        .design li:nth-child(2)::before { content: "👁️"; }
+        .design li:nth-child(3)::before { content: "🛡️"; }
+        .design li:nth-child(4)::before { content: "🔄"; }
+        .design li:nth-child(5)::before { content: "🧪"; }
+        
+        strong {
+            color: var(--color-system1);
+            font-weight: 700;
+        }
+        
+        .conclusion {
+            font-size: 1.2rem;
+            text-align: center;
+            background-color: var(--color-accent);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: var(--color-text);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Animation effects */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .intro {
+                font-size: 1.2rem;
+            }
+            
+            li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ДУМАЙ БЫСТРО И МЕДЛЕННО: ДВОЙНАЯ ЖИЗНЬ ТВОЕГО МОЗГА! 🧠⚡</h1>
+            <p class="intro">Представь, что твой мозг — это <strong>СУПЕРГЕРОЙСКИЙ ДУЭТ</strong> с двумя совершенно разными личностями, которые работают вместе!</p>
+        </header>
+        
+        <section class="section system1">
+            <h2>СИСТЕМА 1: МОЗГ НА АВТОПИЛОТЕ 🔥</h2>
+            <ul>
+                <li>Быстрый стрелок в твоей голове</li>
+                <li>Принимает <strong>МОЛНИЕНОСНЫЕ</strong> решения без напряга</li>
+                <li>Работает на <strong>ИНТУИЦИИ</strong> и <strong>ЧУЙКЕ</strong></li>
+                <li>Иногда делает поспешные выводы (ой!), но помогает прожить день</li>
+            </ul>
+        </section>
+        
+        <section class="section system2">
+            <h2>СИСТЕМА 2: ВНУТРЕННИЙ ДЕТЕКТИВ 🕵️</h2>
+            <ul>
+                <li><strong>ГЛУБОКИЙ МЫСЛИТЕЛЬ</strong>, решающий сложные задачки</li>
+                <li>Долго и тщательно <strong>АНАЛИЗИРУЕТ</strong> всё</li>
+                <li>Ему нужны <strong>КОФЕ</strong> и <strong>КОНЦЕНТРАЦИЯ</strong></li>
+                <li>Точнее, но использовать её весь день — очень утомительно</li>
+            </ul>
+        </section>
+        
+        <section class="section design">
+            <h2>ПОЧЕМУ ЭТО ВАЖНО ДЛЯ КРУТОГО ДИЗАЙНА:</h2>
+            <p class="subtitle">Дизайн должен работать для <strong>ОБЕИХ</strong> этих мозговых систем! Лучший пользовательский опыт — это:</p>
+            
+            <ul>
+                <li><strong>МГНОВЕННО-ПОНЯТНЫЙ:</strong> Всё главное должно быть таким очевидным, что даже пещерный человек справится</li>
+                <li><strong>ВИЗУАЛЬНО ПРИВЛЕКАТЕЛЬНЫЙ:</strong> Цвета и формы, которые <strong>ПРИВЛЕКАЮТ</strong> взгляд и ведут пользователя</li>
+                <li><strong>ЗАЩИЩАЮЩИЙ ОТ ОШИБОК:</strong> Предусмотри страховки, если Система 1 переборщит</li>
+                <li><strong>ГИБКИЙ:</strong> Кто-то любит думать, кто-то — нет. Дизайн должен подходить всем</li>
+                <li><strong>ПРОТЕСТИРОВАННЫЙ НА ЛЮДЯХ:</strong> Проверь, какая система включается у реальных пользователей</li>
+            </ul>
+            
+            <div class="conclusion pulse">
+                Если ты проектируешь с учётом обеих систем, пользователи получат то самое ощущение «<strong>ВСЁ ПРОСТО ИДЕАЛЬНО</strong>», даже не понимая, почему — они просто <strong>ПОЛЮБЯТ</strong> твой продукт!
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        &copy; 2025 Теория двойного процесса для дизайнеров
+    </footer>
+    
+    <script>
+        // Simple interaction to demonstrate System 1 vs System 2
+        document.querySelectorAll('.section').forEach(section => {
+            section.addEventListener('mouseover', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            section.addEventListener('mouseout', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
