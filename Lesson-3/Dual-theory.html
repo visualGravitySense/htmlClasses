@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория двойного процесса в UX-дизайне</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #ff0055;
+            --background: #fff;
+            --text: #111;
+            --border: #111;
+            --card-bg: #fff;
+            --shadow: none;
+        }
+        html, body {
+            background: var(--background);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 10px 10px 10px;
+        }
+        header {
+            background: #fff;
+            border: 4px solid var(--border);
+            margin-bottom: 40px;
+            padding: 30px 0 10px 0;
+            text-align: left;
+            position: relative;
+        }
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: #000;
+            color: #fff;
+            display: inline-block;
+            padding: 4px 12px;
+            border: 2px solid var(--accent);
+            margin-top: 10px;
+        }
+        .dual-systems {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .system {
+            flex: 1;
+            background: var(--card-bg);
+            border: 3px solid var(--border);
+            padding: 24px 18px;
+            min-width: 260px;
+            border-radius: 0;
+            box-shadow: none;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .system-1 {
+            border-top: 10px solid var(--accent);
+        }
+        .system-2 {
+            border-top: 10px solid #000;
+        }
+        .system h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 0 0 18px 0;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+        }
+        .system-1 h2::before { content: "⚡"; }
+        .system-2 h2::before { content: "🧠"; }
+        .characteristic-list {
+            list-style: square inside;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            padding: 0;
+        }
+        .characteristic-list li {
+            margin-bottom: 10px;
+            padding-left: 0;
+            color: #111;
+        }
+        .interactive-section {
+            background: #fff;
+            border: 4px dashed var(--accent);
+            border-radius: 0;
+            padding: 30px 10px;
+            margin-bottom: 30px;
+            box-shadow: none;
+        }
+        .demo-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .demo {
+            flex: 1;
+            min-width: 260px;
+            border: 3px solid #000;
+            border-radius: 0;
+            padding: 18px 10px;
+            text-align: left;
+            background: #f7f7f7;
+            font-size: 1rem;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .demo h3 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+        .stroop-test {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .color-word {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin: 10px 0;
+            min-height: 40px;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 4px 12px;
+            display: inline-block;
+        }
+        .color-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .color-btn {
+            padding: 8px 18px;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: 900;
+            border: 2px solid #000;
+            border-radius: 0;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            margin-bottom: 4px;
+            transition: background 0.1s;
+        }
+        .color-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .math-problem {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin: 10px 0;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 4px 12px;
+            display: inline-block;
+        }
+        .math-input {
+            padding: 8px;
+            font-size: 1.1rem;
+            border: 2px solid #000;
+            border-radius: 0;
+            width: 120px;
+            font-family: inherit;
+            margin-right: 8px;
+        }
+        .submit-btn {
+            padding: 8px 18px;
+            background: #000;
+            color: #fff;
+            border: 2px solid var(--accent);
+            border-radius: 0;
+            font-size: 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .submit-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .result-message {
+            margin-top: 10px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 4px 12px;
+            display: inline-block;
+        }
+        .design-principles {
+            margin-top: 30px;
+        }
+        .principle-cards {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .principle-card {
+            flex: 1;
+            min-width: 200px;
+            background: #fff;
+            border: 3px solid #000;
+            border-radius: 0;
+            padding: 18px 10px;
+            box-shadow: none;
+            margin-bottom: 0;
+            position: relative;
+        }
+        .principle-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .icon {
+            font-size: 1.3rem;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: left;
+            padding: 18px 10px;
+            background: #fff;
+            border: 4px solid #000;
+            border-radius: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        @media (max-width: 900px) {
+            .dual-systems, .demo-container, .principle-cards {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Теория двойного процесса в UX-дизайне</h1>
+            <p class="subtitle">Понимание мышления человека для создания лучшего пользовательского опыта</p>
+        </header>
+        
+        <section class="dual-systems">
+            <div class="system system-1">
+                <h2>Система 1: Быстрая и Интуитивная</h2>
+                <ul class="characteristic-list">
+                    <li>Автоматическая и бессознательная обработка</li>
+                    <li>Опирается на эвристики и ментальные сокращения</li>
+                    <li>Эмоционально обусловлена и бессознательна</li>
+                    <li>Обрабатывает информацию параллельно</li>
+                    <li>Склонна к предубеждениям и ошибкам</li>
+                    <li>Высокая эффективность, но меньшая точность</li>
+                </ul>
+            </div>
+            
+            <div class="system system-2">
+                <h2>Система 2: Медленная и Обдуманная</h2>
+                <ul class="characteristic-list">
+                    <li>Контролируемая и требующая усилий обработка</li>
+                    <li>Опирается на логику и тщательный анализ</li>
+                    <li>Рационально обусловлена и осознанна</li>
+                    <li>Обрабатывает информацию последовательно</li>
+                    <li>Более устойчива к предубеждениям и ошибкам</li>
+                    <li>Высокая точность, но меньшая эффективность</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="interactive-section">
+            <h2>Испытайте обе системы в действии</h2>
+            <p>Попробуйте эти демонстрации, чтобы понять, как ваш мозг использует мышление Системы 1 и Системы 2:</p>
+            
+            <div class="demo-container">
+                <div class="demo">
+                    <h3>Задача Системы 1: Тест Струпа</h3>
+                    <p>Назовите ЦВЕТ слова, а не само слово. Это создает когнитивный конфликт между автоматическим чтением (Система 1) и определением цвета.</p>
+                    
+                    <div class="stroop-test">
+                        <div class="color-word" id="colorWord">Готовы?</div>
+                        <div class="color-buttons">
+                            <button class="color-btn" style="background-color: red; color: white;" data-color="red">Красный</button>
+                            <button class="color-btn" style="background-color: blue; color: white;" data-color="blue">Синий</button>
+                            <button class="color-btn" style="background-color: green; color: white;" data-color="green">Зеленый</button>
+                            <button class="color-btn" style="background-color: purple; color: white;" data-color="purple">Фиолетовый</button>
+                        </div>
+                        <div id="stroopResult" class="result-message"></div>
+                    </div>
+                </div>
+                
+                <div class="demo">
+                    <h3>Задача Системы 2: Устный счет</h3>
+                    <p>Решите эту математическую задачу, которая требует осознанных вычислений и не может быть решена только с помощью интуиции.</p>
+                    
+                    <div id="mathProblem" class="math-problem">23 × 17 = ?</div>
+                    <input type="number" class="math-input" id="mathInput" placeholder="Ваш ответ">
+                    <button class="submit-btn" id="checkMathBtn">Проверить ответ</button>
+                    <div id="mathResult" class="result-message"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="design-principles">
+            <h2>Принципы UX-дизайна на основе теории двойного процесса</h2>
+            
+            <div class="principle-cards">
+                <div class="principle-card">
+                    <h3><span class="icon">🔄</span> Минимизация когнитивной нагрузки</h3>
+                    <p>Создавайте интерфейсы, которые уменьшают необходимость мышления Системы 2, используя знакомые паттерны, четкую иерархию и осмысленные значения по умолчанию.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h3><span class="icon">🧭</span> Визуальные подсказки</h3>
+                    <p>Используйте цвет, контраст и визуальную иерархию для интуитивного (Система 1) навигации пользователей по интерфейсу без необходимости сознательных усилий.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h3><span class="icon">⚠️</span> Предотвращение ошибок</h3>
+                    <p>Проектируйте для предотвращения ошибок, которые могут возникнуть при чрезмерном использовании Системы 1, предоставляя ограничения и шаги подтверждения.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h3><span class="icon">🔄</span> Постепенное раскрытие</h3>
+                    <p>Раскрывайте информацию постепенно, чтобы избежать перегрузки пользователей, позволяя Системе 1 обработать базовую информацию до того, как Система 2 начнет работать с деталями.</p>
+                </div>
+                
+                <div class="principle-card">
+                    <h3><span class="icon">💡</span> Поддержка обоих путей принятия решений</h3>
+                    <p>Проектируйте как для быстрых, интуитивных решений (Система 1), так и для детальных, аналитических решений (Система 2), предоставляя соответствующую информацию и элементы управления.</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Понимание мышления человека через теорию двойного процесса может значительно улучшить дизайн пользовательского опыта, делая интерфейсы более интуитивными и эффективными.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Stroop Test
+        const colorWord = document.getElementById('colorWord');
+        const stroopResult = document.getElementById('stroopResult');
+        const colorButtons = document.querySelectorAll('.color-btn');
+        
+        const words = ['КРАСНЫЙ', 'СИНИЙ', 'ЗЕЛЕНЫЙ', 'ФИОЛЕТОВЫЙ'];
+        const colors = ['red', 'blue', 'green', 'purple'];
+        let currentColorIndex;
+        let currentWordIndex;
+        let correctColor;
+        let startTime;
+        let attempts = 0;
+        let correct = 0;
+        
+        function startStroopTest() {
+            // Create incongruent color-word combination (word and color differ)
+            do {
+                currentColorIndex = Math.floor(Math.random() * colors.length);
+                currentWordIndex = Math.floor(Math.random() * words.length);
+            } while (currentColorIndex === currentWordIndex);
+            
+            correctColor = colors[currentColorIndex];
+            colorWord.textContent = words[currentWordIndex];
+            colorWord.style.color = correctColor;
+            startTime = Date.now();
+        }
+        
+        colorButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const selectedColor = this.getAttribute('data-color');
+                const reactionTime = (Date.now() - startTime) / 1000;
+                
+                attempts++;
+                
+                if (selectedColor === correctColor) {
+                    correct++;
+                    stroopResult.textContent = `Правильно! Время реакции: ${reactionTime.toFixed(2)}с`;
+                    stroopResult.style.color = 'green';
+                } else {
+                    stroopResult.textContent = `Неверно. Цвет был ${correctColor}`;
+                    stroopResult.style.color = 'red';
+                }
+                
+                setTimeout(() => {
+                    if (attempts < 5) {
+                        startStroopTest();
+                    } else {
+                        colorWord.textContent = 'Тест завершен!';
+                        colorWord.style.color = 'black';
+                        stroopResult.textContent = `Вы правильно ответили на ${correct} из 5`;
+                        stroopResult.style.color = 'black';
+                        
+                        // Reset for another round
+                        setTimeout(() => {
+                            attempts = 0;
+                            correct = 0;
+                            startStroopTest();
+                        }, 3000);
+                    }
+                }, 1500);
+            });
+        });
+        
+        // Start Stroop test after page load
+        setTimeout(startStroopTest, 1000);
+        
+        // Math Problem
+        const checkMathBtn = document.getElementById('checkMathBtn');
+        const mathInput = document.getElementById('mathInput');
+        const mathResult = document.getElementById('mathResult');
+        
+        checkMathBtn.addEventListener('click', function() {
+            const userAnswer = parseInt(mathInput.value);
+            const correctAnswer = 23 * 17; // 391
+            
+            if (userAnswer === correctAnswer) {
+                mathResult.textContent = 'Правильно! Это вычисление потребовало мышления Системы 2.';
+                mathResult.style.color = 'green';
+                
+                // Generate new problem
+                setTimeout(() => {
+                    const num1 = Math.floor(Math.random() * 30) + 10;
+                    const num2 = Math.floor(Math.random() * 20) + 10;
+                    document.getElementById('mathProblem').textContent = `${num1} × ${num2} = ?`;
+                    mathInput.value = '';
+                    mathResult.textContent = '';
+                }, 3000);
+                
+            } else {
+                mathResult.textContent = `Неверно. Правильный ответ: ${correctAnswer}.`;
+                mathResult.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>
