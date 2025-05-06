@@ -1,4 +1,4 @@
-![[Pasted image 20250505160227.png]]
+ ![[Pasted image 20250505160227.png]]
 [[Lesson-2/README.md]]
 ## Урок 2: Основы HTML5 и семантическая структура 
 
