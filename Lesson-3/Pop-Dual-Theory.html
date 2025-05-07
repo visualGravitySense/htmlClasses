@@ -5,14 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ДУМАЙ БЫСТРО И МЕДЛЕННО: ДВОЙНАЯ ЖИЗНЬ ТВОЕГО МОЗГА!</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Nunito:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
         
         :root {
-            --color-system1: #FF3366;
-            --color-system2: #3399FF;
-            --color-bg: #FDFBF9;
-            --color-text: #111111;
-            --color-accent: #FFD166;
+            --pastel-pink: #FFB5E8;
+            --pastel-blue: #B5EAD7;
+            --pastel-yellow: #FFE5D4;
+            --pastel-purple: #C7CEEA;
+            --pastel-green: #E2F0CB;
+            --pastel-orange: #FFDAC1;
+            --pastel-mint: #B5EAD7;
+            --pastel-lavender: #E2D1F9;
+            --pastel-peach: #FFDAB9;
+            --pastel-sage: #D4E4C5;
+            --pastel-coral: #FFB3BA;
+            --pastel-sky: #B5D8EB;
+            --dark-text: #2D2D2D;
         }
         
         * {
@@ -22,59 +30,100 @@
         }
         
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text);
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--pastel-yellow);
+            color: var(--dark-text);
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--pastel-pink) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, var(--pastel-blue) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, var(--pastel-purple) 0%, transparent 30%),
+                radial-gradient(circle at 80% 30%, var(--pastel-mint) 0%, transparent 25%),
+                radial-gradient(circle at 20% 70%, var(--pastel-lavender) 0%, transparent 25%);
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--pastel-peach) 0px,
+                var(--pastel-peach) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1;
         }
         
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
+            transform: rotate(-1deg);
         }
         
         header {
-            background: linear-gradient(135deg, var(--color-system1) 0%, var(--color-system2) 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--pastel-pink) 0%, var(--pastel-blue) 100%);
+            color: var(--dark-text);
             padding: 40px 20px;
             text-align: center;
             border-radius: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            box-shadow: 
+                15px 15px 0 var(--pastel-coral),
+                -15px -15px 0 var(--pastel-sky);
             position: relative;
             overflow: hidden;
+            transform: rotate(2deg);
+            border: 8px dashed var(--pastel-purple);
         }
         
         header::before {
             content: "🧠";
             position: absolute;
             font-size: 150px;
-            opacity: 0.1;
+            opacity: 0.2;
             top: -20px;
             right: -20px;
             transform: rotate(15deg);
+            animation: float 3s ease-in-out infinite;
         }
         
         header::after {
             content: "⚡";
             position: absolute;
             font-size: 150px;
-            opacity: 0.1;
+            opacity: 0.2;
             bottom: -20px;
             left: -20px;
             transform: rotate(-15deg);
+            animation: float 3s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0% { transform: rotate(15deg) translateY(0px); }
+            50% { transform: rotate(15deg) translateY(-20px); }
+            100% { transform: rotate(15deg) translateY(0px); }
         }
         
         h1 {
-            font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             font-size: 3rem;
             margin-bottom: 10px;
             line-height: 1.2;
             text-transform: uppercase;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            text-shadow: 3px 3px 0 var(--pastel-coral);
+            transform: rotate(-3deg);
+            display: inline-block;
         }
         
         .intro {
@@ -83,6 +132,7 @@
             margin: 20px auto;
             position: relative;
             z-index: 10;
+            transform: rotate(1deg);
         }
         
         .section {
@@ -90,17 +140,27 @@
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 
+                10px 10px 0 var(--pastel-orange),
+                -10px -10px 0 var(--pastel-mint);
             position: relative;
             overflow: hidden;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+            border: 4px solid var(--pastel-lavender);
+        }
+
+        .section:hover {
+            transform: rotate(0deg) scale(1.02);
         }
         
         .section::before {
             position: absolute;
             font-size: 200px;
-            opacity: 0.05;
+            opacity: 0.1;
             right: -30px;
             top: -30px;
+            animation: float 4s ease-in-out infinite;
         }
         
         .system1::before {
@@ -116,25 +176,27 @@
         }
         
         h2 {
-            font-family: 'Montserrat', sans-serif;
             font-weight: 900;
             font-size: 2.2rem;
             margin-bottom: 20px;
             display: inline-block;
             position: relative;
             z-index: 1;
+            transform: rotate(-2deg);
         }
         
         .system1 h2 {
-            color: var(--color-system1);
+            color: var(--pastel-coral);
+            text-shadow: 2px 2px 0 var(--pastel-pink);
         }
         
         .system2 h2 {
-            color: var(--color-system2);
+            color: var(--pastel-sky);
+            text-shadow: 2px 2px 0 var(--pastel-blue);
         }
         
         .design h2 {
-            background: linear-gradient(90deg, var(--color-system1), var(--color-system2));
+            background: linear-gradient(90deg, var(--pastel-coral), var(--pastel-sky));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -145,6 +207,7 @@
             font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 20px;
+            transform: rotate(1deg);
         }
         
         ul {
@@ -157,11 +220,17 @@
             padding-left: 35px;
             margin-bottom: 15px;
             font-size: 1.1rem;
+            transform: rotate(0.5deg);
+            transition: transform 0.3s ease;
+        }
+
+        li:hover {
+            transform: rotate(0deg) scale(1.05);
         }
         
         .system1 li::before {
             content: "•";
-            color: var(--color-system1);
+            color: var(--pastel-coral);
             font-size: 2rem;
             position: absolute;
             left: 10px;
@@ -170,7 +239,7 @@
         
         .system2 li::before {
             content: "•";
-            color: var(--color-system2);
+            color: var(--pastel-sky);
             font-size: 2rem;
             position: absolute;
             left: 10px;
@@ -182,8 +251,11 @@
             padding: 15px 15px 15px 50px;
             border-radius: 10px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 
+                5px 5px 0 var(--pastel-peach),
+                -5px -5px 0 var(--pastel-sage);
             position: relative;
+            border: 2px solid var(--pastel-lavender);
         }
         
         .design li::before {
@@ -201,19 +273,30 @@
         .design li:nth-child(5)::before { content: "🧪"; }
         
         strong {
-            color: var(--color-system1);
+            color: var(--pastel-coral);
             font-weight: 700;
         }
         
         .conclusion {
             font-size: 1.2rem;
             text-align: center;
-            background-color: var(--color-accent);
+            background-color: var(--pastel-yellow);
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
-            color: var(--color-text);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            color: var(--dark-text);
+            box-shadow: 
+                8px 8px 0 var(--pastel-orange),
+                -8px -8px 0 var(--pastel-mint);
+            transform: rotate(-1deg);
+            border: 4px dashed var(--pastel-purple);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: rotate(-1deg) scale(1); }
+            50% { transform: rotate(-1deg) scale(1.05); }
+            100% { transform: rotate(-1deg) scale(1); }
         }
         
         footer {
@@ -221,17 +304,72 @@
             padding: 20px;
             font-size: 0.9rem;
             opacity: 0.7;
+            transform: rotate(1deg);
         }
-        
-        /* Animation effects */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        /* Floating shapes */
+        .floating-shape {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: 0;
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
+
+        .shape-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--pastel-mint);
+            animation: float-shape 15s infinite;
+        }
+
+        .shape-square {
+            width: 80px;
+            height: 80px;
+            background: var(--pastel-lavender);
+            animation: float-shape 20s infinite;
+        }
+
+        @keyframes float-shape {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 100px) rotate(90deg); }
+            50% { transform: translate(0, 200px) rotate(180deg); }
+            75% { transform: translate(-100px, 100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        /* Cursor trail effect */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--pastel-pink) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: multiply;
+        }
+
+        /* Noise overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 1000;
+            background-image: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+                repeating-linear-gradient(
+                    45deg,
+                    var(--pastel-coral) 0px,
+                    var(--pastel-coral) 1px,
+                    transparent 1px,
+                    transparent 10px
+                );
         }
         
         @media (max-width: 768px) {
@@ -254,6 +392,15 @@
     </style>
 </head>
 <body>
+    <div class="noise"></div>
+    <div class="cursor-trail"></div>
+    
+    <!-- Add floating shapes -->
+    <div class="floating-shape shape-circle" style="top: 20%; left: 10%;"></div>
+    <div class="floating-shape shape-square" style="top: 60%; left: 80%;"></div>
+    <div class="floating-shape shape-circle" style="top: 80%; left: 30%;"></div>
+    <div class="floating-shape shape-square" style="top: 30%; left: 70%;"></div>
+    
     <div class="container">
         <header>
             <h1>ДУМАЙ БЫСТРО И МЕДЛЕННО: ДВОЙНАЯ ЖИЗНЬ ТВОЕГО МОЗГА! 🧠⚡</h1>
@@ -292,7 +439,7 @@
                 <li><strong>ПРОТЕСТИРОВАННЫЙ НА ЛЮДЯХ:</strong> Проверь, какая система включается у реальных пользователей</li>
             </ul>
             
-            <div class="conclusion pulse">
+            <div class="conclusion">
                 Если ты проектируешь с учётом обеих систем, пользователи получат то самое ощущение «<strong>ВСЁ ПРОСТО ИДЕАЛЬНО</strong>», даже не понимая, почему — они просто <strong>ПОЛЮБЯТ</strong> твой продукт!
             </div>
         </section>
@@ -303,17 +450,40 @@
     </footer>
     
     <script>
-        // Simple interaction to demonstrate System 1 vs System 2
+        // Enhanced cursor trail effect
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.querySelector('.cursor-trail');
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            trail.style.transform = `scale(${Math.random() * 0.5 + 0.5})`;
+        });
+
+        // Add hover effects to sections
         document.querySelectorAll('.section').forEach(section => {
             section.addEventListener('mouseover', function() {
-                this.style.transform = 'translateY(-5px)';
-                this.style.transition = 'transform 0.3s ease';
+                this.style.transform = 'rotate(0deg) scale(1.02)';
             });
             
             section.addEventListener('mouseout', function() {
-                this.style.transform = 'translateY(0)';
+                this.style.transform = 'rotate(-1deg) scale(1)';
             });
         });
+
+        // Add floating emojis
+        const emojis = ['🧠', '⚡', '🔥', '🕵️', '💡', '🚀', '✨', '🎯'];
+        for (let i = 0; i < 12; i++) {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.position = 'fixed';
+            emoji.style.fontSize = '2rem';
+            emoji.style.pointerEvents = 'none';
+            emoji.style.left = Math.random() * window.innerWidth + 'px';
+            emoji.style.top = Math.random() * window.innerHeight + 'px';
+            emoji.style.animation = `float-around ${Math.random() * 10 + 10}s linear infinite`;
+            emoji.style.opacity = '0.6';
+            document.body.appendChild(emoji);
+        }
     </script>
 </body>
 </html>

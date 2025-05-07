@@ -6,7 +6,7 @@
       {
         "id": "ba9d90dbe2a964f2",
         "type": "tabs",
-        "dimension": 50,
+        "dimension": 48.190348525469176,
         "children": [
           {
             "id": "1b1edc6b4f074605",
@@ -28,6 +28,20 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "docs/Project-1-task.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Project-1-task"
+            }
+          },
+          {
+            "id": "c6581416f205a8a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "Lesson-2/Lesson 2 HTML.md",
                 "mode": "source",
                 "source": false
@@ -42,12 +56,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Lesson-2/README.md.md",
+                "file": "Lesson-2/GitHub README for Front-End Devs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README.md"
+              "title": "GitHub README for Front-End Devs"
             }
           },
           {
@@ -79,12 +93,12 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "7293c5b23a001833",
         "type": "tabs",
-        "dimension": 50,
+        "dimension": 51.809651474530824,
         "children": [
           {
             "id": "690bb2ff44c0344f",
@@ -111,8 +125,21 @@
               "icon": "lucide-file-text",
               "title": "GitHub-Mastery-Guide-ru"
             }
+          },
+          {
+            "id": "9afb159b74c4af5c",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "HTML Classes Drawing 2025-05-06 19.50.18.excalidraw"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -253,23 +280,31 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "69557a168a051504",
+  "active": "4caeb4983b81458a",
   "lastOpenFiles": [
+    "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md",
+    "Lesson-2/Lesson 2 HTML.md",
+    "Lesson-2/Program-html.md",
+    "Lesson-2/hw.html",
+    "Pasted Image 20250506205517_555.png",
+    "Pasted Image 20250506205351_728.png",
+    "docs/Project-1-task.md",
+    "Excalidraw",
+    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
+    "Lesson-2/GitHub README for Front-End Devs.md",
+    "Lesson-2/README.md",
     "docs/design-roles-scripts.md",
     "docs/design-roles-description.md",
-    "docs/Project-1-task.md",
-    "Lesson-2/Lesson 2 HTML.md",
     "Lesson-2/README.md.md",
     "Pasted image 20250505160227.png",
-    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
     "Pasted image 20250505154154.png",
     "html2.html",
     "Lesson-1/Class-1-html.md",
     "docs/Class-3-html.md",
-    "Lesson-2/Program-html.md",
     "docs/success-stories-task.md",
     "Lesson-1/Введение в основы HTML.pdf",
     "Lesson-2/GitHub Readme for Front-End Devs.md",
@@ -281,9 +316,7 @@
     "Lesson-3/course-wizard-task.md",
     "Lesson-3",
     "Lesson 2/success-stories-task.md",
-    "Lesson-2/success-stories.html",
     "Lesson-2/success-stories-task.md",
-    "Lesson-2/spectrum-thinking.html",
     "Lesson 2/Class-2-html.md",
     "Lesson 2/course-wizard-task.md",
     "Lesson 3/html-practice-wizard.md",
@@ -291,8 +324,6 @@
     "Lesson 2/html-practice-wizard.md",
     "docs/course-wizard-task.md",
     "docs/Class-2-html.md",
-    "docs/Program-1.md",
-    "docs/HW/GitHub Readme for Front-End Devs.md",
-    "docs/HW/GitHub Readme for Designers.md"
+    "docs/Program-1.md"
   ]
 }
