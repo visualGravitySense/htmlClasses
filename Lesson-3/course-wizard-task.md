@@ -257,7 +257,7 @@ project/
 
 ---
 
-Хочешь, я помогу сделать шаблон `practice-wizard.html`?
+
 
 
 # 🎓 Course Registration Wizard Task
