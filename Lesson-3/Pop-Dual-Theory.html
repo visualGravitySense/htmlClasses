@@ -389,6 +389,91 @@
                 font-size: 1rem;
             }
         }
+
+        /* New styles for component examples */
+        .component-examples {
+            margin-top: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-sky) 100%);
+            border-radius: 15px;
+            border: 4px dashed var(--pastel-purple);
+            transform: rotate(-1deg);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .component-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 
+                5px 5px 0 var(--pastel-coral),
+                -5px -5px 0 var(--pastel-mint);
+            transition: transform 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px) rotate(2deg);
+        }
+
+        .component-title {
+            font-size: 1.4rem;
+            color: var(--pastel-coral);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .component-code {
+            background: #2d2d2d;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .component-code::before {
+            content: '💻';
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 1.2rem;
+        }
+
+        .system1-badge {
+            background: var(--pastel-coral);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .system2-badge {
+            background: var(--pastel-sky);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .component-description {
+            font-size: 1rem;
+            margin: 10px 0;
+            color: var(--dark-text);
+        }
     </style>
 </head>
 <body>
@@ -441,6 +526,135 @@
             
             <div class="conclusion">
                 Если ты проектируешь с учётом обеих систем, пользователи получат то самое ощущение «<strong>ВСЁ ПРОСТО ИДЕАЛЬНО</strong>», даже не понимая, почему — они просто <strong>ПОЛЮБЯТ</strong> твой продукт!
+            </div>
+
+            <div class="component-examples">
+                <h2>ПРАКТИЧЕСКИЕ ПРИМЕРЫ КОМПОНЕНТОВ 🎨</h2>
+                <p class="subtitle">Вот как можно применить теорию двойных систем в реальных HTML компонентах:</p>
+
+                <div class="component-grid">
+                    <!-- System 1 Example: Intuitive Navigation -->
+                    <div class="component-card">
+                        <span class="system1-badge">Система 1: Интуитивная</span>
+                        <div class="component-title">
+                            <span>🍔 Навигационное меню</span>
+                        </div>
+                        <div class="component-description">
+                            Мгновенно узнаваемый гамбургер-меню, который пользователи интуитивно понимают как кнопку навигации.
+                        </div>
+                        <div class="component-code">
+&lt;button class="menu-toggle" aria-label="Открыть меню"&gt;
+    &lt;span class="hamburger"&gt;&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;nav class="main-nav"&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Главная&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;О нас&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Контакты&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+                        </div>
+                    </div>
+
+                    <!-- System 2 Example: Complex Form -->
+                    <div class="component-card">
+                        <span class="system2-badge">Система 2: Аналитическая</span>
+                        <div class="component-title">
+                            <span>📝 Умная форма</span>
+                        </div>
+                        <div class="component-description">
+                            Форма с валидацией и подсказками, требующая осознанного ввода данных.
+                        </div>
+                        <div class="component-code">
+&lt;form class="smart-form"&gt;
+    &lt;div class="form-group"&gt;
+        &lt;label for="email"&gt;Email:&lt;/label&gt;
+        &lt;input type="email" id="email" required
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+               title="Введите корректный email"&gt;
+        &lt;div class="validation-message"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="form-group"&gt;
+        &lt;label for="password"&gt;Пароль:&lt;/label&gt;
+        &lt;input type="password" id="password" required
+               minlength="8"
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+               title="Минимум 8 символов, включая цифры и буквы"&gt;
+        &lt;div class="password-strength"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+                        </div>
+                    </div>
+
+                    <!-- Hybrid Example: Search with Suggestions -->
+                    <div class="component-card">
+                        <span class="system1-badge">Система 1</span>
+                        <span class="system2-badge">Система 2</span>
+                        <div class="component-title">
+                            <span>🔍 Умный поиск</span>
+                        </div>
+                        <div class="component-description">
+                            Поиск с мгновенными подсказками (Система 1) и детальными результатами (Система 2).
+                        </div>
+                        <div class="component-code">
+&lt;div class="search-container"&gt;
+    &lt;input type="search" 
+           class="smart-search"
+           placeholder="Поиск..."
+           aria-label="Поиск"&gt;
+    
+    &lt;div class="search-suggestions"&gt;
+        &lt;div class="quick-suggestions"&gt;
+            &lt;button&gt;Популярные запросы&lt;/button&gt;
+            &lt;button&gt;Недавние поиски&lt;/button&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="detailed-results"&gt;
+            &lt;div class="result-category"&gt;
+                &lt;h3&gt;Категории&lt;/h3&gt;
+                &lt;ul&gt;&lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;div class="result-items"&gt;
+                &lt;h3&gt;Товары&lt;/h3&gt;
+                &lt;ul&gt;&lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                        </div>
+                    </div>
+
+                    <!-- System 1 Example: Quick Actions -->
+                    <div class="component-card">
+                        <span class="system1-badge">Система 1: Интуитивная</span>
+                        <div class="component-title">
+                            <span>⚡ Быстрые действия</span>
+                        </div>
+                        <div class="component-description">
+                            Кнопки быстрых действий с понятными иконками для мгновенного понимания.
+                        </div>
+                        <div class="component-code">
+&lt;div class="quick-actions"&gt;
+    &lt;button class="action-btn" aria-label="Поделиться"&gt;
+        &lt;span class="icon"&gt;📤&lt;/span&gt;
+        &lt;span class="label"&gt;Поделиться&lt;/span&gt;
+    &lt;/button&gt;
+    
+    &lt;button class="action-btn" aria-label="Избранное"&gt;
+        &lt;span class="icon"&gt;⭐&lt;/span&gt;
+        &lt;span class="label"&gt;В избранное&lt;/span&gt;
+    &lt;/button&gt;
+    
+    &lt;button class="action-btn" aria-label="Купить"&gt;
+        &lt;span class="icon"&gt;🛒&lt;/span&gt;
+        &lt;span class="label"&gt;Купить&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>

@@ -6,34 +6,19 @@
       {
         "id": "ba9d90dbe2a964f2",
         "type": "tabs",
-        "dimension": 48.190348525469176,
         "children": [
           {
-            "id": "1b1edc6b4f074605",
+            "id": "77f005cb9b0fb39b",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Lesson-2/Program-html.md",
+                "file": "docs/design-roles-scripts-userProfile.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Program-html"
-            }
-          },
-          {
-            "id": "69557a168a051504",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/Project-1-task.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Project-1-task"
+              "title": "design-roles-scripts-userProfile"
             }
           },
           {
@@ -51,95 +36,35 @@
             }
           },
           {
-            "id": "7c772ae3dc4ecd0d",
+            "id": "69557a168a051504",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Lesson-2/GitHub README for Front-End Devs.md",
+                "file": "Lesson-3/Class-3-html.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GitHub README for Front-End Devs"
+              "title": "Class-3-html"
             }
           },
           {
-            "id": "ae6f68dc2847ee3d",
+            "id": "d4c04f838aa9985d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/design-roles-description.md",
+                "file": "Lesson-3/user-profile-card-development.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "design-roles-description"
-            }
-          },
-          {
-            "id": "77f005cb9b0fb39b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/design-roles-scripts.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "design-roles-scripts"
+              "title": "user-profile-card-development"
             }
           }
         ],
-        "currentTab": 2
-      },
-      {
-        "id": "7293c5b23a001833",
-        "type": "tabs",
-        "dimension": 51.809651474530824,
-        "children": [
-          {
-            "id": "690bb2ff44c0344f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/Project-1-task.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Project-1-task"
-            }
-          },
-          {
-            "id": "499afe4f8a6f2da9",
-            "type": "leaf",
-            "state": {
-              "type": "pdf",
-              "state": {
-                "file": "docs/Guides/GitHub-Mastery-Guide-ru.pdf"
-              },
-              "icon": "lucide-file-text",
-              "title": "GitHub-Mastery-Guide-ru"
-            }
-          },
-          {
-            "id": "9afb159b74c4af5c",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "HTML Classes Drawing 2025-05-06 19.50.18.excalidraw"
-            }
-          }
-        ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -196,7 +121,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "3e65ac1d8e062ac0",
@@ -284,46 +209,53 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "4caeb4983b81458a",
+  "active": "c9ce160c14c08513",
   "lastOpenFiles": [
-    "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md",
-    "Lesson-2/Lesson 2 HTML.md",
-    "Lesson-2/Program-html.md",
-    "Lesson-2/hw.html",
-    "Pasted Image 20250506205517_555.png",
-    "Pasted Image 20250506205351_728.png",
-    "docs/Project-1-task.md",
-    "Excalidraw",
-    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
-    "Lesson-2/GitHub README for Front-End Devs.md",
-    "Lesson-2/README.md",
+    "docs/design-roles-scripts-userProfile.md",
     "docs/design-roles-scripts.md",
     "docs/design-roles-description.md",
-    "Lesson-2/README.md.md",
-    "Pasted image 20250505160227.png",
-    "Pasted image 20250505154154.png",
-    "html2.html",
-    "Lesson-1/Class-1-html.md",
-    "docs/Class-3-html.md",
-    "docs/success-stories-task.md",
-    "Lesson-1/Введение в основы HTML.pdf",
-    "Lesson-2/GitHub Readme for Front-End Devs.md",
-    "Lesson-1",
-    "docs/Lesson-1",
-    "Lesson-3/Lesson-1",
-    "Lesson-3/html-practice-wizard.md",
-    "Lesson-3/course-wizard.html",
+    "Lesson-2/Lesson 2 HTML.md",
+    "Lesson-3/Class-3-html.md",
+    "Lesson-3/user-profile-card-development.md",
+    "docs/Project-1-task.md",
+    "docs/Program-html.md",
+    "docs/Program-1.md",
+    "Excalidraw/Drawing 2025-05-09 00.01.13.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-09 19.44.06.excalidraw.md",
+    "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-09 20.13.41.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-08 20.02.11.excalidraw.md",
     "Lesson-3/course-wizard-task.md",
-    "Lesson-3",
-    "Lesson 2/success-stories-task.md",
-    "Lesson-2/success-stories-task.md",
-    "Lesson 2/Class-2-html.md",
-    "Lesson 2/course-wizard-task.md",
-    "Lesson 3/html-practice-wizard.md",
-    "Lesson 3/course-wizard-task.md",
-    "Lesson 2/html-practice-wizard.md",
-    "docs/course-wizard-task.md",
-    "docs/Class-2-html.md",
-    "docs/Program-1.md"
+    "design-roles-description.md",
+    "Lesson-3/html-practice-wizard.md",
+    "design-roles-scripts.md",
+    "Lesson-2/GitHub README for Front-End Devs.md",
+    "Создание визуальной системы.md",
+    "Lesson-4/Class-4-html.md",
+    "Lesson-4/MY CV.md",
+    "docs/img/Pasted image 20250509014404.png",
+    "docs/img/Pasted image 20250509014311.png",
+    "docs/Competencies/Wireframes.md",
+    "docs/Competencies",
+    "docs/Excalidraw/Drawing 2025-05-02 19.35.57.excalidraw.md",
+    "docs/img/Pasted image 20250508234148.png",
+    "docs/img/8512d26d3607072b3d5c950c3f4571e0.jpg",
+    "docs/img/5519c7e3411e674a4968fafeddb26d84.jpg",
+    "docs/img/heroBanner.png",
+    "docs/HW/temp.md",
+    "Lesson-3/Dual-Theory.md",
+    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
+    "Lesson-3/tmp/Dual-theory.html",
+    "Lesson-3/tmp",
+    "Lesson-3/New folder",
+    "Lesson-3/html-tasks.html",
+    "Lesson-3/img/cat-speed.jpg",
+    "Lesson-3/img/cat-ultra.jpg",
+    "Lesson-3/img/cat-ultra.jpg.crdownload",
+    "Lesson-3/img/confession-bear.webp",
+    "Lesson-3/img/confession-bear.webp.crdownload",
+    "Lesson-3/img/Batman.avif",
+    "Lesson-3/img/Batman.avif.crdownload",
+    "Lesson-3/img/2pyubd.jpg.crdownload"
   ]
 }

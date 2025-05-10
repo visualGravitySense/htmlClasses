@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Урок 3 - UX/UI Дизайн и Фронтенд Разработка</title>
+    <style>
+        /* Base styles with pastel colors */
+        :root {
+            --pastel-pink: #FFD1DC;
+            --pastel-blue: #BFEAF5;
+            --pastel-green: #BDFCC9;
+            --pastel-yellow: #FFFFD1;
+            --pastel-purple: #E0C1F4;
+            --pastel-orange: #FFE4C4;
+            --pastel-mint: #98FF98;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--pastel-yellow);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease;
+            background-image: 
+                radial-gradient(circle at 10% 20%, var(--pastel-pink) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, var(--pastel-blue) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, var(--pastel-mint) 0%, transparent 30%);
+        }
+        
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.1),
+                0 0 0 5px var(--pastel-pink),
+                0 0 0 10px var(--pastel-blue);
+            display: none;
+            opacity: 0;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, 
+                var(--pastel-pink),
+                var(--pastel-blue),
+                var(--pastel-green),
+                var(--pastel-purple),
+                var(--pastel-orange)
+            );
+        }
+        
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 4px solid var(--pastel-pink);
+            padding-bottom: 15px;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1::after {
+            content: '✨';
+            position: absolute;
+            right: 20px;
+            top: 0;
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+        
+        code {
+            background-color: var(--pastel-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #333;
+        }
+        
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--pastel-purple);
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .col-2 {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .meme-container {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            padding: 15px;
+            background: var(--pastel-blue);
+            border-radius: 15px;
+            transform: rotate(-2deg);
+        }
+        
+        .meme-container::before {
+            content: '🎭';
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            font-size: 1.5rem;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .meme-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.2),
+                0 0 0 3px var(--pastel-purple);
+            transition: transform 0.3s ease;
+        }
+        
+        .meme-container img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .meme-caption {
+            font-style: italic;
+            margin-top: 15px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 15px;
+            background: var(--pastel-yellow);
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .meme-caption::before {
+            content: '💭';
+            margin-right: 5px;
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-purple);
+        }
+        
+        .tip-box {
+            background-color: var(--pastel-green);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+            border: 3px dashed var(--pastel-purple);
+            transform: rotate(-1deg);
+        }
+        
+        .tip-box::before {
+            content: '💡';
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .warning-box {
+            background-color: var(--pastel-pink);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+            border: 3px dashed var(--pastel-orange);
+            transform: rotate(1deg);
+        }
+        
+        .warning-box::before {
+            content: '⚠️';
+            position: absolute;
+            right: -15px;
+            top: -15px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background-color: var(--pastel-blue);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--pastel-purple);
+            transform: translateY(-3px) rotate(2deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--pastel-pink);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+            box-shadow: 
+                0 3px 8px rgba(0,0,0,0.2),
+                0 0 0 3px var(--pastel-pink);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.3),
+                0 0 0 5px var(--pastel-blue);
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #2d2d2d;
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode .slide {
+            background-color: #3d3d3d;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        body.dark-mode h1, body.dark-mode h2 {
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode p, body.dark-mode li {
+            color: #dddddd;
+        }
+        
+        body.dark-mode code {
+            background-color: #555;
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode pre {
+            background-color: #222;
+            border-left: 4px solid var(--pastel-purple);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <div class="container">
+        <div class="slide active" id="slide1">
+            <h1>Продвинутый HTML для UX/UI Дизайнеров и Фронтенд Разработчиков</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Что Мы Изучим Сегодня</h2>
+                    <ul>
+                        <li>Семантический HTML и его влияние на доступность</li>
+                        <li>HTML5 элементы форм и валидация</li>
+                        <li>Атрибуты данных для улучшенной интерактивности</li>
+                        <li>Интеграция SVG для современных интерфейсов</li>
+                        <li>Техники оптимизации производительности</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="img/2pyubd.jpg" alt="HTML мем - 'Когда твой HTML настолько чистый, что валидаторы берут выходной'" width="400" height="300" />
+                        <p class="meme-caption">Чистый HTML: Когда валидаторы берут выходной</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn next-btn">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 16.6%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2">
+            <h1>Семантический HTML: За Пределами <code>&lt;div&gt;</code> Супа</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Почему Важна Семантика</h2>
+                    <ul>
+                        <li>Улучшенная доступность для скринридеров</li>
+                        <li>Лучшее SEO и обнаружение контента</li>
+                        <li>Более чёткая структура кода для команд разработчиков</li>
+                        <li>Будущая совместимость ваших веб-приложений</li>
+                    </ul>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Совет:</strong> Скринридеры по-разному объявляют семантические элементы, предоставляя контекст пользователям, которые не могут видеть визуальную разметку.</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <h2>Семантические Элементы, Которые Нужно Знать</h2>
+                    <div class="icon-grid">
+                        <div class="icon-item">
+                            <i class="fas fa-heading icon"></i>
+                            <code>&lt;header&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-newspaper icon"></i>
+                            <code>&lt;article&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-list icon"></i>
+                            <code>&lt;nav&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-puzzle-piece icon"></i>
+                            <code>&lt;section&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-bars icon"></i>
+                            <code>&lt;aside&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-shoe-prints icon"></i>
+                            <code>&lt;footer&gt;</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;header&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Главная&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Продукты&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h1&gt;Основной Контент&lt;/h1&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Заголовок Раздела&lt;/h2&gt;
+      &lt;p&gt;Контент здесь...&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/article&gt;
+  
+  &lt;aside&gt;
+    &lt;h2&gt;Связанная Информация&lt;/h2&gt;
+    &lt;p&gt;Содержимое боковой панели...&lt;/p&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;&copy; 2025 Ваша Компания&lt;/p&gt;
+&lt;/footer&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="nav-btn next-btn">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 33.2%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide3">
+            <h1>HTML5 Элементы Форм и Валидация</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Современные Типы Ввода</h2>
+                    <ul>
+                        <li><code>type="email"</code> - Валидация email</li>
+                        <li><code>type="tel"</code> - Телефонные номера</li>
+                        <li><code>type="url"</code> - Веб-адреса</li>
+                        <li><code>type="date"</code> - Выбор даты</li>
+                        <li><code>type="range"</code> - Ползунок</li>
+                        <li><code>type="search"</code> - Поисковые поля</li>
+                        <li><code>type="color"</code> - Выбор цвета</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <h2>Атрибуты Валидации</h2>
+                    <ul>
+                        <li><code>required</code> - Обязательное поле</li>
+                        <li><code>pattern</code> - Проверка по регулярному выражению</li>
+                        <li><code>min</code> и <code>max</code> - Ограничения значений</li>
+                        <li><code>minlength</code> и <code>maxlength</code> - Длина текста</li>
+                    </ul>
+                    <div class="meme-container">
+                        <img src="img/Batman.avif" alt="Мем о валидации форм" width="320" height="240" class="crop-top" />
+                        <p class="meme-caption">Клиентская валидация: Доверяй, но проверяй</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;form&gt;
+  &lt;div&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" required&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="phone"&gt;Телефон:&lt;/label&gt;
+    &lt;input type="tel" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"&gt;
+    &lt;small&gt;Формат: 123-456-7890&lt;/small&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="birth"&gt;День рождения:&lt;/label&gt;
+    &lt;input type="date" id="birth" min="1900-01-01" max="2025-12-31"&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="satisfaction"&gt;Удовлетворённость:&lt;/label&gt;
+    &lt;input type="range" id="satisfaction" min="1" max="10" value="8"&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="theme"&gt;Выберите цвет темы:&lt;/label&gt;
+    &lt;input type="color" id="theme" value="#FFD1DC"&gt;
+  &lt;/div&gt;
+  
+  &lt;button type="submit"&gt;Отправить&lt;/button&gt;
+&lt;/form&gt;
+</div>
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Помните:</strong> Всегда реализуйте и серверную валидацию! Клиентская валидация нужна для удобства пользователя, а не для безопасности.</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="nav-btn next-btn">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 49.8%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide4">
+            <h1>Атрибуты Данных для Улучшенной Интерактивности</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Что Такое Атрибуты Данных?</h2>
+                    <p>Пользовательские атрибуты с префиксом <code>data-</code>, которые хранят дополнительную информацию в HTML элементах без влияния на визуальное отображение.</p>
+                    
+                    <h2>Распространённые Случаи Использования</h2>
+                    <ul>
+                        <li>Хранение информации о состоянии</li>
+                        <li>Конфигурация для JavaScript компонентов</li>
+                        <li>Управление анимациями и переходами</li>
+                        <li>Управление всплывающими подсказками</li>
+                        <li>Отслеживание взаимодействий пользователя</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="img/confession-bear.webp" alt="Мем об атрибутах данных" width="350" height="250" />
+                        <p class="meme-caption">Атрибуты данных: Когда нужно рассказать HTML элементу все свои секреты</p>
+                    </div>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Совет:</strong> Атрибуты данных идеально подходят для фронтенд фреймворков как React, Vue и Angular для хранения состояния компонента прямо в DOM.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- HTML с атрибутами данных --&gt;
+&lt;button 
+  data-modal-target="signup"
+  data-animation="fade"
+  data-delay="200"
+  data-tracking-id="cta-signup-button"&gt;
+  Зарегистрироваться
+&lt;/button&gt;
+
+&lt;!-- JavaScript для доступа к атрибутам данных --&gt;
+&lt;script&gt;
+  const button = document.querySelector('button');
+  
+  // Доступ к атрибутам данных через dataset
+  const modalTarget = button.dataset.modalTarget;  // "signup"
+  const animation = button.dataset.animation;      // "fade"
+  const delay = button.dataset.delay;              // "200"
+  
+  // Открытие модального окна с настроенными опциями
+  openModal(modalTarget, {
+    animation: animation,
+    delay: parseInt(delay)
+  });
+&lt;/script&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="nav-btn next-btn">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 66.4%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide5">
+            <h1>Интеграция SVG для Современных Интерфейсов</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Почему Использовать SVG?</h2>
+                    <ul>
+                        <li>Масштабируется без потери качества</li>
+                        <li>Меньший размер файла для простой графики</li>
+                        <li>Можно анимировать и стилизовать с помощью CSS</li>
+                        <li>Доступно при правильных атрибутах</li>
+                        <li>Поисковый и индексируемый контент</li>
+                    </ul>
+                    <div class="warning-box">
+                        <p><i class="fas fa-exclamation-triangle"></i> <strong>Предупреждение:</strong> Всегда добавляйте соответствующие ARIA атрибуты для обеспечения доступности ваших SVG!</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <h2>Методы Интеграции SVG</h2>
+                    <div class="icon-grid">
+                        <div class="icon-item">
+                            <i class="fas fa-code icon"></i>
+                            <p>Встроенный SVG</p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-image icon"></i>
+                            <p>Тег <code>&lt;img&gt;</code></p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-paint-brush icon"></i>
+                            <p>CSS фон</p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-object-group icon"></i>
+                            <p>Тег <code>&lt;object&gt;</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- Метод 1: Встроенный SVG (лучше для стилизации и анимации) --&gt;
+&lt;svg viewBox="0 0 100 100" aria-labelledby="logo-title" role="img"&gt;
+  &lt;title id="logo-title"&gt;Логотип Компании&lt;/title&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="var(--pastel-blue)" /&gt;
+  &lt;rect x="35" y="35" width="30" height="30" fill="var(--pastel-pink)" /&gt;
+&lt;/svg&gt;
+
+&lt;!-- Метод 2: SVG как изображение --&gt;
+&lt;img src="icon.svg" alt="Описание иконки" width="50" height="50"&gt;
+
+&lt;!-- Метод 3: SVG как фоновое изображение --&gt;
+&lt;div style="background-image: url('icon.svg'); width: 50px; height: 50px;" 
+     role="img" aria-label="Описание иконки"&gt;&lt;/div&gt;
+
+&lt;!-- Метод 4: SVG с тегом object (позволяет взаимодействие) --&gt;
+&lt;object type="image/svg+xml" data="interactive-chart.svg" width="500" height="300"&gt;
+  &lt;p&gt;Ваш браузер не поддерживает SVG&lt;/p&gt;
+&lt;/object&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="nav-btn next-btn">Далее <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 83%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide6">
+            <h1>Техники Оптимизации Производительности</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Лучшие Практики Производительности HTML</h2>
+                    <ul>
+                        <li>Используйте семантические элементы для лучшего парсинга</li>
+                        <li>Добавляйте <code>loading="lazy"</code> для изображений</li>
+                        <li>Используйте <code>async</code> и <code>defer</code> для скриптов</li>
+                        <li>Применяйте <code>&lt;picture&gt;</code> для адаптивных изображений</li>
+                        <li>Используйте <code>preload</code>, <code>prefetch</code> и <code>preconnect</code></li>
+                    </ul>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Совет:</strong> Lighthouse в Chrome DevTools может помочь выявить узкие места производительности в вашей HTML структуре.</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="img/cat-ultra.jpg" alt="Мем об оптимизации производительности" width="400" height="300" />
+                        <p class="meme-caption">Когда твой сайт загружается менее чем за 2 секунды</p>
+                    </div>
+                    <h2>Основные Веб-Метрики для Целевых Показателей</h2>
+                    <ul>
+                        <li>Largest Contentful Paint (LCP)</li>
+                        <li>First Input Delay (FID)</li>
+                        <li>Cumulative Layout Shift (CLS)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- Предварительное подключение к важным сторонним доменам --&gt;
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://analytics.example.com"&gt;
+
+&lt;!-- Предварительная загрузка критических ресурсов --&gt;
+&lt;link rel="preload" href="critical-styles.css" as="style"&gt;
+&lt;link rel="preload" href="hero-image.jpg" as="image"&gt;
+
+&lt;!-- Адаптивные изображения с элементом picture --&gt;
+&lt;picture&gt;
+  &lt;source media="(max-width: 600px)" srcset="small.jpg"&gt;
+  &lt;source media="(max-width: 1200px)" srcset="medium.jpg"&gt;
+  &lt;img src="large.jpg" alt="Адаптивное изображение" loading="lazy" width="800" height="600"&gt;
+&lt;/picture&gt;
+
+&lt;!-- Отложенная загрузка некритического JavaScript --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+</div>
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Важно:</strong> Всегда указывайте размеры изображений с помощью атрибутов width и height, чтобы уменьшить сдвиги макета (CLS)!</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Назад</button>
+                <button class="nav-btn home-btn">В начало <i class="fas fa-home"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const homeButtons = document.querySelectorAll('.home-btn');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Next button functionality
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const nextIndex = currentIndex + 1;
+                    
+                    if (nextIndex < slides.length) {
+                        currentSlide.classList.remove('active');
+                        slides[nextIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+            
+            // Previous button functionality
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const prevIndex = currentIndex - 1;
+                    
+                    if (prevIndex >= 0) {
+                        currentSlide.classList.remove('active');
+                        slides[prevIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+            
+            // Home button functionality
+            homeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    currentSlide.classList.remove('active');
+                    slides[0].classList.add('active');
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const nextIndex = currentIndex + 1;
+                    
+                    if (nextIndex < slides.length) {
+                        currentSlide.classList.remove('active');
+                        slides[nextIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const prevIndex = currentIndex - 1;
+                    
+                    if (prevIndex >= 0) {
+                        currentSlide.classList.remove('active');
+                        slides[prevIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
