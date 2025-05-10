@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Tutorial 3 - UX/UI Design & Frontend Development</title>
+    <style>
+        /* Base styles with pastel colors */
+        :root {
+            --pastel-pink: #FFD1DC;
+            --pastel-blue: #BFEAF5;
+            --pastel-green: #BDFCC9;
+            --pastel-yellow: #FFFFD1;
+            --pastel-purple: #E0C1F4;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--pastel-yellow);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease;
+        }
+        
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 4px solid var(--pastel-pink);
+            padding-bottom: 15px;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+        
+        code {
+            background-color: var(--pastel-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #333;
+        }
+        
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--pastel-purple);
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .col-2 {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .meme-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .meme-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text-light);
+        }
+        
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-purple);
+        }
+        
+        .tip-box {
+            background-color: var(--pastel-green);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .warning-box {
+            background-color: var(--pastel-pink);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background-color: var(--pastel-blue);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--pastel-purple);
+            transform: translateY(-2px);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--pastel-pink);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #2d2d2d;
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode .slide {
+            background-color: #3d3d3d;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        body.dark-mode h1, body.dark-mode h2 {
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode p, body.dark-mode li {
+            color: #dddddd;
+        }
+        
+        body.dark-mode code {
+            background-color: #555;
+            color: #f8f8f8;
+        }
+        
+        body.dark-mode pre {
+            background-color: #222;
+            border-left: 4px solid var(--pastel-purple);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <div class="container">
+        <div class="slide active" id="slide1">
+            <h1>Advanced HTML for UX/UI Designers & Frontend Developers</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>What We'll Cover Today</h2>
+                    <ul>
+                        <li>Semantic HTML and its impact on accessibility</li>
+                        <li>HTML5 form elements & validation</li>
+                        <li>Data attributes for enhanced interactivity</li>
+                        <li>SVG integration for modern interfaces</li>
+                        <li>Performance optimization techniques</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="/api/placeholder/400/300" alt="HTML meme - 'When your HTML is so clean, validators take the day off'" />
+                        <p class="meme-caption">Clean HTML: When validators take the day off</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 16.6%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2">
+            <h1>Semantic HTML: Beyond <code>&lt;div&gt;</code> Soup</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Why Semantics Matter</h2>
+                    <ul>
+                        <li>Improved accessibility for screen readers</li>
+                        <li>Better SEO and content discovery</li>
+                        <li>Clearer code structure for development teams</li>
+                        <li>Future-proofing your web applications</li>
+                    </ul>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Screen readers announce semantic elements differently, providing context to users who can't see the visual layout.</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <h2>Semantic Elements to Know</h2>
+                    <div class="icon-grid">
+                        <div class="icon-item">
+                            <i class="fas fa-heading icon"></i>
+                            <code>&lt;header&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-newspaper icon"></i>
+                            <code>&lt;article&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-list icon"></i>
+                            <code>&lt;nav&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-puzzle-piece icon"></i>
+                            <code>&lt;section&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-bars icon"></i>
+                            <code>&lt;aside&gt;</code>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-shoe-prints icon"></i>
+                            <code>&lt;footer&gt;</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;header&gt;
+  &lt;nav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#"&gt;Products&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h1&gt;Main Content&lt;/h1&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Section Title&lt;/h2&gt;
+      &lt;p&gt;Content here...&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/article&gt;
+  
+  &lt;aside&gt;
+    &lt;h2&gt;Related Info&lt;/h2&gt;
+    &lt;p&gt;Sidebar content...&lt;/p&gt;
+  &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+  &lt;p&gt;&copy; 2025 Your Company&lt;/p&gt;
+&lt;/footer&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 33.2%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide3">
+            <h1>HTML5 Form Elements & Validation</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Modern Input Types</h2>
+                    <ul>
+                        <li><code>type="email"</code> - Email validation</li>
+                        <li><code>type="tel"</code> - Phone numbers</li>
+                        <li><code>type="url"</code> - Website URLs</li>
+                        <li><code>type="date"</code> - Date picker</li>
+                        <li><code>type="range"</code> - Slider control</li>
+                        <li><code>type="search"</code> - Search boxes</li>
+                        <li><code>type="color"</code> - Color picker</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <h2>Validation Attributes</h2>
+                    <ul>
+                        <li><code>required</code> - Field must be filled</li>
+                        <li><code>pattern</code> - Regex pattern matching</li>
+                        <li><code>min</code> & <code>max</code> - Value constraints</li>
+                        <li><code>minlength</code> & <code>maxlength</code> - Text length</li>
+                    </ul>
+                    <div class="meme-container">
+                        <img src="/api/placeholder/320/240" alt="Meme about form validation" />
+                        <p class="meme-caption">Client-side validation: Trust, but verify</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;form&gt;
+  &lt;div&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" required&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="phone"&gt;Phone:&lt;/label&gt;
+    &lt;input type="tel" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"&gt;
+    &lt;small&gt;Format: 123-456-7890&lt;/small&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="birth"&gt;Birthday:&lt;/label&gt;
+    &lt;input type="date" id="birth" min="1900-01-01" max="2025-12-31"&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="satisfaction"&gt;Satisfaction:&lt;/label&gt;
+    &lt;input type="range" id="satisfaction" min="1" max="10" value="8"&gt;
+  &lt;/div&gt;
+  
+  &lt;div&gt;
+    &lt;label for="theme"&gt;Choose theme color:&lt;/label&gt;
+    &lt;input type="color" id="theme" value="#FFD1DC"&gt;
+  &lt;/div&gt;
+  
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+</div>
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Remember:</strong> Always implement server-side validation too! Client-side validation is for user experience, not security.</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 49.8%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide4">
+            <h1>Data Attributes for Enhanced Interactivity</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>What are Data Attributes?</h2>
+                    <p>Custom attributes prefixed with <code>data-</code> that store extra information on HTML elements without affecting visuals.</p>
+                    
+                    <h2>Common Use Cases</h2>
+                    <ul>
+                        <li>Storing state information</li>
+                        <li>Configuration for JavaScript components</li>
+                        <li>Controlling animations or transitions</li>
+                        <li>Managing tooltips and popovers</li>
+                        <li>Tracking user interactions</li>
+                    </ul>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="/api/placeholder/350/250" alt="Meme about data attributes" />
+                        <p class="meme-caption">Data attributes: When you need to tell your HTML element all your secrets</p>
+                    </div>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Data attributes are perfect for frontend frameworks like React, Vue, and Angular to store component state right in the DOM.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- HTML with data attributes --&gt;
+&lt;button 
+  data-modal-target="signup"
+  data-animation="fade"
+  data-delay="200"
+  data-tracking-id="cta-signup-button"&gt;
+  Sign Up Now
+&lt;/button&gt;
+
+&lt;!-- JavaScript to access data attributes --&gt;
+&lt;script&gt;
+  const button = document.querySelector('button');
+  
+  // Access data attributes with dataset
+  const modalTarget = button.dataset.modalTarget;  // "signup"
+  const animation = button.dataset.animation;      // "fade"
+  const delay = button.dataset.delay;              // "200"
+  
+  // Open modal with configured options
+  openModal(modalTarget, {
+    animation: animation,
+    delay: parseInt(delay)
+  });
+&lt;/script&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 66.4%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide5">
+            <h1>SVG Integration for Modern Interfaces</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>Why Use SVG?</h2>
+                    <ul>
+                        <li>Scales without losing quality</li>
+                        <li>Smaller file size for simple graphics</li>
+                        <li>Can be animated and styled with CSS</li>
+                        <li>Accessible with proper attributes</li>
+                        <li>Searchable and indexable content</li>
+                    </ul>
+                    <div class="warning-box">
+                        <p><i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> Always add appropriate ARIA attributes to make your SVGs accessible!</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <h2>SVG Integration Methods</h2>
+                    <div class="icon-grid">
+                        <div class="icon-item">
+                            <i class="fas fa-code icon"></i>
+                            <p>Inline SVG</p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-image icon"></i>
+                            <p><code>&lt;img&gt;</code> tag</p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-paint-brush icon"></i>
+                            <p>CSS background</p>
+                        </div>
+                        <div class="icon-item">
+                            <i class="fas fa-object-group icon"></i>
+                            <p><code>&lt;object&gt;</code> tag</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- Method 1: Inline SVG (best for styling and animation) --&gt;
+&lt;svg viewBox="0 0 100 100" aria-labelledby="logo-title" role="img"&gt;
+  &lt;title id="logo-title"&gt;Company Logo&lt;/title&gt;
+  &lt;circle cx="50" cy="50" r="40" fill="var(--pastel-blue)" /&gt;
+  &lt;rect x="35" y="35" width="30" height="30" fill="var(--pastel-pink)" /&gt;
+&lt;/svg&gt;
+
+&lt;!-- Method 2: SVG as image --&gt;
+&lt;img src="icon.svg" alt="Icon description" width="50" height="50"&gt;
+
+&lt;!-- Method 3: SVG as background image --&gt;
+&lt;div style="background-image: url('icon.svg'); width: 50px; height: 50px;" 
+     role="img" aria-label="Icon description"&gt;&lt;/div&gt;
+
+&lt;!-- Method 4: SVG with object tag (allows interaction) --&gt;
+&lt;object type="image/svg+xml" data="interactive-chart.svg" width="500" height="300"&gt;
+  &lt;p&gt;Your browser doesn't support SVG&lt;/p&gt;
+&lt;/object&gt;
+</div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn next-btn">Next <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 83%;"></div>
+            </div>
+        </div>
+
+        <div class="slide" id="slide6">
+            <h1>Performance Optimization Techniques</h1>
+            <div class="flex-container">
+                <div class="col-2">
+                    <h2>HTML Performance Best Practices</h2>
+                    <ul>
+                        <li>Use semantic elements for better parsing</li>
+                        <li>Add proper <code>loading="lazy"</code> for images</li>
+                        <li>Implement <code>async</code> and <code>defer</code> for scripts</li>
+                        <li>Utilize <code>&lt;picture&gt;</code> for responsive images</li>
+                        <li>Apply <code>preload</code>, <code>prefetch</code>, and <code>preconnect</code></li>
+                    </ul>
+                    <div class="tip-box">
+                        <p><i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Lighthouse in Chrome DevTools can help identify performance bottlenecks in your HTML structure.</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="meme-container">
+                        <img src="/api/placeholder/400/300" alt="Performance optimization meme" />
+                        <p class="meme-caption">When your website loads in under 2 seconds</p>
+                    </div>
+                    <h2>Core Web Vitals to Target</h2>
+                    <ul>
+                        <li>Largest Contentful Paint (LCP)</li>
+                        <li>First Input Delay (FID)</li>
+                        <li>Cumulative Layout Shift (CLS)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="code-block">
+&lt;!-- Preconnect to important third-party domains --&gt;
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://analytics.example.com"&gt;
+
+&lt;!-- Preload critical assets --&gt;
+&lt;link rel="preload" href="critical-styles.css" as="style"&gt;
+&lt;link rel="preload" href="hero-image.jpg" as="image"&gt;
+
+&lt;!-- Responsive images with picture element --&gt;
+&lt;picture&gt;
+  &lt;source media="(max-width: 600px)" srcset="small.jpg"&gt;
+  &lt;source media="(max-width: 1200px)" srcset="medium.jpg"&gt;
+  &lt;img src="large.jpg" alt="Responsive image" loading="lazy" width="800" height="600"&gt;
+&lt;/picture&gt;
+
+&lt;!-- Defer non-critical JavaScript --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+</div>
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>Important:</strong> Always specify image dimensions with width and height attributes to reduce layout shifts (CLS)!</p>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button class="nav-btn home-btn">Back to Start <i class="fas fa-home"></i></button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const homeButtons = document.querySelectorAll('.home-btn');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Next button functionality
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const nextIndex = currentIndex + 1;
+                    
+                    if (nextIndex < slides.length) {
+                        currentSlide.classList.remove('active');
+                        slides[nextIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+            
+            // Previous button functionality
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const prevIndex = currentIndex - 1;
+                    
+                    if (prevIndex >= 0) {
+                        currentSlide.classList.remove('active');
+                        slides[prevIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+            
+            // Home button functionality
+            homeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSlide = document.querySelector('.slide.active');
+                    currentSlide.classList.remove('active');
+                    slides[0].classList.add('active');
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight') {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const nextIndex = currentIndex + 1;
+                    
+                    if (nextIndex < slides.length) {
+                        currentSlide.classList.remove('active');
+                        slides[nextIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    const currentSlide = document.querySelector('.slide.active');
+                    const currentIndex = Array.from(slides).indexOf(currentSlide);
+                    const prevIndex = currentIndex - 1;
+                    
+                    if (prevIndex >= 0) {
+                        currentSlide.classList.remove('active');
+                        slides[prevIndex].classList.add('active');
+                        window.scrollTo(0, 0);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

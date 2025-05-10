@@ -11,22 +11,15 @@
 1. **Исследование пользователей:**
     
     - Сбор и анализ данных о целевой аудитории (через интервью, опросы, анализ поведения).
-	    - Target 1: Dmitri want to see portfolio, and CV resume.
-	    - Target 2: Andrei want: Access Levels, EdTech Elements for FUN
     - Определение болей, потребностей и мотиваций пользователей.
-	    - ==Connections and Networking==
-	    - Inside Info
         
 2. **Создание персон (User Personas):**
     
     - Формирование детализированных портретов типичных пользователей.
-	    - Dmitri : Work: System admin, More minimalistic, More functionality
-	    - Andrei : IT student, frontend developer 
     - Документирование их целей, поведения, предпочтений.
         
 3. **Построение пользовательских сценариев и путешествий (User Journeys):**
-
-	![[Drawing 2025-05-02 19.35.57.excalidraw]]
+    
     - Визуализация путей, по которым идут пользователи для достижения целей.
     - Определение ключевых точек контакта, проблемных зон и возможностей для улучшения.
         
