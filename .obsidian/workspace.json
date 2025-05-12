@@ -6,6 +6,7 @@
       {
         "id": "ba9d90dbe2a964f2",
         "type": "tabs",
+        "dimension": 48.525469168900806,
         "children": [
           {
             "id": "77f005cb9b0fb39b",
@@ -48,27 +49,13 @@
               "icon": "lucide-file",
               "title": "Achievements Community Hub GammaIntelligence"
             }
-          },
-          {
-            "id": "c0a08b0b4581bb70",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Lesson-3/user-profile-card-development.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "user-profile-card-development"
-            }
           }
-        ],
-        "currentTab": 3
+        ]
       },
       {
         "id": "2abf05b131c332d8",
         "type": "tabs",
+        "dimension": 51.474530831099194,
         "children": [
           {
             "id": "72b703aaf4ac9bee",
@@ -83,33 +70,8 @@
               "icon": "lucide-file",
               "title": "user-profile-card-development"
             }
-          },
-          {
-            "id": "ee174fa58430f809",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Drawing 2025-05-09 00.01.13.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2025-05-09 00.01.13.excalidraw"
-            }
-          },
-          {
-            "id": "6e860d4ae89758ce",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/UXUI-wireframes.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "UXUI-wireframes.excalidraw"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -166,8 +128,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "3e65ac1d8e062ac0",
@@ -255,28 +216,40 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "c0a08b0b4581bb70",
+  "active": "77f005cb9b0fb39b",
   "lastOpenFiles": [
-    "Excalidraw/UXUI-wireframes.excalidraw.md",
-    "Lesson-3/user-profile-card-development.md",
-    "Excalidraw/Drawing 2025-05-09 00.01.13.excalidraw.md",
-    "Lesson-4/495443892_1159799509493415_3468543961126248869_n.jpg",
-    "Lesson-4/495443892_1159799509493415_3468543961126248869_n.jpg.crdownload",
+    "Home Works/profile-card-hi-fi-mockup.jpg",
+    "Home Works/profile-card-high-fidelity.jpg",
+    "Home Works/b567afaad3521f2c3e7877e4cce3b098.jpg",
+    "Home Works/8512d26d3607072b3d5c950c3f4571e0.jpg",
+    "Home Works/5519c7e3411e674a4968fafeddb26d84.jpg",
     "docs/HW/Community Hub/Achievements Community Hub GammaIntelligence.md",
+    "Lesson-3/user-profile-card-development.md",
+    "UX UI Draft/Decision Making/CREATE Action Funnel.md",
+    "Excalidraw/Drawing 2025-05-09 00.01.13.excalidraw.md",
+    "Excalidraw/UXUI-wireframes.excalidraw.md",
+    "Excalidraw/HW corrections Artur 2025-05-11 15.45.36.excalidraw.md",
+    "docs/img/Pasted Image 20250511154555_707.png",
+    "Home Works/Class-homework-Artur.html",
+    "Home Works",
+    "New folder",
+    "docs/img/Pasted image 20250511152613.png",
+    "docs/design-roles-scripts-userProfile.md",
+    "docs/img/profile-card-hi-fi-mockup.jpg",
+    "docs/img/profile-card-high-fidelity 1.jpg",
+    "docs/img/profile-card-high-fidelity.jpg",
+    "docs/img/Pasted image 20250511115712.png",
+    "Lesson-4/495443892_1159799509493415_3468543961126248869_n.jpg.crdownload",
     "docs/HW/Community Hub",
     "docs/Excalidraw/Drawing 2025-05-02 19.35.57.excalidraw.md",
-    "UX UI Draft/Decision Making/CREATE Action Funnel.md",
     "UX UI Draft/Decision Making/Human Decision Making Principles.md",
     "UX UI Draft/Decision Making/Dual Process Theory.md",
     "UX UI Draft/Decision Making/Spectrum of Thinking Interventions.md",
     "UX UI Draft/Decision Making",
     "UX UI Draft/Decision Making/Fogg Behaviour Model.md",
     "UX UI Draft",
-    "docs/design-roles-scripts-userProfile.md",
     "Lesson-3/Class-3-html.md",
     "Lesson-2/Lesson 2 HTML.md",
-    "docs/img/Pasted image 20250510125057.png",
-    "docs/img/Pasted image 20250510125024.png",
     "docs/design-roles-scripts.md",
     "docs/design-roles-description.md",
     "docs/Project-1-task.md",
@@ -288,20 +261,8 @@
     "Excalidraw/Drawing 2025-05-08 20.02.11.excalidraw.md",
     "Lesson-3/course-wizard-task.md",
     "design-roles-description.md",
-    "Lesson-3/html-practice-wizard.md",
-    "design-roles-scripts.md",
-    "docs/img/Pasted image 20250509014404.png",
-    "docs/img/Pasted image 20250509014311.png",
     "docs/Competencies",
-    "docs/img/Pasted image 20250508234148.png",
-    "docs/img/8512d26d3607072b3d5c950c3f4571e0.jpg",
-    "docs/img/5519c7e3411e674a4968fafeddb26d84.jpg",
-    "docs/img/heroBanner.png",
     "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
-    "Lesson-3/tmp/Dual-theory.html",
-    "Lesson-3/tmp",
-    "Lesson-3/New folder",
-    "Lesson-3/html-tasks.html",
-    "Lesson-3/img/cat-speed.jpg"
+    "Lesson-3/tmp/Dual-theory.html"
   ]
 }
