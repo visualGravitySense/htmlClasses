@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Основы CSS и Блочная Модель</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+        .box-model-diagram {
+            background-color: #e0f2fe;
+            border: 10px solid #3b82f6;
+            padding: 20px;
+            margin: 20px;
+        }
+        .code-snippet {
+            background-color: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+        }
+        /* New styles for color systems */
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .color-box {
+            height: 100px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .color-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-text {
+            color: #333;
+            text-shadow: none;
+        }
+
+        .example-section {
+            margin-bottom: 40px;
+        }
+
+        .gradient-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gradient-box {
+            height: 120px;
+            flex: 1;
+            min-width: 200px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .transparency-demo {
+            height: 200px;
+            position: relative;
+            background-image: url('/api/placeholder/400/200');
+            background-size: cover;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .transparency-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .variable-demo {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 15px;
+        }
+
+        .variable-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .variable-accent {
+            background-color: var(--accent-color);
+        }
+
+        .variable-danger {
+            background-color: var(--danger-color);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div id="presentation" class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Титульный слайд -->
+            <div class="slide active" data-slide="0">
+                <div class="p-8 text-center">
+                    <h1 class="text-4xl font-bold text-blue-600 mb-4">Основы CSS и Блочная Модель</h1>
+                    <p class="text-xl text-gray-700">Всестороннее руководство по макету и дизайну в CSS</p>
+                </div>
+            </div>
+
+            <!-- Слайд 1: Перевод спецификаций дизайна в CSS -->
+            <div class="slide" data-slide="1">
+                <div class="p-8">
+                    <h2 class="text-3xl font-semibold text-blue-600 mb-6">Перевод спецификаций дизайна в CSS</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* Пример 1: Кнопка из макета */
+.button {
+    width: 200px;
+    height: 50px;
+    background-color: #3b82f6;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}</pre>
+                            </div>
+                            <div class="text-center mb-4">
+                                <button class="inline-block px-8 py-3 bg-blue-500 text-white 
+                                    font-semibold uppercase rounded-lg 
+                                    hover:bg-blue-600 transition duration-300">
+                                    Нажми меня
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* Пример 2: Карточка профиля */
+.profile-card {
+    max-width: 320px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+}</pre>
+                            </div>
+                            <div class="bg-white border border-gray-200 rounded-lg 
+                                shadow-md p-6 max-w-xs mx-auto">
+                                <div class="flex items-center space-x-4">
+                                    <img src="/api/placeholder/80/80" 
+                                        alt="Аватар" 
+                                        class="w-20 h-20 rounded-full">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-900">
+                                            Иван Петров
+                                        </h3>
+                                        <p class="text-gray-500">
+                                            Веб-разработчик
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* Пример 3: Заголовок с макета */
+.hero-title {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: #1f2937;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+}</pre>
+                            </div>
+                            <h1 class="text-4xl font-bold text-gray-900 
+                                leading-tight tracking-tight">
+                                Создавайте 
+                                великолепные 
+                                веб-проекты
+                            </h1>
+                        </div>
+                        
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* Пример 4: Навигационное меню */
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    background-color: #f8fafc;
+    padding: 0 5%;
+    border-bottom: 1px solid #e2e8f0;
+}</pre>
+                            </div>
+                            <nav class="flex items-center justify-between 
+                                bg-gray-50 px-4 py-4 border-b 
+                                border-gray-200">
+                                <div class="text-xl font-bold text-gray-800">
+                                    Логотип
+                                </div>
+                                <ul class="flex space-x-6">
+                                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Главная</a></li>
+                                    <li><a href="#" class="text-gray-700 hover:text-blue-600">О нас</a></li>
+                                    <li><a href="#" class="text-gray-700 hover:text-blue-600">Контакты</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <ul class="list-disc pl-8 text-gray-800 mt-6">
+                        <li>Преобразование макетов дизайна напрямую в свойства CSS</li>
+                        <li>Использование точных измерений и цветовых значений</li>
+                        <li>Точное соответствие спецификациям инструментов дизайна</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Слайд 2: Блочная модель -->
+            <div class="slide" data-slide="2">
+                <div class="p-8">
+                    <h2 class="text-3xl font-semibold text-blue-600 mb-6">Понимание блочной модели</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* CSS Блочной Модели */
+.box-model-example {
+    /* Контент */
+    width: 200px;
+    height: 100px;
+    background-color: #3b82f6;
+    
+    /* Внутренний отступ (padding) */
+    padding: 20px;
+    
+    /* Граница */
+    border: 10px solid #1e40af;
+    
+    /* Внешний отступ (margin) */
+    margin: 20px;
+    
+    /* Критически важное свойство */
+    box-sizing: border-box;
+}
+
+/* Сравнение box-sizing */
+.content-box {
+    box-sizing: content-box;
+}
+
+.border-box {
+    box-sizing: border-box;
+}</pre>
+                            </div>
+                            
+                            <div class="code-snippet mt-4">
+                                <pre>/* HTML Структура */
+&lt;div class="container"&gt;
+    &lt;div class="box-model-example"&gt;
+        Контент блока
+    &lt;/div&gt;
+    &lt;div class="another-element"&gt;
+        Следующий элемент
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="space-y-4">
+                                <div class="bg-blue-500 text-white p-4 
+                                    border-8 border-blue-800 m-4 
+                                    text-center font-bold">
+                                    Пример блока с box-sizing: border-box
+                                    <div class="mt-2 text-sm text-blue-100">
+                                        Общая ширина = 200px
+                                        (контент + padding + border)
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-green-500 text-white p-6 
+                                    border-4 border-green-700 m-6 
+                                    text-center font-bold">
+                                    Блок с большими отступами
+                                    <div class="mt-2 text-sm text-green-100">
+                                        Демонстрация margin
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-red-500 p-4 text-white text-center">
+                                        content-box
+                                        <div class="text-xs text-red-100">
+                                            Размер = контент + padding + border
+                                        </div>
+                                    </div>
+                                    <div class="bg-purple-500 p-4 text-white text-center">
+                                        border-box
+                                        <div class="text-xs text-purple-100">
+                                            Размер = фиксированный
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-gray-100 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                            Ключевые принципы блочной модели:
+                        </h3>
+                        <ul class="list-disc pl-8 text-gray-700 space-y-2">
+                            <li>
+                                <strong>Контент:</strong> Основное содержимое элемента
+                                (текст, изображения, другие элементы)
+                            </li>
+                            <li>
+                                <strong>Внутренний отступ (Padding):</strong> 
+                                Очищенное пространство внутри элемента между контентом и границей
+                            </li>
+                            <li>
+                                <strong>Граница (Border):</strong> 
+                                Линия, окружающая padding и контент
+                            </li>
+                            <li>
+                                <strong>Внешний отступ (Margin):</strong> 
+                                Прозрачная область вокруг элемента, отделяющая его от других элементов
+                            </li>
+                            <li>
+                                <strong>box-sizing: border-box</strong> позволяет 
+                                включать padding и border в общую ширину/высоту элемента
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Слайд 3: Типографика в CSS -->
+            <div class="slide" data-slide="3">
+                <div class="p-8">
+                    <h2 class="text-3xl font-semibold text-blue-600 mb-6">Типографика в CSS</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="code-snippet mb-4">
+                                <pre>/* Расширенные стили типографики */
+/* Базовые настройки шрифта */
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    color: #333;
+}
+
+/* Заголовки */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+/* Параграфы и списки */
+p {
+    margin-bottom: 1.5rem;
+    max-width: 65ch;
+}
+
+ul, ol {
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Выделение и акценты */
+.highlight {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.muted {
+    color: #6b7280;
+    font-style: italic;
+}</pre>
+                            </div>
+                            
+                            <div class="code-snippet mt-4">
+                                <pre>/* HTML Структура */
+&lt;body&gt;
+    &lt;h1&gt;Руководство по типографике&lt;/h1&gt;
+    
+    &lt;p&gt;
+        &lt;span class="highlight"&gt;Типографика&lt;/span&gt; - 
+        это искусство оформления текста.
+    &lt;/p&gt;
+    
+    &lt;h2&gt;Основные принципы&lt;/h2&gt;
+    
+    &lt;ul&gt;
+        &lt;li&gt;Выбор шрифта&lt;/li&gt;
+        &lt;li&gt;Размер и интервалы&lt;/li&gt;
+        &lt;li&gt;Читаемость текста&lt;/li&gt;
+    &lt;/ul&gt;
+    
+    &lt;p class="muted"&gt;
+        Правильная типографика улучшает 
+        визуальное восприятие контента.
+    &lt;/p&gt;
+&lt;/body&gt;</pre>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-white p-6 rounded-lg shadow-md">
+                                <h1 class="text-4xl font-bold text-gray-900 mb-4 border-b-2 border-gray-200 pb-2">
+                                    Руководство по Типографике
+                                </h1>
+                                
+                                <p class="text-base text-gray-700 mb-4">
+                                    <span class="font-bold text-green-600">Типографика</span> - 
+                                    это комплексное искусство оформления текста, 
+                                    включающее выбор шрифтов, их размер, 
+                                    межстрочный интервал и другие параметры.
+                                </p>
+                                
+                                <h2 class="text-2xl font-semibold text-gray-800 mb-3">
+                                    Основные принципы
+                                </h2>
+                                
+                                <ul class="list-disc pl-5 mb-4 text-gray-700">
+                                    <li>Выбор подходящего шрифта</li>
+                                    <li>Правильные размеры и интервалы</li>
+                                    <li>Обеспечение максимальной читаемости</li>
+                                </ul>
+                                
+                                <p class="text-base text-gray-500 italic">
+                                    Правильная типографика улучшает 
+                                    визуальное восприятие контента.
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-100 p-4 rounded">
+                                    <h3 class="text-xl font-bold mb-3">
+                                        Размеры шрифтов
+                                    </h3>
+                                    <div class="space-y-2">
+                                        <p class="text-xs bg-white p-1">xs - Очень маленький</p>
+                                        <p class="text-sm bg-white p-1">sm - Маленький</p>
+                                        <p class="text-base bg-white p-1">base - Стандартный</p>
+                                        <p class="text-lg bg-white p-1">lg - Большой</p>
+                                        <p class="text-xl bg-white p-1">xl - Очень большой</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-100 p-4 rounded">
+                                    <h3 class="text-xl font-bold mb-3">
+                                        Начертания шрифта
+                                    </h3>
+                                    <div class="space-y-2">
+                                        <p class="font-thin bg-white p-1">Thin - Очень тонкий</p>
+                                        <p class="font-light bg-white p-1">Light - Легкий</p>
+                                        <p class="font-normal bg-white p-1">Normal - Обычный</p>
+                                        <p class="font-semibold bg-white p-1">Semibold - Полужирный</p>
+                                        <p class="font-bold bg-white p-1">Bold - Жирный</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+                            Ключевые аспекты типографики:
+                        </h3>
+                        <ul class="list-disc pl-8 text-gray-700 space-y-2">
+                            <li>
+                                <strong>Читаемость:</strong> 
+                                Выбор шрифта и его параметров для легкого восприятия текста
+                            </li>
+                            <li>
+                                <strong>Иерархия:</strong> 
+                                Использование различных размеров и начертаний для структурирования контента
+                            </li>
+                            <li>
+                                <strong>Адаптивность:</strong> 
+                                Применение относительных единиц (em, rem) для гибкой типографики
+                            </li>
+                            <li>
+                                <strong>Интервалы:</strong> 
+                                Влияние межстрочного интервала (line-height) на удобочитаемость
+                            </li>
+                            <li>
+                                <strong>Цветовой контраст:</strong> 
+                                Правильное использование цвета для улучшения восприятия текста
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Слайд 4: Цветовые системы -->
+            <div class="slide" data-slide="4">
+                <div class="p-8">
+                    <h2 class="text-3xl font-semibold text-blue-600 mb-6">Цветовые системы в CSS</h2>
+                    
+                    <div class="card">
+                        <h1 class="text-4xl font-bold text-blue-600 mb-4">Цветовые системы в CSS</h1>
+                        <p class="text-gray-700">Этот интерактивный документ демонстрирует различные способы определения и манипуляции цветами в CSS, включая форматы цветов, CSS-переменные, прозрачность и градиенты.</p>
+                    </div>
+
+                    <div class="card example-section">
+                        <h2>1. Способы представления цветов</h2>
+                        
+                        <h3>Шестнадцатеричные значения (HEX)</h3>
+                        <div class="color-grid">
+                            <div class="color-box" style="background-color: #3b82f6;">#3b82f6 (Синий)</div>
+                            <div class="color-box" style="background-color: #ef4444;">#ef4444 (Красный)</div>
+                            <div class="color-box" style="background-color: #10b981;">#10b981 (Зеленый)</div>
+                            <div class="color-box" style="background-color: #f59e0b;">#f59e0b (Оранжевый)</div>
+                            <div class="color-box" style="background-color: #8b5cf6;">#8b5cf6 (Фиолетовый)</div>
+                            <div class="color-box dark-text" style="background-color: #e5e7eb;">#e5e7eb (Светло-серый)</div>
+                        </div>
+
+                        <div class="code-snippet">
+                            <pre>.blue-box { background-color: #3b82f6; }
+.red-box { background-color: #ef4444; }
+.green-box { background-color: #10b981; }
+.orange-box { background-color: #f59e0b; }
+.purple-box { background-color: #8b5cf6; }
+.light-gray-box { background-color: #e5e7eb; }</pre>
+                        </div>
+
+                        <h3>RGB и RGBA</h3>
+                        <div class="color-grid">
+                            <div class="color-box" style="background-color: rgb(59, 130, 246);">rgb(59, 130, 246)</div>
+                            <div class="color-box" style="background-color: rgb(239, 68, 68);">rgb(239, 68, 68)</div>
+                            <div class="color-box" style="background-color: rgb(16, 185, 129);">rgb(16, 185, 129)</div>
+                            <div class="color-box" style="background-color: rgba(59, 130, 246, 0.7);">rgba(59, 130, 246, 0.7)</div>
+                            <div class="color-box" style="background-color: rgba(239, 68, 68, 0.5);">rgba(239, 68, 68, 0.5)</div>
+                            <div class="color-box" style="background-color: rgba(16, 185, 129, 0.3);">rgba(16, 185, 129, 0.3)</div>
+                        </div>
+
+                        <div class="code-snippet">
+                            <pre>.blue-rgb { background-color: rgb(59, 130, 246); }
+.red-rgb { background-color: rgb(239, 68, 68); }
+.green-rgb { background-color: rgb(16, 185, 129); }
+.blue-rgba { background-color: rgba(59, 130, 246, 0.7); } /* 70% непрозрачности */
+.red-rgba { background-color: rgba(239, 68, 68, 0.5); } /* 50% непрозрачности */
+.green-rgba { background-color: rgba(16, 185, 129, 0.3); } /* 30% непрозрачности */</pre>
+                        </div>
+
+                        <h3>HSL и HSLA</h3>
+                        <div class="color-grid">
+                            <div class="color-box" style="background-color: hsl(217, 91%, 60%);">hsl(217, 91%, 60%)</div>
+                            <div class="color-box" style="background-color: hsl(0, 84%, 60%);">hsl(0, 84%, 60%)</div>
+                            <div class="color-box" style="background-color: hsl(160, 84%, 39%);">hsl(160, 84%, 39%)</div>
+                            <div class="color-box" style="background-color: hsl(270, 70%, 60%);">hsl(270, 70%, 60%)</div>
+                            <div class="color-box" style="background-color: hsla(217, 91%, 60%, 0.4);">hsla(217, 91%, 60%, 0.4)</div>
+                            <div class="color-box" style="background-color: hsla(0, 84%, 60%, 0.6);">hsla(0, 84%, 60%, 0.6)</div>
+                        </div>
+
+                        <div class="code-snippet">
+                            <pre>.blue-hsl { background-color: hsl(217, 91%, 60%); }
+.red-hsl { background-color: hsl(0, 84%, 60%); }
+.green-hsl { background-color: hsl(160, 84%, 39%); }
+.purple-hsl { background-color: hsl(270, 70%, 60%); }
+.blue-hsla { background-color: hsla(217, 91%, 60%, 0.4); } /* 40% непрозрачности */
+.red-hsla { background-color: hsla(0, 84%, 60%, 0.6); } /* 60% непрозрачности */</pre>
+                        </div>
+                    </div>
+
+                    <div class="card example-section">
+                        <h2>2. CSS-переменные для последовательного оформления</h2>
+                        
+                        <div class="code-snippet">
+                            <pre>:root {
+    /* Основные цвета */
+    --primary-color: #3b82f6;
+    --secondary-color: #10b981;
+    --accent-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1f2937;
+    --light-color: #f3f4f6;
+    
+    /* Размеры и стили */
+    --base-font-size: 16px;
+    --heading-font-size: 24px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}</pre>
+                        </div>
+
+                        <h3>Примеры использования CSS-переменных</h3>
+                        <div class="variable-demo">
+                            Элемент с основным цветом (--primary-color)
+                        </div>
+                        
+                        <div class="variable-demo variable-secondary">
+                            Элемент с второстепенным цветом (--secondary-color)
+                        </div>
+                        
+                        <div class="variable-demo variable-accent">
+                            Элемент с акцентным цветом (--accent-color)
+                        </div>
+                        
+                        <div class="variable-demo variable-danger">
+                            Элемент с цветом опасности (--danger-color)
+                        </div>
+                    </div>
+
+                    <div class="card example-section">
+                        <h2>3. Прозрачность и градиенты</h2>
+                        
+                        <h3>Прозрачность с RGBA и HSLA</h3>
+                        <div class="transparency-demo">
+                            <div class="transparency-layer" style="background-color: rgba(59, 130, 246, 0.3);">
+                                30% непрозрачности
+                            </div>
+                        </div>
+                        
+                        <div class="transparency-demo">
+                            <div class="transparency-layer" style="background-color: rgba(239, 68, 68, 0.5);">
+                                50% непрозрачности
+                            </div>
+                        </div>
+                        
+                        <div class="transparency-demo">
+                            <div class="transparency-layer" style="background-color: rgba(16, 185, 129, 0.7);">
+                                70% непрозрачности
+                            </div>
+                        </div>
+
+                        <h3>Градиенты</h3>
+                        <div class="gradient-examples">
+                            <div class="gradient-box" style="background: linear-gradient(to right, #3b82f6, #10b981);">
+                                Линейный градиент<br>(слева направо)
+                            </div>
+                            
+                            <div class="gradient-box" style="background: linear-gradient(to bottom, #ef4444, #f59e0b);">
+                                Линейный градиент<br>(сверху вниз)
+                            </div>
+                            
+                            <div class="gradient-box" style="background: radial-gradient(circle, #3b82f6, #8b5cf6);">
+                                Радиальный градиент
+                            </div>
+                        </div>
+
+                        <div class="gradient-examples">
+                            <div class="gradient-box" style="background: linear-gradient(45deg, #3b82f6, #10b981, #f59e0b);">
+                                Многоцветный градиент
+                            </div>
+                            
+                            <div class="gradient-box" style="background: linear-gradient(to right, #3b82f6 0%, #10b981 50%, #f59e0b 100%);">
+                                Градиент с точками остановки
+                            </div>
+                            
+                            <div class="gradient-box" style="background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 10px, #60a5fa 10px, #60a5fa 20px);">
+                                Повторяющийся градиент
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card example-section">
+                        <h2>4. Практическое применение</h2>
+                        
+                        <h3>Создание цветовых схем</h3>
+                        <div class="color-grid">
+                            <div class="color-box" style="background-color: #3b82f6;">Основной #3b82f6</div>
+                            <div class="color-box" style="background-color: #2563eb;">Темнее #2563eb</div>
+                            <div class="color-box" style="background-color: #60a5fa;">Светлее #60a5fa</div>
+                            <div class="color-box" style="background-color: #f59e0b;">Акцент #f59e0b</div>
+                            <div class="color-box dark-text" style="background-color: #f3f4f6;">Фон #f3f4f6</div>
+                            <div class="color-box" style="background-color: #1f2937;">Текст #1f2937</div>
+                        </div>
+
+                        <h3>Преимущества различных цветовых форматов</h3>
+                        <ul class="list-disc pl-8 text-gray-800">
+                            <li><strong>HEX (#RRGGBB):</strong> Компактный, широко используемый, удобный для копирования.</li>
+                            <li><strong>RGB/RGBA:</strong> Интуитивно понятный, легко добавлять прозрачность (альфа-канал).</li>
+                            <li><strong>HSL/HSLA:</strong> Наиболее удобный для человеческого восприятия, легко корректировать оттенок, насыщенность и яркость.</li>
+                        </ul>
+
+                        <h3>Когда что использовать:</h3>
+                        <ul class="list-disc pl-8 text-gray-800">
+                            <li>Используйте <strong>HEX</strong> для твердых цветов без прозрачности, особенно когда работаете с дизайнерами.</li>
+                            <li>Используйте <strong>RGB/RGBA</strong> когда нужна прозрачность или динамическое изменение каналов.</li>
+                            <li>Используйте <strong>HSL/HSLA</strong> для создания цветовых схем и вариаций.</li>
+                            <li>Используйте <strong>CSS-переменные</strong> для создания единой цветовой системы и тем.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Слайд 5: Селекторы CSS -->
+            <div class="slide" data-slide="5">
+                <div class="p-8">
+                    <h2 class="text-3xl font-semibold text-blue-600 mb-6">CSS Селекторы и Специфичность</h2>
+                    
+                    <div class="container">
+                        <h2>1. Специфичность селекторов</h2>
+                        <p>Специфичность определяет, какое правило CSS применится к элементу, когда несколько правил конфликтуют. Более высокая специфичность имеет приоритет.</p>
+                        
+                        <table class="w-full border-collapse my-4">
+                            <thead>
+                                <tr>
+                                    <th class="p-2 border border-gray-300 bg-gray-100">Тип селектора</th>
+                                    <th class="p-2 border border-gray-300 bg-gray-100">Пример</th>
+                                    <th class="p-2 border border-gray-300 bg-gray-100">Специфичность</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2 border border-gray-300">Встроенные стили</td>
+                                    <td class="p-2 border border-gray-300"><code>style="color: red;"</code></td>
+                                    <td class="p-2 border border-gray-300"><span class="bg-gray-100 px-2 py-1 rounded">1,0,0,0</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border border-gray-300">ID селекторы</td>
+                                    <td class="p-2 border border-gray-300"><code>#header</code></td>
+                                    <td class="p-2 border border-gray-300"><span class="bg-gray-100 px-2 py-1 rounded">0,1,0,0</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border border-gray-300">Классы, псевдоклассы, атрибуты</td>
+                                    <td class="p-2 border border-gray-300"><code>.button</code>, <code>:hover</code>, <code>[type="text"]</code></td>
+                                    <td class="p-2 border border-gray-300"><span class="bg-gray-100 px-2 py-1 rounded">0,0,1,0</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 border border-gray-300">Элементы и псевдоэлементы</td>
+                                    <td class="p-2 border border-gray-300"><code>div</code>, <code>::before</code></td>
+                                    <td class="p-2 border border-gray-300"><span class="bg-gray-100 px-2 py-1 rounded">0,0,0,1</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div id="demo1" class="mt-6">
+                            <h3 class="text-xl font-semibold mb-4">Демонстрация специфичности:</h3>
+                            
+                            <p class="bg-gray-100 p-3 border border-gray-300">Обычный параграф с базовым стилем.</p>
+                            
+                            <p class="text-blue-600 font-bold bg-gray-100 p-3 border border-gray-300">Этот параграф имеет класс "text" и потому синий.</p>
+                            
+                            <p class="text-red-600 font-bold bg-gray-100 p-3 border border-gray-300">Этот параграф имеет класс "important" и потому красный.</p>
+                            
+                            <p id="unique" class="text-purple-600 italic bg-gray-100 p-3 border border-gray-300">Этот параграф имеет id "unique" и потому фиолетовый.</p>
+                            
+                            <div class="box">
+                                <p class="text-pink-600 text-lg bg-gray-100 p-3 border border-gray-300">Этот параграф находится внутри div с классом "box" и потому пурпурный.</p>
+                            </div>
+                            
+                            <p class="text-brown-600 bg-gray-100 p-3 border border-gray-300">Этот параграф использует !important и потому коричневый.</p>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">2. Наследование в CSS</h2>
+                        <p>Наследование - это механизм, с помощью которого свойства передаются от родительского элемента к дочерним.</p>
+                        
+                        <div class="parent border-2 border-blue-500 p-4 mt-4">
+                            <p>Этот текст наследует шрифт и цвет от родительского элемента.</p>
+                            
+                            <div class="child bg-gray-100 m-2 p-2">
+                                <p>Этот текст также наследует свойства от .parent, но имеет свой собственный фон.</p>
+                            </div>
+                            
+                            <div class="child inherited border-2 border-blue-500 m-2 p-2">
+                                <p>Этот дочерний элемент явно наследует рамку с помощью "border: inherit".</p>
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">3. Комбинированные селекторы</h2>
+                        
+                        <div class="combo-demo mt-4">
+                            <p class="bg-gray-100 p-3">Этот параграф является потомком div.combo-demo.</p>
+                            
+                            <div>
+                                <p class="bg-gray-100 p-3 border-l-4 border-green-500 pl-3">Этот параграф находится внутри вложенного div.</p>
+                            </div>
+                            
+                            <h3 class="text-xl font-semibold mt-4">Заголовок и следующие за ним параграфы</h3>
+                            <p class="font-bold text-red-600">Этот параграф идет сразу после h3, поэтому к нему применяется h3 + p.</p>
+                            <p class="italic">Этот параграф также следует за h3, но не непосредственно, поэтому к нему применяется h3 ~ p.</p>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">4. Атрибутивные селекторы</h2>
+                        
+                        <div class="mt-4">
+                            <input type="text" placeholder="Текстовое поле с красной рамкой" class="border-2 border-blue-500 p-2 rounded">
+                            <br><br>
+                            <a href="https://example.com" class="text-green-600 font-bold no-underline">Ссылка начинается с https (зеленая)</a><br>
+                            <a href="document.pdf" class="text-red-600">Ссылка заканчивается на .pdf (красная со значком)</a><br>
+                            <a href="https://example.org/page" class="text-purple-600 underline">Ссылка содержит "example" (пурпурная)</a>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">5. Псевдоклассы и псевдоэлементы</h2>
+                        
+                        <div class="mt-4">
+                            <a href="#" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">Наведите на меня</a>
+                            <p class="quote mt-4">Это цитата с псевдоэлементами до и после.</p>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">6. Расчет специфичности</h2>
+                        
+                        <div id="specificity-demo" class="mt-4">
+                            <div class="demo-box bg-yellow-100 p-4 border border-gray-300">
+                                <p>Этот блок имеет несколько конфликтующих стилей фона:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li><code>.demo-box</code> - lightblue (0,1,0)</li>
+                                    <li><code>div.demo-box</code> - lightgreen (0,1,1)</li>
+                                    <li><code>#specificity-demo .demo-box</code> - lightyellow (1,1,0)</li>
+                                </ul>
+                                <p class="mt-2">Видно, что применяется lightyellow, так как этот селектор имеет ID и класс.</p>
+                            </div>
+                            
+                            <div class="demo-box highlight bg-pink-100 p-4 border border-gray-300 mt-4">
+                                <p>Этот блок добавляет дополнительный класс highlight:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li><code>#specificity-demo div.demo-box.highlight</code> - lightpink (1,2,1)</li>
+                                </ul>
+                                <p class="mt-2">Теперь применяется lightpink, так как этот селектор имеет наивысшую специфичность.</p>
+                            </div>
+                            
+                            <div class="demo-box highlight force-color bg-purple-100 p-4 border border-gray-300 mt-4">
+                                <p>Этот блок добавляет класс с !important:</p>
+                                <ul class="list-disc pl-5 mt-2">
+                                    <li><code>.force-color</code> с !important - lavender</li>
+                                </ul>
+                                <p class="mt-2">!important перекрывает все правила специфичности, поэтому применяется lavender.</p>
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-2xl font-semibold mt-8 mb-4">7. Принципы каскадирования</h2>
+                        <p>Порядок определения окончательного стиля элемента:</p>
+                        <ol class="list-decimal pl-5 mt-2 space-y-2">
+                            <li>Происхождение и вес: стили пользователя с !important > стили автора с !important > стили автора > стили пользователя > стили браузера</li>
+                            <li>Специфичность: если происхождение одинаково, выигрывает селектор с высшей специфичностью</li>
+                            <li>Порядок исходного кода: если специфичность одинакова, применяется последнее правило</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Навигационные элементы управления -->
+            <div class="p-4 bg-gray-200 flex justify-between">
+                <button id="prevSlide" class="bg-blue-500 text-white px-4 py-2 rounded">Предыдущий</button>
+                <span id="slideCounter" class="text-gray-700 self-center">Слайд 1 из 6</span>
+                <button id="nextSlide" class="bg-blue-500 text-white px-4 py-2 rounded">Следующий</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.getElementById('prevSlide');
+        const nextButton = document.getElementById('nextSlide');
+        const slideCounter = document.getElementById('slideCounter');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            // Скрыть все слайды
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            // Показать текущий слайд
+            slides[index].classList.add('active');
+            
+            // Обновить счетчик слайдов
+            slideCounter.textContent = `Слайд ${index + 1} из ${slides.length}`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>

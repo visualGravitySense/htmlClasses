@@ -1,4 +1,10 @@
 {
   "alwaysUpdateLinks": true,
-  "attachmentFolderPath": "docs/img"
+  "attachmentFolderPath": "docs/img",
+  "pdfExportSettings": {
+    "pageSize": "Tabloid",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
 }

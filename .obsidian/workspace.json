@@ -6,7 +6,6 @@
       {
         "id": "ba9d90dbe2a964f2",
         "type": "tabs",
-        "dimension": 48.525469168900806,
         "children": [
           {
             "id": "77f005cb9b0fb39b",
@@ -23,55 +22,35 @@
             }
           },
           {
-            "id": "d4c04f838aa9985d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "UX UI Draft/Decision Making/CREATE Action Funnel.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "CREATE Action Funnel"
-            }
-          },
-          {
             "id": "f0f23fbed27956de",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/HW/Community Hub/Achievements Community Hub GammaIntelligence.md",
+                "file": "docs/Program-1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Achievements Community Hub GammaIntelligence"
+              "title": "Program-1"
             }
-          }
-        ]
-      },
-      {
-        "id": "2abf05b131c332d8",
-        "type": "tabs",
-        "dimension": 51.474530831099194,
-        "children": [
+          },
           {
-            "id": "72b703aaf4ac9bee",
+            "id": "f97c941e746c684a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Lesson-3/user-profile-card-development.md",
+                "file": "Lesson-5/LinkedIn.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "user-profile-card-development"
+              "title": "LinkedIn"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -216,53 +195,53 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "77f005cb9b0fb39b",
+  "active": "f97c941e746c684a",
   "lastOpenFiles": [
-    "Home Works/profile-card-hi-fi-mockup.jpg",
-    "Home Works/profile-card-high-fidelity.jpg",
-    "Home Works/b567afaad3521f2c3e7877e4cce3b098.jpg",
-    "Home Works/8512d26d3607072b3d5c950c3f4571e0.jpg",
-    "Home Works/5519c7e3411e674a4968fafeddb26d84.jpg",
+    "Lesson-4/2-css-Color-Systems.html",
+    "Lesson-4/Class-4-html.md",
+    "Lesson-5/LinkedIn.md",
+    "Lesson-5",
+    "Home Works/Andrei/EvilCorp.zip",
+    "Home Works/Andrei/EvilCorp/images/alexander-rotker-l8p1aWZqHvE-unsplash-1.jpg",
+    "Home Works/Andrei/EvilCorp/images/Cart-Icon.jpg",
+    "Home Works/Andrei/EvilCorp/styles/styles.css",
+    "Home Works/Andrei/EvilCorp/styles/shop.css",
+    "Home Works/Andrei/EvilCorp/styles",
+    "Home Works/Andrei/EvilCorp/shop.html",
+    "Home Works/Andrei/EvilCorp/scripts/main.js",
+    "Home Works/Andrei/EvilCorp/scripts",
+    "Home Works/Andrei/EvilCorp/index.html",
+    "Home Works/Andrei/EvilCorp/images/RAuM.gif",
+    "Home Works/Andrei/EvilCorp/images/evilcorp.png",
+    "Home Works/Andrei/EvilCorp/images/Ellipse 2.png",
+    "Home Works/Andrei/EvilCorp/images/eliot.jpg",
+    "Home Works/Andrei/EvilCorp/images/Cart Icon.jpg",
+    "Home Works/Andrei/EvilCorp/images/alexander-rotker-l8p1aWZqHvE-unsplash 1.jpg",
+    "Home Works/Andrei/EvilCorp/images",
+    "docs/Program-1.md",
     "docs/HW/Community Hub/Achievements Community Hub GammaIntelligence.md",
+    "Lesson-4/495443892_1159799509493415_3468543961126248869_n.jpg",
+    "Lesson-4/MY CV.md",
     "Lesson-3/user-profile-card-development.md",
+    "docs/design-roles-scripts-userProfile.md",
     "UX UI Draft/Decision Making/CREATE Action Funnel.md",
+    "docs/Excalidraw/Drawing 2025-05-02 19.35.57.excalidraw.md",
     "Excalidraw/Drawing 2025-05-09 00.01.13.excalidraw.md",
     "Excalidraw/UXUI-wireframes.excalidraw.md",
     "Excalidraw/HW corrections Artur 2025-05-11 15.45.36.excalidraw.md",
-    "docs/img/Pasted Image 20250511154555_707.png",
-    "Home Works/Class-homework-Artur.html",
-    "Home Works",
-    "New folder",
-    "docs/img/Pasted image 20250511152613.png",
-    "docs/design-roles-scripts-userProfile.md",
-    "docs/img/profile-card-hi-fi-mockup.jpg",
-    "docs/img/profile-card-high-fidelity 1.jpg",
-    "docs/img/profile-card-high-fidelity.jpg",
-    "docs/img/Pasted image 20250511115712.png",
-    "Lesson-4/495443892_1159799509493415_3468543961126248869_n.jpg.crdownload",
-    "docs/HW/Community Hub",
-    "docs/Excalidraw/Drawing 2025-05-02 19.35.57.excalidraw.md",
+    "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-12 13.38.06.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-09 19.44.06.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-08 20.02.11.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-09 20.13.41.excalidraw.md",
+    "Home Works/profile-card-hi-fi-mockup.jpg",
     "UX UI Draft/Decision Making/Human Decision Making Principles.md",
     "UX UI Draft/Decision Making/Dual Process Theory.md",
     "UX UI Draft/Decision Making/Spectrum of Thinking Interventions.md",
-    "UX UI Draft/Decision Making",
     "UX UI Draft/Decision Making/Fogg Behaviour Model.md",
-    "UX UI Draft",
     "Lesson-3/Class-3-html.md",
     "Lesson-2/Lesson 2 HTML.md",
     "docs/design-roles-scripts.md",
-    "docs/design-roles-description.md",
-    "docs/Project-1-task.md",
-    "docs/Program-html.md",
-    "docs/Program-1.md",
-    "Excalidraw/Drawing 2025-05-09 19.44.06.excalidraw.md",
-    "Excalidraw/HTML Classes Drawing 2025-05-06 19.50.18.excalidraw.md",
-    "Excalidraw/Drawing 2025-05-09 20.13.41.excalidraw.md",
-    "Excalidraw/Drawing 2025-05-08 20.02.11.excalidraw.md",
-    "Lesson-3/course-wizard-task.md",
-    "design-roles-description.md",
-    "docs/Competencies",
-    "docs/Guides/GitHub-Mastery-Guide-ru.pdf",
-    "Lesson-3/tmp/Dual-theory.html"
+    "docs/design-roles-description.md"
   ]
 }
