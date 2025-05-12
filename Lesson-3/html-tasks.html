@@ -5,63 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML/CSS Tasks for UX/UI Designers</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
-        .task-container {
-            max-width: 800px;
+        :root {
+            --pastel-pink: #FFD1DC;
+            --pastel-blue: #B5D8EB;
+            --pastel-yellow: #FFFACD;
+            --pastel-green: #C1E1C1;
+            --pastel-purple: #E6E6FA;
+        }
+
+        body {
+            background-color: var(--pastel-yellow);
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            color: #333;
+            margin-bottom: 2rem;
+            transform: rotate(-2deg);
+            text-shadow: 3px 3px 0 var(--pastel-pink);
+        }
+
+        .task-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
             padding: 20px;
         }
 
         .task {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: white;
+            border: 3px solid #333;
+            padding: 1.5rem;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .task:hover {
+            transform: translateY(-5px);
         }
 
         .task h3 {
-            color: #333;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
             margin-top: 0;
-        }
-
-        .task p {
-            color: #666;
-            line-height: 1.6;
+            color: #333;
+            text-transform: uppercase;
         }
 
         .difficulty {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-bottom: 10px;
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            padding: 5px 15px;
+            font-weight: bold;
+            border: 2px solid #333;
+            background: white;
         }
 
-        .beginner { background-color: #e3f2fd; color: #1976d2; }
-        .intermediate { background-color: #fff3e0; color: #f57c00; }
-        .advanced { background-color: #ffebee; color: #d32f2f; }
+        .beginner { background-color: var(--pastel-blue); }
+        .intermediate { background-color: var(--pastel-green); }
+        .advanced { background-color: var(--pastel-purple); }
 
         .learning-objectives {
-            background-color: #f5f5f5;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 15px 0;
+            background-color: var(--pastel-pink);
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px solid #333;
         }
 
         .learning-objectives h4 {
+            font-family: 'Space Grotesk', sans-serif;
             margin-top: 0;
+            text-transform: uppercase;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
             color: #333;
         }
 
-        .learning-objectives ul {
-            margin: 0;
-            padding-left: 20px;
+        p {
+            margin: 1rem 0;
         }
 
-        .learning-objectives li {
-            margin-bottom: 5px;
+        strong {
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
         }
     </style>
 </head>
