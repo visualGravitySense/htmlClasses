@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цветовые системы в CSS - Расширенные примеры</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h1, h2, h3 {
+            color: #2563eb;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-left: 5px solid #3b82f6;
+            padding-left: 15px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .color-box {
+            height: 100px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .color-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-text {
+            color: #333;
+            text-shadow: none;
+        }
+
+        .code-block {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+
+        .example-section {
+            margin-bottom: 40px;
+        }
+
+        .gradient-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gradient-box {
+            height: 120px;
+            flex: 1;
+            min-width: 200px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-switcher {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .theme-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .filter-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .filter-box {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .filter-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .transparency-demo {
+            height: 200px;
+            position: relative;
+            background-image: url('/api/placeholder/400/200');
+            background-size: cover;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .transparency-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --light-color: #f3f4f6;
+            --base-font-size: 16px;
+            --heading-font-size: 24px;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .variable-demo {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 15px;
+        }
+
+        .variable-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .variable-accent {
+            background-color: var(--accent-color);
+        }
+
+        .variable-danger {
+            background-color: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Цветовые системы в CSS</h1>
+        <p>Этот интерактивный документ демонстрирует различные способы определения и манипуляции цветами в CSS, включая форматы цветов, CSS-переменные, прозрачность и градиенты.</p>
+    </div>
+
+    <div class="card example-section">
+        <h2>1. Способы представления цветов</h2>
+        
+        <h3>Шестнадцатеричные значения (HEX)</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: #3b82f6;">#3b82f6 (Синий)</div>
+            <div class="color-box" style="background-color: #ef4444;">#ef4444 (Красный)</div>
+            <div class="color-box" style="background-color: #10b981;">#10b981 (Зеленый)</div>
+            <div class="color-box" style="background-color: #f59e0b;">#f59e0b (Оранжевый)</div>
+            <div class="color-box" style="background-color: #8b5cf6;">#8b5cf6 (Фиолетовый)</div>
+            <div class="color-box dark-text" style="background-color: #e5e7eb;">#e5e7eb (Светло-серый)</div>
+        </div>
+
+        <div class="code-block">
+            <pre>.blue-box { background-color: #3b82f6; }
+.red-box { background-color: #ef4444; }
+.green-box { background-color: #10b981; }
+.orange-box { background-color: #f59e0b; }
+.purple-box { background-color: #8b5cf6; }
+.light-gray-box { background-color: #e5e7eb; }</pre>
+        </div>
+
+        <h3>RGB и RGBA</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: rgb(59, 130, 246);">rgb(59, 130, 246)</div>
+            <div class="color-box" style="background-color: rgb(239, 68, 68);">rgb(239, 68, 68)</div>
+            <div class="color-box" style="background-color: rgb(16, 185, 129);">rgb(16, 185, 129)</div>
+            <div class="color-box" style="background-color: rgba(59, 130, 246, 0.7);">rgba(59, 130, 246, 0.7)</div>
+            <div class="color-box" style="background-color: rgba(239, 68, 68, 0.5);">rgba(239, 68, 68, 0.5)</div>
+            <div class="color-box" style="background-color: rgba(16, 185, 129, 0.3);">rgba(16, 185, 129, 0.3)</div>
+        </div>
+
+        <div class="code-block">
+            <pre>.blue-rgb { background-color: rgb(59, 130, 246); }
+.red-rgb { background-color: rgb(239, 68, 68); }
+.green-rgb { background-color: rgb(16, 185, 129); }
+.blue-rgba { background-color: rgba(59, 130, 246, 0.7); } /* 70% непрозрачности */
+.red-rgba { background-color: rgba(239, 68, 68, 0.5); } /* 50% непрозрачности */
+.green-rgba { background-color: rgba(16, 185, 129, 0.3); } /* 30% непрозрачности */</pre>
+        </div>
+
+        <h3>HSL и HSLA (Hue, Saturation, Lightness)</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: hsl(217, 91%, 60%);">hsl(217, 91%, 60%)</div>
+            <div class="color-box" style="background-color: hsl(0, 84%, 60%);">hsl(0, 84%, 60%)</div>
+            <div class="color-box" style="background-color: hsl(160, 84%, 39%);">hsl(160, 84%, 39%)</div>
+            <div class="color-box" style="background-color: hsl(270, 70%, 60%);">hsl(270, 70%, 60%)</div>
+            <div class="color-box" style="background-color: hsla(217, 91%, 60%, 0.4);">hsla(217, 91%, 60%, 0.4)</div>
+            <div class="color-box" style="background-color: hsla(0, 84%, 60%, 0.6);">hsla(0, 84%, 60%, 0.6)</div>
+        </div>
+
+        <div class="code-block">
+            <pre>.blue-hsl { background-color: hsl(217, 91%, 60%); }
+.red-hsl { background-color: hsl(0, 84%, 60%); }
+.green-hsl { background-color: hsl(160, 84%, 39%); }
+.purple-hsl { background-color: hsl(270, 70%, 60%); }
+.blue-hsla { background-color: hsla(217, 91%, 60%, 0.4); } /* 40% непрозрачности */
+.red-hsla { background-color: hsla(0, 84%, 60%, 0.6); } /* 60% непрозрачности */</pre>
+        </div>
+
+        <h3>Современные функции цвета (RGB и HSL с spaces)</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: rgb(59 130 246);">rgb(59 130 246)</div>
+            <div class="color-box" style="background-color: hsl(217 91% 60%);">hsl(217 91% 60%)</div>
+            <div class="color-box" style="background-color: rgb(239 68 68 / 50%);">rgb(239 68 68 / 50%)</div>
+            <div class="color-box" style="background-color: hsl(160 84% 39% / 70%);">hsl(160 84% 39% / 70%)</div>
+        </div>
+
+        <div class="code-block">
+            <pre>/* Современный синтаксис без запятых */
+.blue-modern { background-color: rgb(59 130 246); }
+.blue-hsl-modern { background-color: hsl(217 91% 60%); }
+.red-modern-alpha { background-color: rgb(239 68 68 / 50%); }
+.green-hsl-modern-alpha { background-color: hsl(160 84% 39% / 70%); }</pre>
+        </div>
+
+        <h3>Именованные цвета</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: red;">red</div>
+            <div class="color-box" style="background-color: blue;">blue</div>
+            <div class="color-box" style="background-color: green;">green</div>
+            <div class="color-box" style="background-color: tomato;">tomato</div>
+            <div class="color-box" style="background-color: steelblue;">steelblue</div>
+            <div class="color-box" style="background-color: mediumseagreen;">mediumseagreen</div>
+        </div>
+
+        <div class="code-block">
+            <pre>.box1 { background-color: red; }
+.box2 { background-color: blue; }
+.box3 { background-color: green; }
+.box4 { background-color: tomato; }
+.box5 { background-color: steelblue; }
+.box6 { background-color: mediumseagreen; }</pre>
+        </div>
+    </div>
+
+    <div class="card example-section">
+        <h2>2. CSS-переменные для последовательного оформления</h2>
+        
+        <div class="code-block">
+            <pre>:root {
+    /* Основные цвета */
+    --primary-color: #3b82f6;
+    --secondary-color: #10b981;
+    --accent-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1f2937;
+    --light-color: #f3f4f6;
+    
+    /* Размеры и стили */
+    --base-font-size: 16px;
+    --heading-font-size: 24px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}</pre>
+        </div>
+
+        <h3>Примеры использования CSS-переменных</h3>
+        <div class="variable-demo">
+            Элемент с основным цветом (--primary-color)
+        </div>
+        
+        <div class="variable-demo variable-secondary">
+            Элемент с второстепенным цветом (--secondary-color)
+        </div>
+        
+        <div class="variable-demo variable-accent">
+            Элемент с акцентным цветом (--accent-color)
+        </div>
+        
+        <div class="variable-demo variable-danger">
+            Элемент с цветом опасности (--danger-color)
+        </div>
+
+        <div class="code-block">
+            <pre>.variable-demo {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.variable-secondary {
+    background-color: var(--secondary-color);
+}
+
+.variable-accent {
+    background-color: var(--accent-color);
+}
+
+.variable-danger {
+    background-color: var(--danger-color);
+}</pre>
+        </div>
+
+        <h3>Темы на основе CSS-переменных</h3>
+        <div class="code-block">
+            <pre>/* Светлая тема (по умолчанию) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --highlight-color: #3b82f6;
+}
+
+/* Темная тема */
+.dark-theme {
+    --bg-color: #1f2937;
+    --text-color: #f3f4f6;
+    --highlight-color: #60a5fa;
+}
+
+/* Использование переменных */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.highlight {
+    color: var(--highlight-color);
+}</pre>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <strong>Примечание:</strong> CSS-переменные позволяют централизованно управлять цветовой схемой сайта, что облегчает поддержку и тематизацию.
+        </div>
+    </div>
+
+    <div class="card example-section">
+        <h2>3. Прозрачность и манипуляция цветами</h2>
+        
+        <h3>Прозрачность с RGBA и HSLA</h3>
+        <div class="transparency-demo">
+            <div class="transparency-layer" style="background-color: rgba(59, 130, 246, 0.3);">
+                30% непрозрачности
+            </div>
+        </div>
+        
+        <div class="transparency-demo">
+            <div class="transparency-layer" style="background-color: rgba(239, 68, 68, 0.5);">
+                50% непрозрачности
+            </div>
+        </div>
+        
+        <div class="transparency-demo">
+            <div class="transparency-layer" style="background-color: rgba(16, 185, 129, 0.7);">
+                70% непрозрачности
+            </div>
+        </div>
+
+        <div class="code-block">
+            <pre>.overlay-light {
+    background-color: rgba(59, 130, 246, 0.3); /* Синий с 30% непрозрачности */
+}
+
+.overlay-medium {
+    background-color: rgba(239, 68, 68, 0.5); /* Красный с 50% непрозрачности */
+}
+
+.overlay-dark {
+    background-color: rgba(16, 185, 129, 0.7); /* Зеленый с 70% непрозрачности */
+}
+
+/* Альтернативная запись с HSLA */
+.overlay-hsla {
+    background-color: hsla(217, 91%, 60%, 0.4); /* Синий с 40% непрозрачности */
+}</pre>
+        </div>
+
+        <h3>Градиенты</h3>
+        <div class="gradient-examples">
+            <div class="gradient-box" style="background: linear-gradient(to right, #3b82f6, #10b981);">
+                Линейный градиент<br>(слева направо)
+            </div>
+            
+            <div class="gradient-box" style="background: linear-gradient(to bottom, #ef4444, #f59e0b);">
+                Линейный градиент<br>(сверху вниз)
+            </div>
+            
+            <div class="gradient-box" style="background: radial-gradient(circle, #3b82f6, #8b5cf6);">
+                Радиальный градиент
+            </div>
+        </div>
+
+        <div class="gradient-examples">
+            <div class="gradient-box" style="background: linear-gradient(45deg, #3b82f6, #10b981, #f59e0b);">
+                Многоцветный градиент
+            </div>
+            
+            <div class="gradient-box" style="background: linear-gradient(to right, #3b82f6 0%, #10b981 50%, #f59e0b 100%);">
+                Градиент с точками остановки
+            </div>
+            
+            <div class="gradient-box" style="background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 10px, #60a5fa 10px, #60a5fa 20px);">
+                Повторяющийся градиент
+            </div>
+        </div>
+
+        <div class="code-block">
+            <pre>/* Линейные градиенты */
+.gradient-horizontal {
+    background: linear-gradient(to right, #3b82f6, #10b981);
+}
+
+.gradient-vertical {
+    background: linear-gradient(to bottom, #ef4444, #f59e0b);
+}
+
+.gradient-diagonal {
+    background: linear-gradient(45deg, #3b82f6, #10b981, #f59e0b);
+}
+
+/* Радиальный градиент */
+.gradient-radial {
+    background: radial-gradient(circle, #3b82f6, #8b5cf6);
+}
+
+/* Градиент с точками остановки */
+.gradient-stops {
+    background: linear-gradient(to right, #3b82f6 0%, #10b981 50%, #f59e0b 100%);
+}
+
+/* Повторяющийся градиент */
+.gradient-repeating {
+    background: repeating-linear-gradient(
+        45deg,
+        #3b82f6,
+        #3b82f6 10px,
+        #60a5fa 10px,
+        #60a5fa 20px
+    );
+}</pre>
+        </div>
+
+        <h3>Современные функции смешивания цветов</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: color-mix(in srgb, #3b82f6 50%, #10b981 50%);">
+                color-mix (синий + зеленый)
+            </div>
+            <div class="color-box" style="background-color: color-mix(in srgb, #ef4444 70%, #f59e0b 30%);">
+                color-mix (красный 70% + оранжевый 30%)
+            </div>
+            <div class="color-box" style="background-color: color-mix(in hsl, #3b82f6 50%, #ef4444 50%);">
+                color-mix в hsl пространстве
+            </div>
+        </div>
+
+        <div class="code-block">
+            <pre>/* Смешивание цветов (color-mix) */
+.mix-equal {
+    background-color: color-mix(in srgb, #3b82f6 50%, #10b981 50%);
+}
+
+.mix-weighted {
+    background-color: color-mix(in srgb, #ef4444 70%, #f59e0b 30%);
+}
+
+.mix-hsl {
+    background-color: color-mix(in hsl, #3b82f6 50%, #ef4444 50%);
+}</pre>
+        </div>
+    </div>
+
+    <div class="card example-section">
+        <h2>4. Практическое применение цветовых систем</h2>
+        
+        <h3>Создание цветовых схем</h3>
+        <div class="color-grid">
+            <div class="color-box" style="background-color: #3b82f6;">Основной #3b82f6</div>
+            <div class="color-box" style="background-color: #2563eb;">Темнее #2563eb</div>
+            <div class="color-box" style="background-color: #60a5fa;">Светлее #60a5fa</div>
+            <div class="color-box" style="background-color: #f59e0b;">Акцент #f59e0b</div>
+            <div class="color-box dark-text" style="background-color: #f3f4f6;">Фон #f3f4f6</div>
+            <div class="color-box" style="background-color: #1f2937;">Текст #1f2937</div>
+        </div>
+
+        <div class="code-block">
+            <pre>:root {
+    /* Основная цветовая схема */
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    --accent: #f59e0b;
+    --background: #f3f4f6;
+    --text: #1f2937;
+}</pre>
+        </div>
+
+        <h3>Преимущества различных цветовых форматов</h3>
+        <ul>
+            <li><strong>HEX (#RRGGBB):</strong> Компактный, широко используемый, удобный для копирования.</li>
+            <li><strong>RGB/RGBA:</strong> Интуитивно понятный, легко добавлять прозрачность (альфа-канал).</li>
+            <li><strong>HSL/HSLA:</strong> Наиболее удобный для человеческого восприятия, легко корректировать оттенок, насыщенность и яркость.</li>
+        </ul>
+
+        <h3>Когда что использовать:</h3>
+        <ul>
+            <li>Используйте <strong>HEX</strong> для твердых цветов без прозрачности, особенно когда работаете с дизайнерами.</li>
+            <li>Используйте <strong>RGB/RGBA</strong> когда нужна прозрачность или динамическое изменение каналов.</li>
+            <li>Используйте <strong>HSL/HSLA</strong> для создания цветовых схем и вариаций (осветление, затемнение, изменение насыщенности).</li>
+            <li>Используйте <strong>CSS-переменные</strong> для создания единой цветовой системы и тем.</li>
+        </ul>
+
+        <div style="margin-top: 20px;">
+            <strong>Совет:</strong> HSL особенно удобен для создания оттенков цвета, так как можно просто менять последнее значение (яркость):
+            <div class="color-grid" style="margin-top: 10px;">
+                <div class="color-box" style="background-color: hsl(217, 91%, 30%);">hsl(217, 91%, 30%)</div>
+                <div class="color-box" style="background-color: hsl(217, 91%, 50%);">hsl(217, 91%, 50%)</div>
+                <div class="color-box" style="background-color: hsl(217, 91%, 70%);">hsl(217, 91%, 70%)</div>
+                <div class="color-box dark-text" style="background-color: hsl(217, 91%, 90%);">hsl(217, 91%, 90%)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
