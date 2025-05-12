@@ -7,13 +7,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background: #ffeef8;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
         }
         .slide {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            background: #fffafd;
+            border: 3px solid #ffd1dc;
+            border-radius: 18px;
+            margin: 24px;
+            padding: 32px;
         }
         .slide.active {
             display: block;
@@ -26,41 +28,42 @@
             margin: 20px;
         }
         .code-snippet {
-            background-color: #1f2937;
-            color: #f3f4f6;
+            background: #e0f7fa;
+            border: 2px solid #b0e0e6;
+            color: #333;
+            font-family: 'Courier New', monospace;
             padding: 15px;
             border-radius: 8px;
-            font-family: 'Courier New', monospace;
+            margin: 10px 0;
         }
         /* New styles for color systems */
         .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 30px;
+            background: #fff0f5;
+            border: 2px solid #ffd1dc;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
         }
 
         .color-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .color-box {
             height: 100px;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #333;
             text-align: center;
             font-weight: bold;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 10px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #b0e0e6;
+            background: #ffeef8;
         }
 
         .color-box:hover {
@@ -78,35 +81,34 @@
         }
 
         .gradient-examples {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .gradient-box {
             height: 120px;
-            flex: 1;
-            min-width: 200px;
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #333;
             text-align: center;
             font-weight: bold;
             padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid #b0e0e6;
+            background: #e0f7fa;
         }
 
         .transparency-demo {
             height: 200px;
             position: relative;
-            background-image: url('/api/placeholder/400/200');
-            background-size: cover;
-            border-radius: 6px;
+            background: #fffafd;
+            border-radius: 8px;
             overflow: hidden;
-            margin: 20px 0;
+            margin: 15px 0;
+            border: 2px solid #ffd1dc;
         }
 
         .transparency-layer {
@@ -118,17 +120,16 @@
             justify-content: center;
             font-size: 24px;
             font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            color: #ff6b95;
         }
 
         .variable-demo {
-            background-color: var(--primary-color);
-            color: white;
+            background: #fff0f5;
+            color: #333;
             padding: 15px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            border-radius: 8px;
             margin-bottom: 15px;
+            border: 2px solid #ffd1dc;
         }
 
         .variable-secondary {
@@ -141,6 +142,221 @@
 
         .variable-danger {
             background-color: var(--danger-color);
+        }
+
+        /* Anti-design styles with pastel colors */
+        h1, h2, h3 {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            color: #ff6b95;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            border: 2px solid #ffd1dc;
+            background: #fff0f5;
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        th, td {
+            border: 1.5px solid #ffd1dc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #ffd1dc;
+            color: #ff6b95;
+        }
+
+        .button, #prevSlide, #nextSlide {
+            background: #b0e0e6;
+            border: 2px solid #ffd1dc;
+            padding: 10px 22px;
+            border-radius: 30px;
+            color: #ff6b95;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .demo-box, .parent, .child, .card, .variable-demo {
+            background: #fff0f5;
+            border: 2px solid #ffd1dc;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 18px 0;
+            color: #333;
+        }
+
+        input[type="text"] {
+            background: #e0f7fa;
+            border: 2px solid #b0e0e6;
+            padding: 8px;
+            border-radius: 8px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        a {
+            color: #ff6b95;
+            text-decoration: underline wavy #ffd1dc;
+        }
+
+        ul, ol {
+            padding-left: 24px;
+            margin: 10px 0;
+        }
+
+        li {
+            margin: 7px 0;
+            padding-left: 5px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #ff6b95;
+            border-left: 5px solid #ffd1dc;
+            background: #fffafd;
+            padding-left: 18px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        /* Navigation controls */
+        #prevSlide, #nextSlide {
+            background: #b0e0e6;
+            border: 2px solid #ffd1dc;
+            padding: 10px 22px;
+            border-radius: 30px;
+            color: #ff6b95;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #slideCounter {
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            color: #333;
+        }
+
+        /* Specificity demo boxes */
+        #demo1 p {
+            background: #fff0f5;
+            border: 2px solid #ffd1dc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        /* Parent-child demo */
+        .parent {
+            background: #fff0f5;
+            border: 2px solid #ffd1dc;
+            padding: 18px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .child {
+            background: #e0f7fa;
+            border: 2px solid #ffd1dc;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* Card styles */
+        .card {
+            background: #fff0f5;
+            border: 2px solid #ffd1dc;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .color-box {
+            height: 100px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #b0e0e6;
+            background: #ffeef8;
+        }
+
+        .gradient-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .gradient-box {
+            height: 120px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            border: 2px solid #b0e0e6;
+            background: #e0f7fa;
+        }
+
+        .transparency-demo {
+            height: 200px;
+            position: relative;
+            background: #fffafd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 2px solid #ffd1dc;
+        }
+
+        .transparency-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b95;
+        }
+
+        .variable-demo {
+            background: #fff0f5;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid #ffd1dc;
+        }
+
+        /* Remove all animations and transitions */
+        * {
+            transition: none !important;
+            animation: none !important;
+            transform: none !important;
         }
     </style>
 </head>
