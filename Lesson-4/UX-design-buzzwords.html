@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Принципы UX дизайна: теория подталкивания и поведенческие науки</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --slide-bg: #ffffff;
+        }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .slide {
+            height: 100vh;
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: var(--slide-bg);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            text-align: left;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+        
+        .two-column {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+        }
+        
+        .column {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+        }
+        
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .dot.active {
+            background-color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            p, ul {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <h1>Принципы UX дизайна</h1>
+                <h2>Теория подталкивания и поведенческие науки</h2>
+                <p>Как понимание поведения пользователей помогает создавать более эффективные интерфейсы</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Теория подталкивания (Nudge Theory) -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h2>Теория подталкивания (Nudge Theory)</h2>
+                <p>Концепция из поведенческой науки, которая фокусируется на понимании того, как люди принимают решения, и как небольшие, едва заметные изменения в окружающей среде могут значительно влиять на процесс принятия решений.</p>
+                <p>Разработана <span class="highlight">Ричардом Талером</span> и <span class="highlight">Кассом Санстейном</span>, основная идея заключается в том, что "подталкивая" поведение людей в определенном направлении, мы можем побудить их принимать более правильные и обоснованные решения без необходимости в строгих правилах или ограничениях.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Применение Теории подталкивания в UX дизайне -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h2>Применение Теории подталкивания в UX дизайне</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Архитектура выбора</h3>
+                        <p>Разработка компоновки и порядка вариантов таким образом, чтобы влиять на решения пользователей. Например, размещение более желательных опций в верхней части списка или делая их визуально более заметными.</p>
+                    </div>
+                    <div class="column">
+                        <h3>Значения по умолчанию</h3>
+                        <p>Установка параметров по умолчанию, которые побуждают пользователей принимать лучшие решения. Например, предварительный выбор более экологичного варианта доставки или включение настроек конфиденциальности по умолчанию.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Еще примеры применения Теории подталкивания -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h2>Еще примеры применения Теории подталкивания</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Социальное доказательство</h3>
+                        <p>Демонстрация того, как другие сделали аналогичный выбор или имели положительный опыт. Например, показ рейтингов и отзывов о продукте или указание на то, что большое количество пользователей выполнили определенное действие.</p>
+                    </div>
+                    <div class="column">
+                        <h3>Своевременные вмешательства</h3>
+                        <p>Предоставление рекомендаций или подсказок в нужный момент пути пользователя. Например, предложение помощи, когда пользователь сталкивается со сложной задачей, или напоминание о преимуществах завершения процесса.</p>
+                    </div>
+                </div>
+                <p class="highlight">Важно: При применении теории подталкивания в UX дизайне критически важно сохранять баланс между поощрением позитивного поведения и уважением автономии пользователя.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Persuasive Technology -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h2>Убеждающие технологии (Persuasive Technology)</h2>
+                <p>Это область UX дизайна, которая фокусируется на использовании технологий для влияния на поведение человека и побуждения пользователей к выполнению определенных действий. Она сочетает в себе принципы психологии и дизайна для создания опыта, который влияет на поведение пользователя желаемым образом.</p>
+                <p>Цель убеждающих технологий — мягко убедить или поощрить пользователей принять определенные привычки или поведение, часто с намерением улучшить их общий опыт или достичь конкретного результата.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Примеры убеждающих технологий -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h2>Примеры убеждающих технологий</h2>
+                <ul>
+                    <li><span class="highlight">Подкрепление:</span> Предоставление пользователям положительной обратной связи или наград за выполнение определенных действий (например, значки или очки в геймифицированном интерфейсе).</li>
+                    <li><span class="highlight">Социальное влияние:</span> Использование социальных связей и норм для поощрения действий или решений, например, отображение количества друзей, которым также понравился продукт на сайте интернет-магазина.</li>
+                    <li><span class="highlight">Дефицит:</span> Использование концепции дефицита (ограниченная доступность, ограниченные по времени предложения) для создания у пользователей чувства срочности.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Еще примеры убеждающих технологий -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h2>Еще примеры убеждающих технологий</h2>
+                <ul>
+                    <li><span class="highlight">Персонализация:</span> Настройка контента или опыта для отдельного пользователя на основе его предпочтений, поведения или демографической информации, что делает опыт более релевантным и привлекательным.</li>
+                    <li><span class="highlight">Обязательства и последовательность:</span> Поощрение пользователей брать на себя небольшие обязательства с намерением со временем перейти к более крупным обязательствам, часто через последовательность небольших задач или этапов.</li>
+                </ul>
+                <p class="highlight">Важно использовать эти техники ответственно и этично, гарантируя, что конечная цель соответствует интересам пользователей и не эксплуатирует и не манипулирует ими негативным образом.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Behavioral Science -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h2>Поведенческая наука (Behavioral Science)</h2>
+                <p>Междисциплинарное изучение человеческого поведения, которое охватывает такие дисциплины, как психология, социология и антропология. Эта область в первую очередь фокусируется на понимании того, что влияет на наши решения, действия и эмоции.</p>
+                <p>В контексте UX дизайна применение концепций и принципов поведенческой науки может улучшить опыт пользователя, повысив вовлеченность пользователя, удобство использования и общую удовлетворенность.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Behavioral Economics -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h2>Поведенческая экономика (Behavioral Economics)</h2>
+                <p>Это подраздел экономики, изучающий психологические, социальные и эмоциональные факторы, влияющие на принятие решений и экономическое поведение.</p>
+                <p>Стремится понять, почему люди делают выбор, отклоняющийся от традиционной экономической модели, которая предполагает, что люди ведут себя рационально и стремятся максимизировать свою полезность.</p>
+                <p class="highlight">Ключевые понятия: эвристики, когнитивные искажения, ограниченная рациональность, избегание потерь.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Behavior Design -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h2>Дизайн поведения (Behavior Design)</h2>
+                <p>Подход, который сочетает элементы психологии, нейронауки и принципов дизайна, чтобы понять и повлиять на поведение человека.</p>
+                <p>Цель дизайна поведения — облегчить пользователям достижение их целей или желаемых действий в рамках продукта, услуги или системы.</p>
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Модель B.J. Fogg</h3>
+                        <p>Поведение = Мотивация + Способность + Триггер</p>
+                    </div>
+                    <div class="column">
+                        <h3>Ключевые элементы</h3>
+                        <ul>
+                            <li>Понимание мотивации</li>
+                            <li>Упрощение задач</li>
+                            <li>Своевременные подсказки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Заключение -->
+        <div class="slide" id="slide11">
+            <div class="slide-content">
+                <h2>Заключение</h2>
+                <p>Использование принципов поведенческих наук в UX дизайне позволяет:</p>
+                <ul>
+                    <li>Создавать более интуитивные и удобные интерфейсы</li>
+                    <li>Повышать вовлеченность пользователей</li>
+                    <li>Помогать пользователям достигать их целей</li>
+                    <li>Улучшать конверсию и удержание</li>
+                </ul>
+                <p class="highlight">Важно: Всегда применяйте эти принципы этично, с уважением к пользователям и их выбору.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Вопросы -->
+        <div class="slide" id="slide12">
+            <div class="slide-content">
+                <h1>Спасибо за внимание!</h1>
+                <h2>Вопросы?</h2>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button id="prevBtn">Назад</button>
+        <button id="nextBtn">Вперед</button>
+    </div>
+    
+    <div class="navigation-dots" id="navDots"></div>
+    
+    <script>
+        // JavaScript for presentation controls
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const progressBar = document.getElementById('progressBar');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const navDots = document.getElementById('navDots');
+            
+            let currentSlideIndex = 0;
+            const totalSlides = slides.length;
+            
+            // Initialize progress bar
+            updateProgressBar();
+            
+            // Create navigation dots
+            createNavigationDots();
+            
+            // Update buttons state
+            updateButtonsState();
+            
+            // Event listeners for buttons
+            prevBtn.addEventListener('click', goToPreviousSlide);
+            nextBtn.addEventListener('click', goToNextSlide);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'ArrowRight' || event.key === ' ') {
+                    goToNextSlide();
+                } else if (event.key === 'ArrowLeft') {
+                    goToPreviousSlide();
+                }
+            });
+            
+            function goToNextSlide() {
+                if (currentSlideIndex < totalSlides - 1) {
+                    changeSlide(currentSlideIndex + 1);
+                }
+            }
+            
+            function goToPreviousSlide() {
+                if (currentSlideIndex > 0) {
+                    changeSlide(currentSlideIndex - 1);
+                }
+            }
+            
+            function changeSlide(index) {
+                slides[currentSlideIndex].classList.remove('active');
+                document.querySelectorAll('.dot')[currentSlideIndex].classList.remove('active');
+                
+                currentSlideIndex = index;
+                
+                slides[currentSlideIndex].classList.add('active');
+                document.querySelectorAll('.dot')[currentSlideIndex].classList.add('active');
+                
+                updateProgressBar();
+                updateButtonsState();
+            }
+            
+            function updateProgressBar() {
+                const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            function updateButtonsState() {
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+            }
+            
+            function createNavigationDots() {
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('dot');
+                    if (i === 0) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', function() {
+                        changeSlide(i);
+                    });
+                    navDots.appendChild(dot);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
