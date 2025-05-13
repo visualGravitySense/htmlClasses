@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Testing Subscription Forms with Nudge Theory</title>
+    <style>
+        :root {
+            --primary-a: #4f46e5;
+            --secondary-a: #ec4899;
+            --accent-a: #f59e0b;
+            --text-a: #1e1b4b;
+            --bg-a: #f8fafc;
+            --gray-a: #64748b;
+            --success-a: #10b981;
+            
+            --primary-b: #3b82f6;
+            --secondary-b: #06b6d4;
+            --accent-b: #f97316;
+            --text-b: #0f172a;
+            --bg-b: #f1f5f9;
+            --gray-b: #475569;
+            --success-b: #22c55e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #0f172a;
+            background-color: #e2e8f0;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1e293b;
+            font-size: 2.5rem;
+            width: 100%;
+        }
+        
+        h2 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .forms-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .forms-container {
+                grid-template-columns: 1fr;
+            }
+            
+            body {
+                padding: 1rem;
+            }
+        }
+        
+        .form-wrapper {
+            padding: 2rem;
+            border-radius: 1rem;
+            background-color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .description {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 0.5rem;
+            border-left: 4px solid #64748b;
+        }
+        
+        .description h3 {
+            margin-bottom: 0.5rem;
+            color: #334155;
+        }
+        
+        .description ul {
+            padding-left: 1.5rem;
+        }
+        
+        .description li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Variant A Styles */
+        .variant-a {
+            
+        }
+        
+        .variant-a::before {
+            
+        }
+        
+        .variant-a .form-header {
+            
+        }
+        
+        .variant-a .form-header h2 {
+            
+        }
+        
+        .variant-a .form-header p {
+            
+        }
+        
+        .variant-a .subscription-form {
+            
+        }
+        
+        .variant-a .timer {
+            
+        }
+        
+        .variant-a .timer::before {
+            /* content: "⏱"; */
+        }
+        
+        .variant-a .form-group {
+            
+        }
+        
+        .variant-a label {
+            
+        }
+        
+        .variant-a input {
+            
+        }
+        
+        .variant-a input:focus {
+            
+        }
+        
+        .variant-a .checkbox-group {
+            
+        }
+        
+        .variant-a .checkbox-group input {
+            
+        }
+        
+        .variant-a .checkbox-label {
+            
+        }
+        
+        .variant-a .btn {
+            
+        }
+        
+        .variant-a .btn:hover {
+            
+        }
+        
+        .variant-a .btn::after {
+            
+        }
+        
+        .variant-a .social-proof {
+            
+        }
+        
+        .variant-a .avatars {
+            
+        }
+        
+        .variant-a .avatar {
+            
+        }
+        
+        .variant-a .avatar:first-child {
+            
+        }
+        
+        .variant-a .avatar:nth-child(2) {
+            
+        }
+        
+        .variant-a .avatar:nth-child(3) {
+            
+        }
+        
+        .variant-a .testimonial {
+            
+        }
+        
+        .variant-a .testimonial::before {
+            
+        }
+        
+        .variant-a .testimonial p {
+            
+        }
+        
+        .variant-a .testimonial .author {
+            
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A/B Testing Форм Подписки с Принципами Nudge Theory</h1>
+        
+        <div class="forms-container">
+            <!-- Variant A -->
+            <div class="form-wrapper variant-a">
+                <div class="form-header">
+                    <h2>Станьте экспертом в CSS</h2>
+                    <p>Получайте еженедельные уроки и практические задания</p>
+                </div>
+                
+                <div class="subscription-form">
+                    <div class="timer">Осталось: 2 дня 15:30:45</div>
+                    
+                    <div class="form-group">
+                        <label for="nameA">Имя</label>
+                        <input type="text" id="nameA" placeholder="Ваше имя">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emailA">Email</label>
+                        <input type="email" id="emailA" placeholder="example@email.com" value="example@email.com">
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agreeA" checked>
+                        <label for="agreeA" class="checkbox-label">Я согласен получать информацию о специальных предложениях и новых курсах</label>
+                    </div>
+                    
+                    <button class="btn">Начать обучение бесплатно</button>
+                    
+                    <div class="social-proof">
+                        <span>✓</span> Уже 5000+ студентов обучаются у нас
+                    </div>
+                    
+                    <div class="avatars">
+                        <div class="avatar">АК</div>
+                        <div class="avatar">МВ</div>
+                        <div class="avatar">СП</div>
+                        <div class="avatar">+</div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p>Эти уроки полностью изменили мой подход к фронтенду. Теперь я создаю интерфейсы намного быстрее и качественнее!</p>
+                        <div class="author">— Анна К., Front-end разработчик</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+        
+
+    </div>
+</body>
+</html>
