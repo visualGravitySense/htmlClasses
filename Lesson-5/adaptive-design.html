@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивный Дизайн и Макеты</title>
+    <style>
+        :root {
+            --primary: #fc74d1;    /* Soft pink */
+            --primary-dark: #fd42b8; /* Darker pink */
+            --secondary: #B5EAD7;  /* Mint green */
+            --dark: #6B7B8D;      /* Muted blue-gray */
+            --light: #FFF5F5;     /* Soft pink-white */
+            --accent: #FFDAC1;    /* Peach */
+            --accent2: #C7CEEA;   /* Lavender */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .presentation {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(45deg, var(--light), var(--accent2));
+        }
+        
+        .slides {
+            min-height: 100vh;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 2rem 0.5rem;
+            scroll-snap-align: start;
+            position: relative;
+            background: linear-gradient(135deg, var(--light) 0%, var(--accent2) 100%);
+        }
+        
+        .slide-content {
+            max-width: 1000px;
+            width: 90%;
+            padding: 2rem 1rem;
+            border-radius: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            position: relative;
+            border: 3px dashed var(--primary);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+            text-shadow: 2px 2px 0px var(--accent2);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 1px 1px 0px var(--accent2);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .two-column > div {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 2px dotted var(--secondary);
+        }
+        
+        code {
+            background-color: var(--accent2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+        
+        pre {
+            background-color: var(--accent2);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            white-space: pre-wrap;
+            border: 2px solid var(--primary);
+        }
+        
+        .title-slide {
+            background: linear-gradient(45deg, var(--primary), var(--accent2));
+        }
+        
+        .title-slide h1 {
+            color: #803f68;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 3px 3px 0px var(--dark);
+        }
+        
+        .title-slide p {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #803f68;;
+            text-shadow: 1px 1px 0px var(--dark);
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            font-size: 1rem;
+            opacity: 0.7;
+            background: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            color: var(--dark);
+        }
+        
+        .demo {
+            border: 3px dashed var(--secondary);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .demo::before {
+            content: "Demo";
+            position: absolute;
+            top: -0.8rem;
+            left: 1rem;
+            background-color: var(--accent);
+            padding: 0 0.5rem;
+            color: var(--dark);
+            font-weight: bold;
+            border-radius: 0.5rem;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            border: 2px solid var(--accent2);
+        }
+        
+        .nav-btn:disabled {
+            background-color: var(--accent2);
+            color: var(--dark);
+            cursor: not-allowed;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.25rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .slide-content {
+                padding: 1rem 0.5rem;
+            }
+            
+            .title-slide h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Device mockups */
+        .devices {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .device {
+            border: 3px dashed var(--primary);
+            border-radius: 1rem;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .device-mobile {
+            width: 120px;
+            height: 200px;
+        }
+        
+        .device-tablet {
+            width: 200px;
+            height: 150px;
+        }
+        
+        .device-desktop {
+            width: 300px;
+            height: 180px;
+        }
+        
+        .device-header {
+            background-color: var(--accent);
+            padding: 0.25rem;
+            text-align: center;
+            font-size: 0.75rem;
+            border-bottom: 2px dotted var(--primary);
+        }
+        
+        .device-content {
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 24px);
+        }
+        
+        /* Flexbox demo */
+        .flexbox-demo {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            border: 3px dashed var(--secondary);
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .flex-item {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            border: 2px solid var(--accent2);
+        }
+        
+        /* Grid demo */
+        .grid-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+            border: 3px dashed var(--secondary);
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .grid-item {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            border: 2px solid var(--accent2);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="slides" id="slides">
+            <!-- Slide 1: Title -->
+            <div class="slide title-slide" id="slide1">
+                <div class="slide-content">
+                    <h1>Адаптивный Дизайн и Макеты</h1>
+                    <p>Полное руководство по созданию гибких веб-интерфейсов</p>
+                </div>
+                <div class="slide-number">1</div>
+            </div>
+
+            <!-- Slide 2: Introduction -->
+            <div class="slide" id="slide2">
+                <div class="slide-content">
+                    <h2>Что такое адаптивный дизайн?</h2>
+                    <p>Адаптивный веб-дизайн - это подход к веб-дизайну, который обеспечивает корректное отображение веб-страниц на различных устройствах и размерах экрана.</p>
+                    <div class="devices">
+                        <div class="device device-mobile">
+                            <div class="device-header">Мобильный</div>
+                            <div class="device-content">Контент адаптируется под маленькие экраны</div>
+                        </div>
+                        <div class="device device-tablet">
+                            <div class="device-header">Планшет</div>
+                            <div class="device-content">Контент по-разному отображается на средних экранах</div>
+                        </div>
+                        <div class="device device-desktop">
+                            <div class="device-header">Десктоп</div>
+                            <div class="device-content">Контент использует преимущества больших экранов</div>
+                        </div>
+                    </div>
+                    <p>Сегодня мы изучим, как создавать веб-сайты, которые обеспечивают оптимальный просмотр и взаимодействие на самых разных устройствах.</p>
+                </div>
+                <div class="slide-number">2</div>
+            </div>
+
+            <!-- Slide 3: Responsive Design Principles -->
+            <div class="slide" id="slide3">
+                <div class="slide-content">
+                    <h2>Принципы адаптивного дизайна</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Основные принципы</h3>
+                            <ul>
+                                <li><span class="highlight">Гибкие сетки:</span> Использование относительных единиц вместо фиксированных пикселей</li>
+                                <li><span class="highlight">Гибкие изображения:</span> Изображения, которые масштабируются внутри своих контейнеров</li>
+                                <li><span class="highlight">Медиа-запросы:</span> CSS-техники для применения разных стилей в зависимости от характеристик устройства</li>
+                                <li><span class="highlight">Точки перелома:</span> Точки, где ваш макет меняется для адаптации к разным размерам экрана</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Почему это важно</h3>
+                            <ul>
+                                <li>Мобильный трафик составляет более 50% мирового веб-трафика</li>
+                                <li>Пользователи ожидают безупречного опыта на всех своих устройствах</li>
+                                <li>Поисковые системы отдают предпочтение мобильно-дружественным сайтам</li>
+                                <li>Снижает затраты на разработку и поддержку по сравнению с отдельными мобильными сайтами</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">3</div>
+            </div>
+
+            <!-- Slide 4: Designing for Different Viewports -->
+            <div class="slide" id="slide4">
+                <div class="slide-content">
+                    <h2>Проектирование для разных размеров области просмотра</h2>
+                    <p>Область просмотра - это видимая часть веб-страницы. Разные устройства имеют разные размеры области просмотра.</p>
+                    <div class="demo">
+                        <h3>Ключевые аспекты области просмотра</h3>
+                        <ul>
+                            <li><span class="highlight">Ширина и высота:</span> Физические размеры области просмотра</li>
+                            <li><span class="highlight">Разрешение:</span> Плотность пикселей может значительно различаться между устройствами</li>
+                            <li><span class="highlight">Ориентация:</span> Портретная или ландшафтная ориентация значительно влияет на макет</li>
+                            <li><span class="highlight">Контекст пользователя:</span> Мобильные пользователи часто имеют другие потребности, чем пользователи десктопа</li>
+                        </ul>
+                        <h3>Необходимый мета-тег</h3>
+                        <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+                        <p>Этот мета-тег обеспечивает правильное масштабирование на мобильных устройствах и необходим для адаптивного дизайна.</p>
+                    </div>
+                </div>
+                <div class="slide-number">4</div>
+            </div>
+
+            <!-- Slide 5: Breakpoints -->
+            <div class="slide" id="slide5">
+                <div class="slide-content">
+                    <h2>Точки перелома и их стратегическое размещение</h2>
+                    <p>Точки перелома - это места, где контент вашего сайта адаптируется для обеспечения наилучшего макета для размера экрана.</p>
+                    <div class="two-column">
+                        <div>
+                            <h3>Общие точки перелома</h3>
+                            <ul>
+                                <li><span class="highlight">Маленький (Мобильный):</span> 320px - 480px</li>
+                                <li><span class="highlight">Средний (Планшет):</span> 481px - 768px</li>
+                                <li><span class="highlight">Большой (Десктоп):</span> 769px - 1024px</li>
+                                <li><span class="highlight">Очень большой:</span> 1025px и выше</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Стратегическое размещение</h3>
+                            <ul>
+                                <li>Устанавливайте точки перелома на основе контента, а не устройств</li>
+                                <li>Тестируйте дизайн при различных ширинах</li>
+                                <li>Ищите места, где макет ломается или выглядит неудобно</li>
+                                <li>Добавляйте точки перелома там, где это необходимо, вместо использования предопределенных значений</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">5</div>
+            </div>
+
+            <!-- Slide 6: Progressive Enhancement vs Graceful Degradation -->
+            <div class="slide" id="slide6">
+                <div class="slide-content">
+                    <h2>Прогрессивное улучшение против плавной деградации</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Прогрессивное улучшение</h3>
+                            <p>Начните с базовой функциональности, которая работает во всех браузерах, затем добавьте расширенные функции для современных браузеров.</p>
+                            <ul>
+                                <li>Начните с семантической HTML-структуры</li>
+                                <li>Добавьте базовые CSS для всех устройств</li>
+                                <li>Добавьте расширенные CSS для современных браузеров</li>
+                                <li>Добавьте JavaScript-улучшения в последнюю очередь</li>
+                            </ul>
+                            <p><span class="highlight">Направление:</span> Снизу → Вверх</p>
+                        </div>
+                        <div>
+                            <h3>Плавная деградация</h3>
+                            <p>Сначала создайте для современных браузеров, затем обеспечьте приемлемую функциональность в старых браузерах.</p>
+                            <ul>
+                                <li>Проектируйте с учетом современных функций</li>
+                                <li>Создайте запасные варианты для старых браузеров</li>
+                                <li>Обеспечьте работу основной функциональности</li>
+                                <li>Примите, что опыт может отличаться</li>
+                            </ul>
+                            <p><span class="highlight">Направление:</span> Сверху → Вниз</p>
+                        </div>
+                    </div>
+                    <p>Прогрессивное улучшение обычно предпочтительнее в современном адаптивном дизайне, так как оно соответствует подходу "сначала мобильные".</p>
+                </div>
+                <div class="slide-number">6</div>
+            </div>
+
+            <!-- Slide 7: Wireframing Responsive Layouts -->
+            <div class="slide" id="slide7">
+                <div class="slide-content">
+                    <h2>Прототипирование адаптивных макетов</h2>
+                    <p>Прототипирование для адаптивного дизайна требует планирования различных макетов для разных размеров экрана.</p>
+                    <div class="demo">
+                        <h3>Подходы к адаптивному прототипированию</h3>
+                        <ul>
+                            <li><span class="highlight">Создавайте несколько прототипов</span> для ключевых точек перелома (мобильный, планшет, десктоп)</li>
+                            <li><span class="highlight">Используйте сетки</span> для обеспечения согласованности между точками перелома</li>
+                            <li><span class="highlight">Учитывайте приоритет контента</span> - что показывать первым на маленьких экранах?</li>
+                            <li><span class="highlight">Планируйте области касания</span> для мобильных устройств (минимум 44×44px)</li>
+                            <li><span class="highlight">Продумайте паттерны навигации</span>, которые работают на всех устройствах (гамбургер-меню и т.д.)</li>
+                        </ul>
+                        <p>Инструменты вроде Figma, Adobe XD и Sketch предлагают функции адаптивного дизайна, которые помогают моделировать, как дизайны адаптируются к разным размерам экрана.</p>
+                    </div>
+                </div>
+                <div class="slide-number">7</div>
+            </div>
+
+            <!-- Slide 8: Media Queries and Breakpoints -->
+            <div class="slide" id="slide8">
+                <div class="slide-content">
+                    <h2>Медиа-запросы и точки перелома</h2>
+                    <p>Медиа-запросы позволяют применять CSS-стили в зависимости от характеристик устройства.</p>
+                    <div class="code-example">
+                        <h3>Базовый синтаксис медиа-запросов</h3>
+                        <pre><code>/* Базовые стили для всех устройств */
+.container {
+    width: 100%;
+    padding: 15px;
+}
+
+/* Стили для планшетов и больше */
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+}
+
+/* Стили для десктопов и больше */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 970px;
+    }
+}</code></pre>
+                        <!-- Static Media Query Visualization -->
+                        <div style="width: 100%; max-width: 350px; margin: 1rem auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="background: var(--primary); color: white; border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center;">Мобильный (100%)</div>
+                            <div style="background: var(--secondary); color: var(--dark); border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center; width: 80%; align-self: center;">Планшет (max-width: 750px)</div>
+                            <div style="background: var(--accent); color: var(--dark); border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center; width: 60%; align-self: center;">Десктоп (max-width: 970px)</div>
+                        </div>
+                    </div>
+                    <h3>Особенности медиа-запросов</h3>
+                    <ul>
+                        <li><span class="highlight">width, min-width, max-width:</span> Целевая ширина области просмотра</li>
+                        <li><span class="highlight">height, min-height, max-height:</span> Целевая высота области просмотра</li>
+                        <li><span class="highlight">orientation:</span> Портретная или ландшафтная ориентация</li>
+                        <li><span class="highlight">aspect-ratio:</span> Соотношение ширины к высоте</li>
+                        <li><span class="highlight">resolution:</span> Плотность пикселей (полезно для дисплеев с высокой плотностью пикселей)</li>
+                    </ul>
+                </div>
+                <div class="slide-number">8</div>
+            </div>
+
+            <!-- Slide 9: Flexbox -->
+            <div class="slide" id="slide9">
+                <div class="slide-content">
+                    <h2>Flexbox для одномерных макетов</h2>
+                    <p>Flexbox предназначен для одномерных макетов - либо строк, либо столбцов.</p>
+                    <div class="flexbox-demo">
+                        <div class="flex-item">Элемент 1</div>
+                        <div class="flex-item">Элемент 2</div>
+                        <div class="flex-item">Элемент 3</div>
+                    </div>
+                    <div class="two-column">
+                        <div>
+                            <h3>Ключевые свойства Flexbox</h3>
+                            <ul>
+                                <li><code>display: flex</code> - Создает flex-контейнер</li>
+                                <li><code>flex-direction</code> - Направление flex-элементов (строка/столбец)</li>
+                                <li><code>justify-content</code> - Выравнивание по главной оси</li>
+                                <li><code>align-items</code> - Выравнивание по поперечной оси</li>
+                                <li><code>flex-wrap</code> - Перенос элементов на новые строки</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Лучшие случаи использования</h3>
+                            <ul>
+                                <li>Меню навигации</li>
+                                <li>Карточные макеты</li>
+                                <li>Центрирование контента</li>
+                                <li>Столбцы равной высоты</li>
+                                <li>Адаптивные макеты с переупорядочиванием</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <pre><code>/* Базовый пример Flexbox */
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.item {
+    flex: 1 1 200px; /* растягивание, сжатие, базовый размер */
+}</code></pre>
+                    <!-- Static Flexbox Visualization -->
+                    <div style="display: flex; gap: 1rem; background: var(--accent2); border-radius: 1rem; padding: 1rem; margin-top: 1rem; justify-content: space-between;">
+                        <div style="background: var(--primary); color: white; border-radius: 0.5rem; padding: 1rem 2rem; font-weight: bold;">1</div>
+                        <div style="background: var(--secondary); color: var(--dark); border-radius: 0.5rem; padding: 1rem 2rem; font-weight: bold;">2</div>
+                        <div style="background: var(--accent); color: var(--dark); border-radius: 0.5rem; padding: 1rem 2rem; font-weight: bold;">3</div>
+                    </div>
+                </div>
+                <div class="slide-number">9</div>
+            </div>
+
+            <!-- Slide 10: CSS Grid -->
+            <div class="slide" id="slide10">
+                <div class="slide-content">
+                    <h2>CSS Grid для двумерных макетов</h2>
+                    <p>CSS Grid предназначен для двумерных макетов - одновременно строк и столбцов.</p>
+                    <div class="grid-demo">
+                        <div class="grid-item">1</div>
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">5</div>
+                        <div class="grid-item">6</div>
+                    </div>
+                    <div class="two-column">
+                        <div>
+                            <h3>Ключевые свойства Grid</h3>
+                            <ul>
+                                <li><code>display: grid</code> - Создает grid-контейнер</li>
+                                <li><code>grid-template-columns</code> - Определяет столбцы</li>
+                                <li><code>grid-template-rows</code> - Определяет строки</li>
+                                <li><code>grid-gap</code> - Устанавливает промежутки между элементами</li>
+                                <li><code>grid-area</code> - Размещает элементы в определенных областях</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Лучшие случаи использования</h3>
+                            <ul>
+                                <li>Макеты страниц</li>
+                                <li>Галереи изображений</li>
+                                <li>Интерфейсы панелей управления</li>
+                                <li>Сложные макеты форм</li>
+                                <li>Контент в стиле журнала</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <pre><code>/* Пример адаптивного Grid */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 1rem;
+}</code></pre>
+                    <!-- Static Grid Visualization -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: var(--accent2); border-radius: 1rem; padding: 1rem; margin-top: 1rem;">
+                        <div style="background: var(--primary); color: white; border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">1</div>
+                        <div style="background: var(--secondary); color: var(--dark); border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">2</div>
+                        <div style="background: var(--accent); color: var(--dark); border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">3</div>
+                        <div style="background: var(--primary); color: white; border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">4</div>
+                        <div style="background: var(--secondary); color: var(--dark); border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">5</div>
+                        <div style="background: var(--accent); color: var(--dark); border-radius: 0.5rem; padding: 1rem; font-weight: bold; text-align: center;">6</div>
+                    </div>
+                </div>
+                <div class="slide-number">10</div>
+            </div>
+
+            <!-- Slide 11: Combining Flexbox and Grid -->
+            <div class="slide" id="slide11">
+                <div class="slide-content">
+                    <h2>Combining Flexbox and Grid</h2>
+                    <p>For complex layouts, you can combine the strengths of both Flexbox and Grid.</p>
+                    <div class="two-column">
+                        <div>
+                            <h3>When to Use Flexbox</h3>
+                            <ul>
+                                <li>For content flow in a single direction</li>
+                                <li>When you need flexible spacing</li>
+                                <li>For alignment challenges</li>
+                                <li>When content size determines layout</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>When to Use Grid</h3>
+                            <ul>
+                                <li>For two-dimensional layouts</li>
+                                <li>When you need to define both rows and columns</li>
+                                <li>For more complex positioning</li>
+                                <li>When layout determines content placement</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="demo">
+                        <h3>Common Pattern: Grid for Layout, Flexbox for Components</h3>
+                        <pre><code>/* Page structure with Grid */
+.page {
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    grid-template-columns: 1fr 3fr;
+}
+
+/* Navigation with Flexbox */
+.nav {
+    display: flex;
+    justify-content: space-between;
+}</code></pre>
+                    </div>
+                </div>
+                <div class="slide-number">11</div>
+            </div>
+
+            <!-- Slide 12: Responsive Images and Media -->
+            <div class="slide" id="slide12">
+                <div class="slide-content">
+                    <h2>Адаптивные изображения и медиа</h2>
+                    <p>Изображения и медиа часто составляют большую часть размера страницы. Их оптимизация важна для производительности.</p>
+                    <div class="two-column">
+                        <div>
+                            <h3>Базовые адаптивные изображения</h3>
+                            <pre><code>img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+                            <p>Это гарантирует, что изображения никогда не превышают ширину контейнера, сохраняя пропорции.</p>
+                            <!-- Static Responsive Image Visualization -->
+                            <div style="width: 100%; max-width: 300px; border: 2px dashed var(--primary); border-radius: 1rem; background: var(--accent2); margin: 1rem auto; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+                                <img src="https://placekitten.com/400/200" alt="Пример адаптивного изображения" style="max-width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                                <span style="margin-top: 0.5rem; color: var(--dark); font-size: 0.9rem;">Изображение с max-width: 100%</span>
+                            </div>
+                            <h3>Арт-дирекция с &lt;picture&gt;</h3>
+                            <pre><code>&lt;picture&gt;
+    &lt;source media="(max-width: 600px)" srcset="small.jpg"&gt;
+    &lt;source media="(max-width: 1200px)" srcset="medium.jpg"&gt;
+    &lt;img src="large.jpg" alt="Описание"&gt;
+&lt;/picture&gt;</code></pre>
+                        </div>
+                        <div>
+                            <h3>Переключение разрешения с помощью srcset</h3>
+                            <pre><code>&lt;img 
+    src="image-800.jpg"
+    srcset="image-400.jpg 400w,
+            image-800.jpg 800w,
+            image-1200.jpg 1200w"
+    sizes="(max-width: 600px) 100vw,
+           (max-width: 1200px) 50vw,
+           33vw"
+    alt="Описание"&gt;</code></pre>
+                            <h3>Адаптивные фоновые изображения</h3>
+                            <pre><code>/* Смена фонового изображения на разных точках перелома */
+.hero {
+    background-image: url('large.jpg');
+}
+
+@media (max-width: 768px) {
+    .hero {
+        background-image: url('medium.jpg');
+    }
+}</code></pre>
+                            <!-- Static Responsive Background Visualization -->
+                            <div style="width: 100%; max-width: 300px; height: 100px; border: 2px dashed var(--primary); border-radius: 1rem; background: url('https://placekitten.com/300/100') center/cover no-repeat, var(--accent2); margin: 1rem auto; display: flex; align-items: flex-end; justify-content: center;">
+                                <span style="background: rgba(255,255,255,0.7); color: var(--dark); font-size: 0.9rem; border-radius: 0.5rem; margin-bottom: 0.5rem; padding: 0.2rem 0.7rem;">Фоновое изображение</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">12</div>
+            </div>
+
+            <!-- Slide 13: Mobile-First Approach -->
+            <div class="slide" id="slide13">
+                <div class="slide-content">
+                    <h2>Мобильный подход (Mobile-First)</h2>
+                    <p>Mobile-first означает проектирование и кодирование сначала для мобильных устройств, а затем постепенное улучшение для больших экранов.</p>
+                    <div class="demo">
+                        <h3>Преимущества Mobile-First</h3>
+                        <ul>
+                            <li>Фокус на основном контенте и функциональности</li>
+                            <li>Обычно приводит к более быстрой загрузке сайтов</li>
+                            <li>Соответствует прогрессивному улучшению</li>
+                            <li>Подготовка к мобильному будущему</li>
+                        </ul>
+                        <h3>Пример реализации</h3>
+                        <pre><code>/* Базовые стили для мобильных */
+.container {
+    padding: 15px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Улучшения для планшетов */
+@media (min-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+    
+    .nav {
+        flex-direction: row;
+    }
+}
+
+/* Дополнительные улучшения для десктопа */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}</code></pre>
+                        <!-- Static Mobile-First Navigation Visualization -->
+                        <div style="width: 100%; max-width: 350px; margin: 1rem auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="background: var(--primary); color: white; border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center;">Меню</div>
+                            <div style="background: var(--secondary); color: var(--dark); border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center;">Главная</div>
+                            <div style="background: var(--accent); color: var(--dark); border-radius: 0.5rem; padding: 0.7rem 1rem; font-weight: bold; text-align: center;">О нас</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">13</div>
+            </div>
+
+            <!-- Slide 14: Testing Responsive Designs -->
+            <div class="slide" id="slide14">
+                <div class="slide-content">
+                    <h2>Тестирование адаптивных дизайнов на разных устройствах</h2>
+                    <p>Тестирование важно, чтобы убедиться, что ваш адаптивный дизайн работает корректно на всех устройствах.</p>
+                    <div class="two-column">
+                        <div>
+                            <h3>Методы тестирования</h3>
+                            <ul>
+                                <li><span class="highlight">Browser DevTools:</span> Используйте встроенные режимы адаптивного дизайна в браузере</li>
+                                <li><span class="highlight">Физические устройства:</span> Тестируйте на реальных мобильных телефонах и планшетах</li>
+                                <li><span class="highlight">Device Labs:</span> Сервисы, предоставляющие доступ к разным устройствам</li>
+                                <li><span class="highlight">Эмуляторы/симуляторы:</span> Программы, имитирующие разные устройства</li>
+                                <li><span class="highlight">Онлайн-инструменты:</span> Browserstack, Responsively App и др.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Что тестировать</h3>
+                            <ul>
+                                <li>Целостность макета на разных точках перелома</li>
+                                <li>Размеры областей касания (минимум 44×44px)</li>
+                                <li>Читаемость и масштабирование шрифтов</li>
+                                <li>Время загрузки на медленных сетях</li>
+                                <li>Удобство форм на мобильных устройствах</li>
+                                <li>Доступность навигации</li>
+                                <li>Изменение ориентации экрана</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">14</div>
+            </div>
+
+            <!-- Slide 15: Best Practices -->
+            <div class="slide" id="slide15">
+                <div class="slide-content">
+                    <h2>Лучшие практики адаптивного дизайна</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Производительность</h3>
+                            <ul>
+                                <li>Оптимизируйте изображения для разных размеров экрана</li>
+                                <li>Минимизируйте количество HTTP-запросов с помощью CSS-спрайтов или иконок-шрифтов</li>
+                                <li>Используйте ленивую загрузку для контента вне экрана</li>
+                                <li>Внедряйте критический CSS для ускорения отображения</li>
+                                <li>Тестируйте производительность на медленных мобильных соединениях</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Доступность</h3>
+                            <ul>
+                                <li>Обеспечьте достаточный контраст на всех размерах</li>
+                                <li>Используйте семантические HTML-элементы</li>
+                                <li>Делайте области касания достаточно большими (мин. 44×44px)</li>
+                                <li>Проверьте навигацию с клавиатуры</li>
+                                <li>Убедитесь, что экранные читалки могут читать ваш контент</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="demo">
+                        <h3>Типичные ошибки, которых стоит избегать</h3>
+                        <ul>
+                            <li>Фиксированные размеры, мешающие масштабированию</li>
+                            <li>Слишком мелкий текст на мобильных устройствах</li>
+                            <li>Скрытие важного контента на маленьких экранах</li>
+                            <li>Забывают тестировать на реальных устройствах</li>
+                            <li>Сложные hover-эффекты, не работающие на сенсорных экранах</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-number">15</div>
+            </div>
+
+            <!-- Slide 16: CSS Variables for Responsive Design -->
+            <div class="slide" id="slide16">
+                <div class="slide-content">
+                    <h2>CSS-переменные для адаптивного дизайна</h2>
+                    <p>CSS Custom Properties (переменные) делают адаптивный дизайн более удобным и гибким для поддержки.</p>
+                    <div class="code-example">
+                        <h3>Настройка CSS-переменных</h3>
+                        <pre><code>:root {
+    /* Базовые размеры */
+    --base-font-size: 16px;
+    --spacing-unit: 1rem;
+    --container-width: 100%;
+    --header-height: 60px;
+}
+
+@media (min-width: 768px) {
+    :root {
+        --base-font-size: 18px;
+        --spacing-unit: 1.5rem;
+        --container-width: 750px;
+        --header-height: 80px;
+    }
+}
+
+@media (min-width: 1200px) {
+    :root {
+        --container-width: 1140px;
+    }
+}</code></pre>
+                    </div>
+                    <h3>Использование CSS-переменных</h3>
+                    <pre><code>.container {
+    width: var(--container-width);
+    margin: 0 auto;
+    padding: var(--spacing-unit);
+}
+
+header {
+    height: var(--header-height);
+}
+
+body {
+    font-size: var(--base-font-size);
+}</code></pre>
+                    <p>Такой подход централизует значения для адаптива и делает код более поддерживаемым.</p>
+                </div>
+                <div class="slide-number">16</div>
+            </div>
+
+            <!-- Slide 17: Container Queries -->
+            <div class="slide" id="slide17">
+                <div class="slide-content">
+                    <h2>Контейнерные запросы (Container Queries)</h2>
+                    <p>Контейнерные запросы позволяют применять стили на основе размера родительского контейнера, а не только окна браузера.</p>
+                    <div class="two-column">
+                        <div>
+                            <h3>Преимущества контейнерных запросов</h3>
+                            <ul>
+                                <li>Компоненты реагируют на размер контейнера, а не только окна</li>
+                                <li>Один и тот же компонент может адаптироваться к разным контекстам</li>
+                                <li>Лучше для компонентных дизайн-систем</li>
+                                <li>Более переиспользуемый и поддерживаемый код</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Синтаксис контейнерных запросов</h3>
+                            <pre><code>/* Определение контекста контейнера */
+.card-container {
+    container-type: inline-size;
+}
+
+/* Стили на основе ширины контейнера */
+@container (min-width: 400px) {
+    .card {
+        display: flex;
+    }
+    
+    .card-image {
+        width: 30%;
+    }
+    
+    .card-content {
+        width: 70%;
+    }
+}</code></pre>
+                            <p>Примечание: проверьте поддержку браузеров перед использованием в продакшене.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">17</div>
+            </div>
+
+            <!-- Slide 18: Case Studies -->
+            <div class="slide" id="slide18">
+                <div class="slide-content">
+                    <h2>Кейсы адаптивного дизайна</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Проблемы адаптива в e-commerce</h3>
+                            <ul>
+                                <li><span class="highlight">Списки товаров:</span> Сетка превращается в список на мобильных</li>
+                                <li><span class="highlight">Фильтрация:</span> Фильтры выезжают сбоку на мобильных</li>
+                                <li><span class="highlight">Навигация:</span> Мега-меню превращается в аккордеон на мобильных</li>
+                                <li><span class="highlight">Оформление заказа:</span> Упрощённые формы для мобильных пользователей</li>
+                            </ul>
+                            <p>Обычно решения включают постепенное раскрытие информации и приоритизацию основных функций для мобильных.</p>
+                        </div>
+                        <div>
+                            <h3>Проблемы новостных/контентных сайтов</h3>
+                            <ul>
+                                <li><span class="highlight">Макет статьи:</span> Боковая колонка уходит вниз на мобильных</li>
+                                <li><span class="highlight">Типографика:</span> Разные размеры шрифтов и межстрочные интервалы</li>
+                                <li><span class="highlight">Изображения:</span> Арт-дирекция для разных контекстов</li>
+                                <li><span class="highlight">Реклама:</span> Разные рекламные блоки для разных экранов</li>
+                            </ul>
+                            <p>Контентные сайты выигрывают от прогрессивной загрузки и продуманного приоритета контента.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">18</div>
+            </div>
+
+            <!-- Slide 19: Future of Responsive Design -->
+            <div class="slide" id="slide19">
+                <div class="slide-content">
+                    <h2>Будущее адаптивного дизайна</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Emerging Technologies</h3>
+                            <ul>
+                                <li><span class="highlight">Container Queries:</span> Компоненты, реагирующие на контейнер</li>
+                                <li><span class="highlight">Subgrid:</span> Элементы grid, участвующие в родительской сетке</li>
+                                <li><span class="highlight">Viewport Units:</span> Новые единицы svw, lvw, dvw</li>
+                                <li><span class="highlight">Aspect Ratio:</span> Свойство aspect-ratio</li>
+                                <li><span class="highlight">Scroll-linked Animations:</span> Анимации, зависящие от прокрутки</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Emerging Patterns</h3>
+                            <ul>
+                                <li><span class="highlight">Intrinsic Web Design:</span> Вне рамок классического адаптива</li>
+                                <li><span class="highlight">Device Agnostic:</span> Дизайн под возможности, а не устройства</li>
+                                <li><span class="highlight">Fluid Typography:</span> Шрифты, масштабируемые с окном</li>
+                                <li><span class="highlight">Context-aware Components:</span> Компоненты, адаптирующиеся к контексту</li>
+                                <li><span class="highlight">AI-driven Layouts:</span> Автоматическая подстройка под пользователя</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p>Будущее адаптива — это не только устройства, а по-настоящему гибкие и контекстно-осознанные интерфейсы.</p>
+                </div>
+                <div class="slide-number">19</div>
+            </div>
+
+            <!-- Slide 20: Resources and Practice -->
+            <div class="slide" id="slide20">
+                <div class="slide-content">
+                    <h2>Ресурсы и практические задания</h2>
+                    <div class="two-column">
+                        <div>
+                            <h3>Learning Resources</h3>
+                            <ul>
+                                <li>MDN Web Docs - Responsive Design</li>
+                                <li>CSS-Tricks Guide to Flexbox & Grid</li>
+                                <li>web.dev Responsive Design Guide</li>
+                                <li>Smashing Magazine Articles</li>
+                                <li>Google's Responsive Web Design Fundamentals</li>
+                            </ul>
+                            <h3>Tools</h3>
+                            <ul>
+                                <li>Browser DevTools</li>
+                                <li>Responsively App</li>
+                                <li>BrowserStack</li>
+                                <li>Figma/Adobe XD for responsive wireframing</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Practice Exercises</h3>
+                            <ul>
+                                <li><span class="highlight">Exercise 1:</span> Create a responsive navigation that transforms from desktop to mobile</li>
+                                <li><span class="highlight">Exercise 2:</span> Build a product card that adapts to different container widths</li>
+                                <li><span class="highlight">Exercise 3:</span> Implement a responsive image gallery using CSS Grid</li>
+                                <li><span class="highlight">Exercise 4:</span> Create a responsive form with appropriate mobile optimizations</li>
+                                <li><span class="highlight">Exercise 5:</span> Build a complete responsive landing page from a provided design</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-number">20</div>
+            </div>
+
+            <!-- Slide 21: Summary -->
+            <div class="slide" id="slide21">
+                <div class="slide-content">
+                    <h2>Итоги: основные выводы</h2>
+                    <div class="demo">
+                        <h3>Основы адаптивного дизайна</h3>
+                        <ul>
+                            <li>Проектируйте для разных размеров экрана с помощью гибких макетов и медиа-запросов</li>
+                            <li>Используйте точки перелома, исходя из контента, а не устройств</li>
+                            <li>Внедряйте mobile-first для прогрессивного улучшения</li>
+                            <li>Выбирайте подходящие инструменты: Flexbox для 1D, Grid для 2D макетов</li>
+                            <li>Оптимизируйте изображения и медиа для разных экранов</li>
+                            <li>Тестируйте на разных устройствах и в разных условиях</li>
+                        </ul>
+                        <p>Помните: цель адаптивного дизайна — обеспечить оптимальный просмотр и взаимодействие независимо от устройства.</p>
+                    </div>
+                    <h3>Вопросы?</h3>
+                    <p>Продолжим с практическими заданиями на следующем занятии.</p>
+                </div>
+                <div class="slide-number">21</div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prev">Назад</button>
+            <button class="nav-btn" id="next">Вперед</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            let currentSlide = 1;
+            
+            const prevBtn = document.getElementById('prev');
+            const nextBtn = document.getElementById('next');
+            
+            // Initial button state
+            updateButtons();
+            
+            // Button event listeners
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    navigateToSlide(currentSlide);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    navigateToSlide(currentSlide);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    if (currentSlide > 1) {
+                        currentSlide--;
+                        navigateToSlide(currentSlide);
+                    }
+                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    if (currentSlide < totalSlides) {
+                        currentSlide++;
+                        navigateToSlide(currentSlide);
+                    }
+                }
+            });
+            
+            function navigateToSlide(slideNumber) {
+                const targetSlide = document.getElementById('slide' + slideNumber);
+                targetSlide.scrollIntoView({ behavior: 'smooth' });
+                updateButtons();
+            }
+            
+            function updateButtons() {
+                prevBtn.disabled = currentSlide === 1;
+                nextBtn.disabled = currentSlide === totalSlides;
+            }
+        });
+    </script>
+</body>
+</html>
