@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Имя Фамилия | UX/UI Дизайнер</title>
+    <style>
+        :root {
+            --color-bg: #f9f9f9;
+            --color-bg-card: #fff;
+            --color-bg-card-alt: #f5f5f5;
+            --color-bg-dark: #333;
+            --color-primary: #2d78c8;
+            --color-primary-dark: #2367a9;
+            --color-accent: #1a1a1a;
+            --color-text: #1a1a1a;
+            --color-text-light: #333;
+            --color-text-muted: #666;
+            --color-border: #f0f0f0;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+            --color-shadow-light: rgba(0, 0, 0, 0.05);
+            --color-shadow-card: rgba(0,0,0,0.06);
+            --color-white: #fff;
+            --color-link: #2d78c8;
+        }
+        /* Основные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 120px 0;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--color-primary);
+        }
+        
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+        
+        p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--color-text-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Навигация */
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            z-index: 100;
+            box-shadow: 0 2px 20px var(--color-shadow);
+        }
+        
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            min-height: 90px;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+            margin-right: 40px;
+            white-space: nowrap;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-links li {
+            margin: 0;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            padding: 4px 0;
+            display: inline-block;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-link);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a.active::after,
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Главный экран */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 120px;
+        }
+        
+        .hero-content {
+            width: 50%;
+            padding-right: 50px;
+        }
+        
+        .hero-image {
+            width: 50%;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            background: var(--color-bg-card-alt);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: var(--color-text-light);
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 4px 15px var(--color-shadow-card);
+        }
+        
+        /* О себе */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 350px;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--color-shadow-light);
+            background: var(--color-bg-card-alt);
+        }
+        
+        /* Навыки */
+        .skills {
+            background-color: #fff;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .skill-card {
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--color-shadow-light);
+            background-color: var(--color-bg-card);
+            border: 2px solid var(--color-border);
+        }
+        
+        .skill-card h3 {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: var(--color-text);
+        }
+        
+        .skill-card p {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+        }
+        
+        /* Процесс работы */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            counter-reset: step;
+            margin-top: 40px;
+        }
+        
+        .process-step {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .process-step::before {
+            counter-increment: step;
+            content: counter(step);
+            display: block;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .process-step::after {
+            content: "";
+            position: absolute;
+            top: 30px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: #ddd;
+            z-index: -1;
+        }
+        
+        .process-step:last-child::after {
+            display: none;
+        }
+        
+        /* Портфолио */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--color-shadow);
+        }
+        
+        .portfolio-image {
+            height: 250px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
+        .portfolio-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--color-text);
+        }
+        
+        /* Отзывы */
+        .testimonials {
+            background-color: #fff;
+        }
+        
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .testimonial-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            font-weight: 500;
+            margin-bottom: 30px;
+            color: var(--color-text);
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--color-text);
+        }
+        
+        .testimonial-position {
+            color: #777;
+        }
+        
+        /* Услуги */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--color-shadow-light);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-card i {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+        
+        /* Контакты */
+        .contact {
+            background-color: #fff;
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--color-text);
+        }
+        
+        .contact-info p {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+        
+        .contact-form {
+            flex: 2;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Футер */
+        footer {
+            background-color: var(--color-bg-dark);
+            color: var(--color-white);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--color-white);
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            color: var(--color-white);
+            font-size: 1.5rem;
+        }
+        
+        footer .social-links a {
+            padding: 0 14px;
+        }
+        
+        /* Адаптив */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content, .hero-image {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 40px;
+            }
+            
+            .hero-image img {
+                max-width: 300px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-image img {
+                max-width: 250px;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            h2 {
+                font-size: 2.8rem;
+            }
+            
+            h3 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            h3 {
+                font-size: 1.6rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Стили для мобильного меню */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 20px;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 2px 10px var(--color-shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-btn.active i:before {
+                content: "\f00d";
+            }
+        }
+
+        /* Убираем hover эффекты для производительности */
+        .portfolio-overlay {
+            transform: translateY(0);
+            opacity: 0.9;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: none;
+        }
+
+        .skill-card:hover,
+        .service-card:hover {
+            transform: none;
+        }
+
+        /* Добавляем Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">Ваше Имя</a>
+            <ul class="nav-links">
+                <li><a href="#about">О себе</a></li>
+                <li><a href="#skills">Навыки</a></li>
+                <li><a href="#process">Процесс</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="container" style="display: flex; align-items: center;">
+            <div class="hero-content">
+                <h1>Привет, я Ваше Имя</h1>
+                <p>UX/UI дизайнер с опытом создания пользовательских интерфейсов, которые приносят результаты. Я помогаю брендам создавать продукты, в которые влюбляются пользователи.</p>
+                <a href="#contact" class="btn">Связаться со мной</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/400x400?text=Фото" alt="Фото дизайнера">
+            </div>
+        </div>
+    </section>
+    
+    <!-- О себе -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>О себе</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Я UX/UI дизайнер с более чем [X] летним опытом работы. Я специализируюсь на создании интуитивно понятных и визуально привлекательных интерфейсов, которые помогают бизнесу достигать своих целей.</p>
+                    <p>Мой подход основывается на глубоком понимании пользователей и их потребностей. Я верю, что хороший дизайн должен не только выглядеть привлекательно, но и решать реальные проблемы.</p>
+                    <p>За время своей карьеры я работал с различными брендами и компаниями, от стартапов до крупных корпораций, помогая им улучшать их цифровые продукты и создавать уникальный пользовательский опыт.</p>
+                    <a href="#" class="btn">Скачать резюме</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://placehold.co/400x600?text=Рабочий+процесс" alt="Рабочий процесс">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Навыки -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Мои навыки</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fas fa-pencil-ruler"></i>
+                    <h3>UI Дизайн</h3>
+                    <p>Создание визуально привлекательных интерфейсов с упором на эстетику и бренд</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-users"></i>
+                    <h3>UX Дизайн</h3>
+                    <p>Разработка пользовательских сценариев и прототипов на основе исследований</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Отзывчивый дизайн</h3>
+                    <p>Адаптивные интерфейсы для любых устройств и разрешений экрана</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Прототипы</h3>
+                    <p>Создание интерактивных прототипов для тестирования и презентации</p>
+                </div>
+            </div>
+            
+            <h3 style="text-align: center; margin-top: 50px; margin-bottom: 30px;">Инструменты, которыми я владею</h3>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Logo" alt="Figma logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <h3>Figma</h3>
+                </div>
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Logo" alt="Adobe XD logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <h3>Adobe XD</h3>
+                </div>
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Logo" alt="Sketch logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <h3>Sketch</h3>
+                </div>
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Logo" alt="Photoshop logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <h3>Photoshop</h3>
+                </div>
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Logo" alt="Illustrator logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <h3>Illustrator</h3>
+                </div>
+                <!-- <div class="skill-card">
+                    <h3>InVision</h3>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Процесс работы -->
+    <section id="process" class="process">
+        <div class="container">
+            <h2>Мой процесс работы</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Я следую структурированному процессу дизайна, который обеспечивает эффективные решения и отличные результаты для каждого проекта.</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <h3>Исследование</h3>
+                    <p>Изучение пользователей, конкурентов и бизнес-целей</p>
+                </div>
+                <div class="process-step">
+                    <h3>Стратегия</h3>
+                    <p>Определение целей, пользовательских сценариев и информационной архитектуры</p>
+                </div>
+                <div class="process-step">
+                    <h3>Прототипы</h3>
+                    <p>Создание вайрфреймов и интерактивных прототипов</p>
+                </div>
+                <div class="process-step">
+                    <h3>Дизайн</h3>
+                    <p>Разработка визуального стиля и пользовательского интерфейса</p>
+                </div>
+                <div class="process-step">
+                    <h3>Тестирование</h3>
+                    <p>Проверка удобства использования и итерация на основе обратной связи</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Портфолио -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2>Мои работы</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+1" alt="Проект 1" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 1</h3>
+                        <p>Редизайн мобильного приложения</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+2" alt="Проект 2" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 2</h3>
+                        <p>Дизайн e-commerce платформы для модного бренда</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+3" alt="Проект 3" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 3</h3>
+                        <p>UX/UI для образовательной платформы</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+4" alt="Проект 4" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 4</h3>
+                        <p>Редизайн корпоративного веб-сайта</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+5" alt="Проект 5" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 5</h3>
+                        <p>UI-компоненты для дашборда аналитики</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
+                        <img src="https://placehold.co/350x220?text=Проект+6" alt="Проект 6" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+                    </div>
+                    <div style="padding: 30px 24px 24px 24px;">
+                        <h3 class="portfolio-title">Проект 6</h3>
+                        <p>Мобильное приложение для здорового образа жизни</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Отзывы -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>Отзывы клиентов</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Работа с этим дизайнером превзошла все наши ожидания. Отличное понимание наших потребностей и внимание к деталям сделали наш проект успешным."</p>
+                    <p class="testimonial-author">Иван Петров</p>
+                    <p class="testimonial-position">CEO, Компания ABC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Услуги -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Мои услуги</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Веб-дизайн</h3>
+                    <p>Создание современных и функциональных веб-сайтов с отзывчивым дизайном</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Мобильные приложения</h3>
+                    <p>Дизайн пользовательских интерфейсов для iOS и Android</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Брендинг</h3>
+                    <p>Разработка визуальной идентичности бренда и стилистических руководств</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3>UX аудит</h3>
+                    <p>Анализ удобства использования существующих продуктов и рекомендации по улучшению</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Дизайн дашбордов</h3>
+                    <p>Создание информативных и понятных интерфейсов для аналитических платформ</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-comments"></i>
+                    <h3>Консультации</h3>
+                    <p>Профессиональные консультации по UX/UI дизайну для вашей команды</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Образование и сертификаты -->
+    <section id="education" class="education">
+        <div class="container">
+            <h2>Образование и сертификаты</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 40px;">
+                    <h3>Высшее образование</h3>
+                    <p><strong>Университет</strong> - Факультет/специальность</p>
+                    <p>Годы обучения</p>
+                </div>
+                <div>
+                    <h3>Сертификаты и курсы</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="margin-bottom: 20px;">
+                            <p><strong>Название сертификата/курса</strong></p>
+                            <p>Организация, год</p>
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <p><strong>Название сертификата/курса</strong></p>
+                            <p>Организация, год</p>
+                        </li>
+                        <li style="margin-bottom: 20px;">
+                            <p><strong>Название сертификата/курса</strong></p>
+                            <p>Организация, год</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Контакты -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Связаться со мной</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Контактная информация</h3>
+                    <p><i class="fas fa-envelope"></i> почта@пример.com</p>
+                    <p><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Город, Страна</p>
+                    <div class="social-links" style="margin-top: 30px;">
+                        <a href="#"><i class="fab fa-behance"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Отправить сообщение</h3>
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="user_name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="user_email" placeholder="Ваш email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="subject" placeholder="Тема">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="message" placeholder="Ваше сообщение" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Ваше Имя. Все права защищены.</p>
+        </div>
+    </footer>
+    
+    <!-- EmailJS SDK and integration script for students -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init('YOUR_PUBLIC_KEY'); // TODO: Replace with your EmailJS Public Key
+      })();
+
+      document.getElementById('contact-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+          .then(function() {
+            alert('Сообщение успешно отправлено!');
+          }, function(error) {
+            alert('Ошибка при отправке сообщения. Попробуйте еще раз.');
+          });
+      });
+    </script>
+    
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Добавление активного класса в навигации при прокрутке
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + sectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Мобильное меню
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.className = 'mobile-menu-btn';
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        document.querySelector('nav .container').appendChild(mobileMenuBtn);
+
+        mobileMenuBtn.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Закрытие мобильного меню при клике на ссылку
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
+                        
