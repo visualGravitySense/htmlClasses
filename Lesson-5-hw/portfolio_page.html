@@ -27,6 +27,9 @@
             --color-shadow-card: rgba(0,0,0,0.06);
             --color-white: #fff;
             --color-link: var(--pastel-blue);
+            --accent-gradient: linear-gradient(90deg, #FFD1DC 0%, #B5D8EB 50%, #FFFACD 100%);
+            --accent-gradient-2: linear-gradient(90deg, #C1E1C1 0%, #B5D8EB 50%, #E6E6FA 100%);
+            --contact-gradient: linear-gradient(90deg, #ff8adb 0%, #88f1cb 50%, #95a5e8 100%);
         }
         /* Основные стили */
         * {
@@ -69,13 +72,76 @@
         }
         
         h1 {
-            font-size: 4.5rem;
+            font-family: 'Poppins', 'Space Grotesk', Arial, sans-serif;
+            font-size: 5rem;
             margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: #223;
+            background: none;
+            text-shadow: none;
+            -webkit-text-stroke: 0;
+            text-stroke: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .h1-main {
+            color: #223;
+        }
+        .h1-accent1 {
+            background: linear-gradient(90deg, #ffb5e8 0%, #b5ead7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: rotate(-2deg);
-            text-shadow: 3px 3px 0 var(--pastel-pink);
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px #ffb5e8, 0 0 24px #fff6fa;
+            -webkit-text-stroke: 1.5px #2c2f33;
+            /* text-stroke: 1.5px #fff; */
+        }
+        .h1-accent2 {
+            background: linear-gradient(90deg, #fffac1 0%, #b5d8eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px #fffac1, 0 0 24px #e6e6fa;
+            -webkit-text-stroke: 1.5px #2c2f33;
+            /* text-stroke: 1.5px #fff; */
+        }
+        .h1-accent3 {
+            background: linear-gradient(90deg, #b5d8eb 0%, #c7ceea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px #b5d8eb, 0 0 24px #c7ceea;
+            -webkit-text-stroke: 1.5px #2c2f33;
+            /* text-stroke: 1.5px #fff; */
+        }
+        .h1-accent4 {
+            background: linear-gradient(90deg, #b5ead7 0%, #ffb5e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 12px #b5ead7, 0 0 24px #ffb5e8;
+            -webkit-text-stroke: 1.5px #fff;
+            text-stroke: 1.5px #fff;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            top: 60%;
+            width: 80%;
+            height: 30%;
+            background: linear-gradient(90deg, #fff8, #FFD1DC88 40%, #B5D8EB55 80%, #fff0 100%);
+            filter: blur(8px);
+            z-index: -1;
+            pointer-events: none;
+            border-radius: 40% 60% 60% 40%/60% 40% 60% 40%;
         }
         
         h2 {
@@ -93,9 +159,10 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--color-primary);
+            width: 120px;
+            height: 6px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
         }
         
         h3 {
@@ -219,8 +286,8 @@
         
         .btn {
             display: inline-block;
-            background-color: var(--color-primary);
-            color: var(--color-text);
+            background: var(--accent-gradient);
+            color: #222;
             padding: 15px 40px;
             border: 3px solid #333;
             text-decoration: none;
@@ -229,11 +296,13 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             box-shadow: 0 4px 15px var(--color-shadow-card);
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border-radius: 8px;
         }
         
         .btn:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 8px 24px var(--color-shadow-card);
         }
         
         /* О себе */
@@ -313,12 +382,13 @@
             width: 60px;
             height: 60px;
             line-height: 60px;
-            background-color: var(--color-primary);
-            color: var(--color-white);
+            background: var(--contact-gradient);
+            color: #fff;
             border-radius: 50%;
             margin: 0 auto 20px;
             font-size: 1.5rem;
             font-weight: 700;
+            border: 2px solid #fff;
         }
         
         .process-step::after {
@@ -348,6 +418,24 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px var(--color-shadow);
+            background: var(--color-bg-card);
+        }
+        
+        .portfolio-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--accent-gradient);
+            color: #222;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 6px 18px;
+            z-index: 2;
+            box-shadow: 1px 1px 0 #fff, 2px 2px 0 #333;
+            text-transform: none;
         }
         
         .portfolio-image {
@@ -474,6 +562,10 @@
             color: var(--color-primary);
         }
         
+        .contact-info .social-links a {
+            color: inherit;
+        }
+        
         .contact-form {
             flex: 2;
         }
@@ -514,9 +606,18 @@
         
         .social-links a {
             display: inline-block;
-            color: var(--color-white);
             font-size: 1.5rem;
+            transition: transform 0.15s, color 0.15s;
         }
+        
+        .fa-behance { color: #1769ff !important; }
+        .fa-dribbble { color: #ea4c89 !important; }
+        .fa-linkedin { color: #0077b5 !important; }
+        .fa-instagram { color: #e4405f !important; }
+        .fa-pinterest { color: #e60023 !important; }
+        .fa-github { color: #333 !important; }
+        footer .fa-github { color: #fff !important; }
+        .social-links a:hover { transform: scale(1.15); }
         
         footer .social-links a {
             padding: 0 14px;
@@ -562,7 +663,7 @@
             }
             
             h1 {
-                font-size: 3.5rem;
+                font-size: 3.2rem;
             }
             
             h2 {
@@ -584,7 +685,7 @@
             }
             
             h1 {
-                font-size: 2.8rem;
+                font-size: 2.1rem;
             }
             
             h2 {
@@ -659,6 +760,15 @@
 
         /* Добавляем Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Space+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&display=swap');
+
+        .contact-gradient-icon {
+            background: var(--contact-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -682,7 +792,12 @@
     <section class="hero">
         <div class="container" style="display: flex; align-items: center;">
             <div class="hero-content">
-                <h1>Привет, я Ваше Имя</h1>
+                <h1>
+                  <span class="h1-main">Привет,</span>
+                  <span class="h1-accent1">я</span>
+                  <span class="h1-accent2">Ваше</span>
+                  <span class="h1-accent3">Имя</span>
+                </h1>
                 <p>UX/UI дизайнер с опытом создания пользовательских интерфейсов, которые приносят результаты. Я помогаю брендам создавать продукты, в которые влюбляются пользователи.</p>
                 <a href="#contact" class="btn">Связаться со мной</a>
             </div>
@@ -716,22 +831,22 @@
             <h2>Мои навыки</h2>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <i class="fas fa-pencil-ruler"></i>
+                    <i class="fas fa-pencil-ruler contact-gradient-icon"></i>
                     <h4>UI Дизайн</h4>
                     <p>Создание визуально привлекательных интерфейсов с упором на эстетику и бренд</p>
                 </div>
                 <div class="skill-card">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-users contact-gradient-icon"></i>
                     <h4>UX Дизайн</h4>
                     <p>Разработка пользовательских сценариев и прототипов на основе исследований</p>
                 </div>
                 <div class="skill-card">
-                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-mobile-alt contact-gradient-icon"></i>
                     <h4>Отзывчивый дизайн</h4>
                     <p>Адаптивные интерфейсы для любых устройств и разрешений экрана</p>
                 </div>
                 <div class="skill-card">
-                    <i class="fas fa-code"></i>
+                    <i class="fas fa-code contact-gradient-icon"></i>
                     <h4>Прототипы</h4>
                     <p>Создание интерактивных прототипов для тестирования и презентации</p>
                 </div>
@@ -740,19 +855,19 @@
             <h3 style="text-align: center; margin-top: 50px; margin-bottom: 30px;">Инструменты, которыми я владею</h3>
             <div class="skills-grid">
                 <div class="skill-card">
-                    <img src="https://placehold.co/100x100?text=Logo" alt="Figma logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <img src="img/figma.png" alt="Figma logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Figma</h3>
                 </div>
                 <div class="skill-card">
-                    <img src="https://placehold.co/100x100?text=Logo" alt="Adobe XD logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <img src="img/xd.png" alt="Adobe XD logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Adobe XD</h3>
                 </div>
                 <div class="skill-card">
-                    <img src="https://placehold.co/100x100?text=Logo" alt="Sketch logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <img src="img/scetch.png" alt="Sketch logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Sketch</h3>
                 </div>
                 <div class="skill-card">
-                    <img src="https://placehold.co/100x100?text=Logo" alt="Photoshop logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
+                    <img src="img/photoshop.png" alt="Photoshop logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Photoshop</h3>
                 </div>
                 <!-- <div class="skill-card">
@@ -803,6 +918,7 @@
             <h2>Мои работы</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
+                    <span class="portfolio-badge">Мобильное</span>
                     <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
                         <img src="https://placehold.co/350x220?text=Проект+1" alt="Проект 1" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
                     </div>
@@ -813,6 +929,7 @@
                     </div>
                 </div>
                 <div class="portfolio-item">
+                    <span class="portfolio-badge">E-commerce</span>
                     <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
                         <img src="https://placehold.co/350x220?text=Проект+2" alt="Проект 2" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
                     </div>
@@ -823,6 +940,7 @@
                     </div>
                 </div>
                 <div class="portfolio-item">
+                    <span class="portfolio-badge">Образование</span>
                     <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
                         <img src="https://placehold.co/350x220?text=Проект+3" alt="Проект 3" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
                     </div>
@@ -832,36 +950,7 @@
                         <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
-                        <img src="https://placehold.co/350x220?text=Проект+4" alt="Проект 4" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
-                    </div>
-                    <div style="padding: 30px 24px 24px 24px;">
-                        <h3 class="portfolio-title">Проект 4</h3>
-                        <p>Редизайн корпоративного веб-сайта</p>
-                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
-                        <img src="https://placehold.co/350x220?text=Проект+5" alt="Проект 5" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
-                    </div>
-                    <div style="padding: 30px 24px 24px 24px;">
-                        <h3 class="portfolio-title">Проект 5</h3>
-                        <p>UI-компоненты для дашборда аналитики</p>
-                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div style="width:100%;text-align:center;background:#f5f5f5;padding-top:20px;">
-                        <img src="https://placehold.co/350x220?text=Проект+6" alt="Проект 6" style="width:90%;max-width:350px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06);">
-                    </div>
-                    <div style="padding: 30px 24px 24px 24px;">
-                        <h3 class="portfolio-title">Проект 6</h3>
-                        <p>Мобильное приложение для здорового образа жизни</p>
-                        <a href="#" class="btn" style="margin-top: 15px;">Подробнее</a>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -886,32 +975,32 @@
             <h2>Мои услуги</h2>
             <div class="services-grid">
                 <div class="service-card">
-                    <i class="fas fa-desktop"></i>
+                    <i class="fas fa-desktop contact-gradient-icon"></i>
                     <h3>Веб-дизайн</h3>
                     <p>Создание современных и функциональных веб-сайтов с отзывчивым дизайном</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-mobile-alt contact-gradient-icon"></i>
                     <h3>Мобильные приложения</h3>
                     <p>Дизайн пользовательских интерфейсов для iOS и Android</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-palette"></i>
+                    <i class="fas fa-palette contact-gradient-icon"></i>
                     <h3>Брендинг</h3>
                     <p>Разработка визуальной идентичности бренда и стилистических руководств</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-tachometer-alt"></i>
+                    <i class="fas fa-tachometer-alt contact-gradient-icon"></i>
                     <h3>UX аудит</h3>
                     <p>Анализ удобства использования существующих продуктов и рекомендации по улучшению</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-chart-line contact-gradient-icon"></i>
                     <h3>Дизайн дашбордов</h3>
                     <p>Создание информативных и понятных интерфейсов для аналитических платформ</p>
                 </div>
                 <div class="service-card">
-                    <i class="fas fa-comments"></i>
+                    <i class="fas fa-comments contact-gradient-icon"></i>
                     <h3>Консультации</h3>
                     <p>Профессиональные консультации по UX/UI дизайну для вашей команды</p>
                 </div>
@@ -957,9 +1046,9 @@
             <div class="contact-container">
                 <div class="contact-info">
                     <h3>Контактная информация</h3>
-                    <p><i class="fas fa-envelope"></i> почта@пример.com</p>
-                    <p><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Город, Страна</p>
+                    <p><i class="fas fa-envelope contact-gradient-icon"></i> почта@пример.com</p>
+                    <p><i class="fas fa-phone contact-gradient-icon"></i> +7 (XXX) XXX-XX-XX</p>
+                    <p><i class="fas fa-map-marker-alt contact-gradient-icon"></i> Город, Страна</p>
                     <div class="social-links" style="margin-top: 30px;">
                         <a href="#"><i class="fab fa-behance"></i></a>
                         <a href="#"><i class="fab fa-dribbble"></i></a>
