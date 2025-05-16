@@ -257,6 +257,27 @@
             min-height: 100vh;
             padding-top: 120px;
             margin-top: 90px;
+            background-image: url("img/photo-2.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 2;
         }
         
         .hero-content {
@@ -383,7 +404,7 @@
             height: 60px;
             line-height: 60px;
             background: var(--contact-gradient);
-            color: #fff;
+            color: #3d3d3d;
             border-radius: 50%;
             margin: 0 auto 20px;
             font-size: 1.5rem;
@@ -628,6 +649,7 @@
             .hero {
                 flex-direction: column;
                 text-align: center;
+                
             }
             
             .hero-content, .hero-image {
@@ -802,7 +824,7 @@
                 <a href="#contact" class="btn">Связаться со мной</a>
             </div>
             <div class="hero-image">
-                <img src="https://placehold.co/400x400?text=Фото" alt="Фото дизайнера">
+                <img src="img/me-1.png?text=Фото" alt="Фото дизайнера">
             </div>
         </div>
     </section>
@@ -819,7 +841,7 @@
                     <a href="#" class="btn">Скачать резюме</a>
                 </div>
                 <div class="about-image">
-                    <img src="https://placehold.co/400x600?text=Рабочий+процесс" alt="Рабочий процесс">
+                    <img src="img/workflow.jpg?text=Рабочий+процесс" alt="Рабочий процесс">
                 </div>
             </div>
         </div>
@@ -1050,12 +1072,12 @@
                     <p><i class="fas fa-phone contact-gradient-icon"></i> +7 (XXX) XXX-XX-XX</p>
                     <p><i class="fas fa-map-marker-alt contact-gradient-icon"></i> Город, Страна</p>
                     <div class="social-links" style="margin-top: 30px;">
-                        <a href="#"><i class="fab fa-behance"></i></a>
-                        <a href="#"><i class="fab fa-dribbble"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-pinterest"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="https://www.behance.net/yourusername" target="_blank"><i class="fab fa-behance"></i></a>
+                        <a href="https://dribbble.com/yourusername" target="_blank"><i class="fab fa-dribbble"></i></a>
+                        <a href="https://www.linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/yourusername" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.pinterest.com/yourusername" target="_blank"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
@@ -1084,12 +1106,12 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="#"><i class="fab fa-behance"></i></a>
-                <a href="#"><i class="fab fa-dribbble"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-pinterest"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://www.behance.net/yourusername" target="_blank"><i class="fab fa-behance"></i></a>
+                <a href="https://dribbble.com/yourusername" target="_blank"><i class="fab fa-dribbble"></i></a>
+                <a href="https://www.linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/yourusername" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.pinterest.com/yourusername" target="_blank"><i class="fab fa-pinterest"></i></a>
+                <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
             </div>
             <p>&copy; 2025 Ваше Имя. Все права защищены.</p>
         </div>
