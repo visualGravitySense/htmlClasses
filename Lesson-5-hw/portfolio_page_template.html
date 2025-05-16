@@ -6,40 +6,35 @@
     <title>Имя Фамилия | UX/UI Дизайнер</title>
     <style>
         :root {
-            --pastel-pink: #FFD1DC;
-            --pastel-blue: #B5D8EB;
-            --pastel-yellow: #FFFACD;
-            --pastel-green: #C1E1C1;
-            --pastel-purple: #E6E6FA;
-            --color-bg: var(--pastel-yellow);
+            --color-bg: #f9f9f9;
             --color-bg-card: #fff;
-            --color-bg-card-alt: var(--pastel-blue);
+            --color-bg-card-alt: #f5f5f5;
             --color-bg-dark: #333;
-            --color-primary: var(--pastel-pink);
-            --color-primary-dark: #fd42b8;
-            --color-accent: var(--pastel-purple);
+            --color-primary: #2d78c8;
+            --color-primary-dark: #2367a9;
+            --color-accent: #1a1a1a;
             --color-text: #1a1a1a;
             --color-text-light: #333;
             --color-text-muted: #666;
-            --color-border: var(--pastel-green);
+            --color-border: #f0f0f0;
             --color-shadow: rgba(0, 0, 0, 0.1);
             --color-shadow-light: rgba(0, 0, 0, 0.05);
             --color-shadow-card: rgba(0,0,0,0.06);
             --color-white: #fff;
-            --color-link: var(--pastel-blue);
+            --color-link: #2d78c8;
         }
         /* Основные стили */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Space Mono', monospace;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
         }
         
         body {
             background-color: var(--color-bg);
             color: var(--color-text);
-            line-height: 1.1;
+            line-height: 1.6;
         }
         
         .container {
@@ -50,22 +45,12 @@
         
         section {
             padding: 120px 0;
-            border: 3px solid #333;
-            margin: 40px;
-            background-color: white;
-            position: relative;
         }
         
-        h1, h2, h3, h4 {
-            font-family: 'Space Grotesk', sans-serif;
+        h1, h2, h3 {
             font-weight: 800;
             letter-spacing: -0.02em;
             line-height: 1.2;
-            text-transform: uppercase;
-        }
-
-        h4 {
-            margin: 18px 0px 18px 0px;
         }
         
         h1 {
@@ -74,8 +59,7 @@
             background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            transform: rotate(-2deg);
-            text-shadow: 3px 3px 0 var(--pastel-pink);
+            text-transform: uppercase;
         }
         
         h2 {
@@ -84,7 +68,6 @@
             text-align: center;
             position: relative;
             padding-bottom: 1rem;
-            color: #333;
         }
         
         h2::after {
@@ -106,7 +89,7 @@
         
         p {
             font-size: 1.25rem;
-            line-height: 1.4;
+            line-height: 1.8;
             color: var(--color-text-light);
             margin-bottom: 1.5rem;
         }
@@ -120,7 +103,6 @@
             background-color: rgba(255, 255, 255, 0.98);
             z-index: 100;
             box-shadow: 0 2px 20px var(--color-shadow);
-            border-bottom: 3px solid #333;
         }
         
         nav .container {
@@ -134,7 +116,6 @@
         }
         
         .logo {
-            font-family: 'Space Grotesk', sans-serif;
             font-size: 2rem;
             font-weight: 800;
             color: var(--color-text);
@@ -142,7 +123,6 @@
             letter-spacing: -0.02em;
             margin-right: 40px;
             white-space: nowrap;
-            text-transform: uppercase;
         }
         
         .nav-links {
@@ -189,7 +169,6 @@
             align-items: center;
             min-height: 100vh;
             padding-top: 120px;
-            margin-top: 90px;
         }
         
         .hero-content {
@@ -220,20 +199,15 @@
         .btn {
             display: inline-block;
             background-color: var(--color-primary);
-            color: var(--color-text);
+            color: var(--color-white);
             padding: 15px 40px;
-            border: 3px solid #333;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
             font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             box-shadow: 0 4px 15px var(--color-shadow-card);
-            transition: transform 0.2s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-5px);
         }
         
         /* О себе */
@@ -444,7 +418,6 @@
         /* Контакты */
         .contact {
             background-color: #fff;
-            margin-bottom: 60px;
         }
         
         .contact-container {
@@ -658,7 +631,7 @@
         }
 
         /* Добавляем Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Space+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -717,22 +690,22 @@
             <div class="skills-grid">
                 <div class="skill-card">
                     <i class="fas fa-pencil-ruler"></i>
-                    <h4>UI Дизайн</h4>
+                    <h3>UI Дизайн</h3>
                     <p>Создание визуально привлекательных интерфейсов с упором на эстетику и бренд</p>
                 </div>
                 <div class="skill-card">
                     <i class="fas fa-users"></i>
-                    <h4>UX Дизайн</h4>
+                    <h3>UX Дизайн</h3>
                     <p>Разработка пользовательских сценариев и прототипов на основе исследований</p>
                 </div>
                 <div class="skill-card">
                     <i class="fas fa-mobile-alt"></i>
-                    <h4>Отзывчивый дизайн</h4>
+                    <h3>Отзывчивый дизайн</h3>
                     <p>Адаптивные интерфейсы для любых устройств и разрешений экрана</p>
                 </div>
                 <div class="skill-card">
                     <i class="fas fa-code"></i>
-                    <h4>Прототипы</h4>
+                    <h3>Прототипы</h3>
                     <p>Создание интерактивных прототипов для тестирования и презентации</p>
                 </div>
             </div>
@@ -755,10 +728,10 @@
                     <img src="https://placehold.co/100x100?text=Logo" alt="Photoshop logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Photoshop</h3>
                 </div>
-                <!-- <div class="skill-card">
+                <div class="skill-card">
                     <img src="https://placehold.co/100x100?text=Logo" alt="Illustrator logo" style="display:block;margin:0 auto 18px auto;width:70px;height:70px;object-fit:contain;">
                     <h3>Illustrator</h3>
-                </div> -->
+                </div>
                 <!-- <div class="skill-card">
                     <h3>InVision</h3>
                 </div> -->
@@ -789,10 +762,10 @@
                     <h3>Дизайн</h3>
                     <p>Разработка визуального стиля и пользовательского интерфейса</p>
                 </div>
-                <!-- <div class="process-step">
+                <div class="process-step">
                     <h3>Тестирование</h3>
                     <p>Проверка удобства использования и итерация на основе обратной связи</p>
-                </div> -->
+                </div>
             </div>
         </div>
     </section>
