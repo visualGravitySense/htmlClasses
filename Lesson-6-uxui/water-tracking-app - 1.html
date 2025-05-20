@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Tracking App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #181c2f 0%, #232946 100%);
+        }
+
+        .app-container {
+            width: 360px;
+            height: 620px;
+            background: linear-gradient(120deg, #232946 60%, #181c2f 100%);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 0 32px 4px #00f0ff55, 0 0 0 2px #7f5af0, 0 8px 32px #181c2f99;
+            border: 2px solid #232946;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: box-shadow 0.3s;
+        }
+
+        .app-container:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: 18px;
+            box-shadow: 0 0 32px 8px #00f0ff33, 0 0 0 4px #7f5af055 inset;
+            z-index: 1;
+        }
+
+        .header {
+            padding: 18px 20px 12px 20px;
+            border-bottom: 2px solid #00f0ff;
+            font-size: 15px;
+            color: #fff;
+            font-weight: bold;
+            background: linear-gradient(90deg, #232946 0%, #00f0ff 100%);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #00f0ff, 0 0 8px #7f5af0;
+            box-shadow: 0 2px 16px #00f0ff33;
+            border-top: 2px solid #fff1;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .check-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #00f0ff 0%, #7f5af0 100%);
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 0 12px 2px #00f0ff, 0 0 8px #7f5af0;
+            border: 2px solid #fff3;
+            transition: box-shadow 0.2s;
+        }
+        .check-icon:hover {
+            box-shadow: 0 0 24px 6px #00f0ff, 0 0 16px #7f5af0;
+        }
+
+        .status-text {
+            font-size: 20px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #00f0ffcc;
+        }
+
+        .continue-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: -6px;
+        }
+
+        .thumb-icon {
+            font-size: 30px;
+            filter: drop-shadow(0 2px 12px #7f5af0);
+            text-shadow: 0 0 8px #7f5af0, 0 0 16px #fff6;
+        }
+
+        .continue-text {
+            font-size: 26px;
+            font-weight: 900;
+            color: #00f0ff;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #00f0ff, 0 0 16px #fff6;
+        }
+
+        .water-status-card {
+            background: linear-gradient(120deg, #232946 60%, #181c2f 100%);
+            border-radius: 12px;
+            padding: 22px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 24px 4px #00f0ff33, 0 0 0 2px #7f5af0 inset;
+            border: 2px solid #232946;
+            position: relative;
+            overflow: hidden;
+        }
+        .water-status-card:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: 12px;
+            box-shadow: 0 0 32px 8px #00f0ff33 inset;
+            z-index: 1;
+        }
+
+        .water-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .water-drop {
+            color: #00f0ff;
+            font-size: 22px;
+            filter: drop-shadow(0 2px 12px #00f0ff);
+            text-shadow: 0 0 8px #00f0ff, 0 0 16px #fff6;
+        }
+
+        .medal {
+            color: #ffe066;
+            font-size: 22px;
+            filter: drop-shadow(0 2px 12px #ffe066);
+            text-shadow: 0 0 8px #ffe066, 0 0 16px #fff6;
+        }
+
+        .days-count {
+            font-weight: 900;
+            font-size: 20px;
+            color: #fff;
+            text-shadow: 0 0 8px #00f0ffcc;
+        }
+
+        .water-icon-container {
+            margin-top: 8px;
+        }
+
+        .water-icon {
+            width: 74px;
+            height: 74px;
+            background: linear-gradient(135deg, #00f0ff 0%, #7f5af0 100%);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 0 24px 6px #00f0ff, 0 0 16px #7f5af0;
+            border: 2px solid #fff3;
+            transition: box-shadow 0.2s;
+        }
+        .water-icon:hover {
+            box-shadow: 0 0 32px 12px #00f0ff, 0 0 24px #7f5af0;
+        }
+
+        .water-icon:before {
+            content: "";
+            position: absolute;
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(135deg, #232946 0%, #181c2f 100%);
+            border-radius: 8px;
+            z-index: 0;
+            box-shadow: 0 0 16px #00f0ff99 inset;
+        }
+
+        .checkmark {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 0 0 16px #00f0ff, 0 0 8px #fff;
+        }
+
+        .completed-text {
+            margin-top: 8px;
+            font-size: 18px;
+            text-align: center;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 0 8px #00f0ffcc;
+        }
+
+        .glasses-count {
+            margin-top: 16px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #7f5af0;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #7f5af0cc;
+        }
+
+        .weekday-glasses {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            border-bottom: 2px solid #00f0ff;
+            box-shadow: 0 2px 16px #00f0ff33;
+            padding-bottom: 8px;
+        }
+
+        .weekday {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .glass-icon {
+            color: #00f0ff;
+            font-size: 28px;
+            filter: drop-shadow(0 2px 12px #00f0ff);
+            text-shadow: 0 0 8px #00f0ff, 0 0 16px #fff6;
+        }
+
+        .day-label {
+            font-size: 13px;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 0 0 8px #00f0ffcc;
+        }
+
+        .reminder {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #00f0ff;
+            padding-top: 18px;
+            box-shadow: 0 -2px 16px #00f0ff33;
+        }
+
+        .reminder-text {
+            color: #00f0ff;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px #00f0ff, 0 0 16px #fff6;
+        }
+
+        .time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .clock-icon {
+            color: #7f5af0;
+            font-size: 20px;
+            filter: drop-shadow(0 2px 12px #7f5af0);
+            text-shadow: 0 0 8px #7f5af0, 0 0 16px #fff6;
+        }
+
+        .time-text {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 900;
+            text-shadow: 0 0 8px #00f0ffcc;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background: #181c2f;
+            border-radius: 8px;
+            margin: 18px 0 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 16px #00f0ffcc, 0 2px 8px #7f5af0;
+            border: 2px solid #00f0ff;
+            position: relative;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            width: 70%; /* Example: 70% progress */
+            background: linear-gradient(90deg, #00f0ff 0%, #7f5af0 100%);
+            border-radius: 8px 0 0 8px;
+            box-shadow: 0 0 16px #00f0ff, 0 2px 8px #7f5af0;
+            transition: width 0.4s cubic-bezier(.4,2,.6,1);
+            border-right: 2px solid #fff6;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            Ваш прогресс на прошлой неделе: • Гидратация: +18%
+        </div>
+        <div class="content">
+            <div class="status-row">
+                <div class="check-icon">✓</div>
+                <div class="status-text">Готово! Хорошая работа.</div>
+            </div>
+            
+            <div class="continue-row">
+                <div class="thumb-icon">👍</div>
+                <div class="continue-text">Продолжай!</div>
+            </div>
+
+            <div class="water-status-card">
+                <div class="water-info">
+                    <span class="water-drop">💧</span>
+                    <span class="days-count">1</span>
+                    <span class="medal">🏅</span>
+                    <span class="days-count">14 дней</span>
+                </div>
+
+                <div class="water-icon-container">
+                    <div class="water-icon">
+                        <span class="checkmark">✓</span>
+                    </div>
+                </div>
+
+                <div class="completed-text">Я сделал это сегодня</div>
+            </div>
+
+            <div class="glasses-count">
+                <div>👏 Это уже 10-й стакан воды на этой неделе!</div>
+            </div>
+
+            <div class="weekday-glasses">
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">М</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">Т</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">W</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">Т</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">F</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">S</div>
+                </div>
+                <div class="weekday">
+                    <div class="glass-icon">🥛</div>
+                    <div class="day-label">S</div>
+                </div>
+            </div>
+
+            <div class="reminder">
+                <div class="reminder-text">включить напоминание</div>
+                <div class="time">
+                    <span class="clock-icon">⏱</span>
+                    <span class="time-text">4:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
