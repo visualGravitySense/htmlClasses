@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma и UX-дизайн привычек</title>
+    <style>
+        :root {
+            --primary: #5851ff;
+            --secondary: #ff5154;
+            --dark: #e0e5ec;
+            --light: #f9f9f9;
+            --accent: #34c759;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --text-color: #2d3436;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--text-color);
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .presentation {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+            pointer-events: none;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+            pointer-events: auto;
+        }
+        
+        .slide-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--dark);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 8px 8px 16px var(--shadow-dark),
+                       -8px -8px 16px var(--shadow-light);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-btn {
+            background: var(--dark);
+            color: var(--text-color);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 10px var(--shadow-dark),
+                       -5px -5px 10px var(--shadow-light);
+        }
+        
+        .nav-btn:hover {
+            box-shadow: inset 5px 5px 10px var(--shadow-dark),
+                       inset -5px -5px 10px var(--shadow-light);
+        }
+        
+        .nav-btn:active {
+            box-shadow: inset 3px 3px 6px var(--shadow-dark),
+                       inset -3px -3px 6px var(--shadow-light);
+        }
+        
+        .practice-box {
+            background: var(--dark);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                       inset -4px -4px 8px var(--shadow-light);
+        }
+        
+        .challenge-box {
+            background: var(--dark);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                       inset -4px -4px 8px var(--shadow-light);
+        }
+        
+        blockquote {
+            background: var(--dark);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-color);
+            box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                       inset -4px -4px 8px var(--shadow-light);
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            color: var(--text-color);
+            background: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 4px 4px 8px var(--shadow-dark),
+                       -4px -4px 8px var(--shadow-light);
+        }
+        
+        ul, ol {
+            background: var(--dark);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin: 1rem 0;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                       inset -4px -4px 8px var(--shadow-light);
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .two-columns {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .column {
+            flex: 1;
+            background: var(--dark);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: inset 4px 4px 8px var(--shadow-dark),
+                       inset -4px -4px 8px var(--shadow-light);
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 0.2em;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .two-columns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide1">
+            <div class="slide-content">
+                <h1>🎓 Урок 1: Введение в Figma и UX-дизайн привычек</h1>
+                <blockquote>
+                    "UX-дизайнер не просто создает интерфейсы — он меняет поведение людей. А чтобы это делать, ты сам должен стать мастером формирования привычек."
+                </blockquote>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Figma as a Tool -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h2>🔹 Часть 1: Figma — как инструмент, который сам формирует привычку</h2>
+                
+                <h3>Что такое Figma? Зачем она нужна UX/UI-дизайнеру?</h3>
+                
+                <h3>Как Figma использует UX-принципы:</h3>
+                <ul>
+                    <li>Минималистичный онбординг (триггеры)</li>
+                    <li>Простота (упрощение шагов)</li>
+                    <li>Визуальная обратная связь (анимации, всплывающие подсказки)</li>
+                    <li>Совместная работа (социальный фактор)</li>
+                </ul>
+                
+                <div class="practice-box">
+                    <strong>👉 Практика:</strong> зарегистрируйся и открой новый проект. Посмотри на интерфейс глазами UX-дизайнера.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Practice with Figma -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h2>🔹 Часть 2: Практика с Figma + внедрение привычки</h2>
+                
+                <ul>
+                    <li>Создаем первый фрейм (десктоп, планшет, мобайл)</li>
+                    <li>Добавляем простые фигуры</li>
+                    <li>Разбираемся со слоями, компонентами и авто-лейаутом</li>
+                </ul>
+                
+                <div class="practice-box">
+                    <strong>👉 Микропривычка:</strong> создай шаблон фрейма и назови его "💡 Моя база" — ты будешь использовать его в будущих проектах.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: UX Design for Habits -->
+        <div class="slide" id="slide4">
+            <div class="slide-content">
+                <h2>🔹 UX-дизайн, который формирует привычки</h2>
+                
+                <blockquote>
+                    "Дизайн должен помогать пользователю менять поведение. Это и есть суть UX."
+                </blockquote>
+                
+                <h3>6 принципов "habit-formation" в UX:</h3>
+                <ul>
+                    <li><span class="emoji">🎯</span> Цель и барьеры пользователя</li>
+                    <li><span class="emoji">🔔</span> Триггеры</li>
+                    <li><span class="emoji">✂️</span> Упрощение действий</li>
+                    <li><span class="emoji">⭐</span> Обратная связь и награды</li>
+                    <li><span class="emoji">🫂</span> Социальный фактор</li>
+                    <li><span class="emoji">🔁</span> Итерации</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Mini Project -->
+        <div class="slide" id="slide5">
+            <div class="slide-content">
+                <h2>🔹 Часть 4: Мини-проект — «Трекер привычек»</h2>
+                
+                <div class="challenge-box">
+                    <strong>Задание:</strong><br>
+                    Сделай в Figma интерфейс для приложения, которое:
+                    <ul>
+                        <li>Помогает начать привычку (пить воду, делать зарядку и т.п.)</li>
+                        <li>Использует триггеры и напоминания</li>
+                        <li>Простое (одна кнопка в день)</li>
+                        <li>Даёт визуальную обратную связь (✔️, прогресс, похвала)</li>
+                    </ul>
+                </div>
+                
+                <p>👉 <em>После — короткая UX-рефлексия: какие принципы ты использовал?</em></p>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Mini Challenge -->
+        <div class="slide" id="slide6">
+            <div class="slide-content">
+                <h2>🔹 Часть 5: Mini-Challenge</h2>
+                
+                <div class="challenge-box">
+                    <strong>Figma Habit Challenge:</strong><br>
+                    Цель — выработать привычку работать в Figma + думать как UX-дизайнер.
+                    <ul>
+                        <li>Создай 3 фрейма (моб/планшет/десктоп)</li>
+                        <li>Сделай кнопки с hover-состоянием</li>
+                        <li>Добавь текстовые стили и цвета</li>
+                        <li>Создай компонент и используй его 3 раза</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Final Message -->
+        <div class="slide" id="slide7">
+            <div class="slide-content">
+                <h2>🔹 Финальное послание студентам:</h2>
+                
+                <blockquote>
+                    "UX-дизайн — это про людей. А у людей есть привычки. Ты можешь их менять. Начни с себя. Сформируй привычку думать как дизайнер." 💡
+                </blockquote>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Components of Habit Tracker App -->
+        <div class="slide" id="slide8">
+            <div class="slide-content">
+                <h2>🧱 Основные компоненты главного экрана</h2>
+                <p>Для <strong>главного экрана</strong> приложения <strong>трекера привычек</strong> важно продумать компоненты, которые:</p>
+                <ol>
+                    <li>Мотивируют пользователя продолжать привычки</li>
+                    <li>Упрощают взаимодействие</li>
+                    <li>Делают прогресс наглядным</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Components Part 1 -->
+        <div class="slide" id="slide9">
+            <div class="slide-content">
+                <h3>1. Header / Верхняя панель</h3>
+                <ul>
+                    <li>Название приложения или приветствие (например: <em>Доброе утро, Алекс!</em>)</li>
+                    <li>Иконка профиля или меню</li>
+                    <li>Переключатель темы (светлая/тёмная)</li>
+                    <li>Иконка уведомлений (опционально)</li>
+                </ul>
+                
+                <h3>2. Блок "Сегодня" / Ежедневный прогресс</h3>
+                <ul>
+                    <li>Заголовок: "Сегодняшние привычки"</li>
+                    <li>Статистика дня (кол-во выполненных из всех)</li>
+                    <li>Кольцевой/линейный прогрессбар</li>
+                    <li>Фильтр по категориям/времени (если нужно)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Components Part 2 -->
+        <div class="slide" id="slide10">
+            <div class="slide-content">
+                <h3>3. Список привычек</h3>
+                <p>Каждая привычка оформляется в <strong>карточке</strong>:</p>
+                <ul>
+                    <li>Название привычки</li>
+                    <li>Иконка привычки (💧, 🏃‍♂️, 📚)</li>
+                    <li>Частота выполнения (например: 3/5 раз в неделю)</li>
+                    <li>Кнопка ✅ или чекбокс "выполнено сегодня"</li>
+                    <li>Прогресс по привычке (на неделю или месяц)</li>
+                </ul>
+                
+                <h3>4. Блок мотивации / Стикер дня</h3>
+                <ul>
+                    <li>Мотивационная фраза или цитата дня</li>
+                    <li>Или emoji-карта эмоции (🎯 / 🔥 / 🌱)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Components Part 3 -->
+        <div class="slide" id="slide11">
+            <div class="slide-content">
+                <h3>5. Кнопка "Добавить привычку"</h3>
+                <ul>
+                    <li>Floating Action Button (FAB) с ➕</li>
+                    <li>Ведёт к экрану создания привычки</li>
+                </ul>
+                
+                <h3>6. Нижняя навигация (если используется)</h3>
+                <ul>
+                    <li>Главная</li>
+                    <li>Прогресс / Аналитика</li>
+                    <li>Статистика</li>
+                    <li>Профиль</li>
+                </ul>
+                
+                <h3>7. Бейджи / Достижения (по желанию)</h3>
+                <ul>
+                    <li>"3 дня подряд!" / streak</li>
+                    <li>"Вы достигли цели недели"</li>
+                    <li>Маленькие значки достижений</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Additional Components -->
+        <div class="slide" id="slide12">
+            <div class="slide-content">
+                <h2>🧩 Дополнительно (опционально)</h2>
+                <ul>
+                    <li>Календарь привычек (мини-версия в главном экране)</li>
+                    <li>Лента активности (если соц. составляющая)</li>
+                    <li>Напоминания / предстоящие задачи</li>
+                    <li>Виджет настроения (как ты себя чувствуешь сегодня?)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prevBtn">← Назад</button>
+            <button class="nav-btn" id="nextBtn">Вперед →</button>
+        </div>
+        
+        <div class="slide-number" id="slideNumber">1 / 12</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideNumber = document.getElementById('slideNumber');
+            let currentSlideIndex = 0;
+            
+            function showSlide(index) {
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                slides[index].classList.add('active');
+                slideNumber.textContent = `${index + 1} / ${slides.length}`;
+                
+                // Disable prev button on first slide
+                prevBtn.disabled = index === 0;
+                // Disable next button on last slide
+                nextBtn.disabled = index === slides.length - 1;
+            }
+            
+            prevBtn.addEventListener('click', function() {
+                if (currentSlideIndex > 0) {
+                    currentSlideIndex--;
+                    showSlide(currentSlideIndex);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentSlideIndex < slides.length - 1) {
+                    currentSlideIndex++;
+                    showSlide(currentSlideIndex);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            });
+            
+            // Initialize
+            showSlide(currentSlideIndex);
+        });
+    </script>
+</body>
+</html>
