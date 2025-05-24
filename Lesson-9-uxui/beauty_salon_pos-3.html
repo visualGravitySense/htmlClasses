@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон красоты - Выберите услуги</title>
+    <style>
+        :root {
+            /* Light Theme (Default) */
+            --primary-color: #667eea;
+            --primary-light: #7e93fa;
+            --primary-dark: #4e67d9;
+            --secondary-color: #764ba2;
+            --secondary-light: #8c5ebd;
+            --secondary-dark: #613c87;
+            --success-color: #61d26c;
+            --danger-color: #ff6b6b;
+            --warning-color: #ffd76e;
+            --dark-color: #444;
+            --light-color: #e6e9ef;
+            --gray-color: #d1d9e6;
+            --shadow-light: #ffffff;
+            --shadow-dark: #b8c6e0;
+            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-color: #444;
+            --text-muted: #777;
+            --border-radius: 15px;
+            
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-bg-dark: rgba(75, 85, 115, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+            --glass-shadow-dark: rgba(0, 0, 0, 0.2);
+            --blur-strength: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInDown 1s ease-out forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Best Promotions Section */
+        .best-promotions {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 35px var(--glass-shadow-dark);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .best-promotions::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            z-index: -1;
+        }
+
+        .promotions-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .promotions-header h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .promotions-header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            display: inline-block;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .promotions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .promotion-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .promotion-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .promotion-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .promotion-card:hover::before {
+            opacity: 1;
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--danger-color), #ff4757);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .promo-title {
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.3;
+        }
+
+        .promo-description {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .promo-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .promo-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .old-price {
+            color: rgba(255,255,255,0.6);
+            text-decoration: line-through;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .new-price {
+            color: var(--warning-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .promo-validity {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .promo-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--success-color), #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(97, 210, 108, 0.3);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .promo-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(97, 210, 108, 0.4);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .promo-btn:hover::before {
+            left: 100%;
+        }
+
+        .special-promo {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(255, 215, 110, 0.2), rgba(255, 107, 107, 0.2));
+            border: 2px solid rgba(255, 215, 110, 0.5);
+            text-align: center;
+        }
+
+        .special-promo .promo-title {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--warning-color), #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glassmorphism Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+
+        .service-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+        }
+
+        .service-category.visible {
+            transform: translateY(0) rotateX(0deg);
+            opacity: 1;
+        }
+
+        .service-category:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 15px 30px var(--glass-shadow-dark);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .category-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                transparent
+            );
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Neumorphic Service Items */
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+        }
+
+        .service-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-info {
+            flex: 1;
+            transform-style: preserve-3d;
+            transform: translateZ(5px);
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .service-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-right: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transform: translateZ(5px);
+        }
+
+        .service-duration {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-right: 15px;
+            background: rgba(0,0,0,0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            transform: translateZ(5px);
+        }
+
+        /* Glassmorphism Buttons */
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: scale(0) translateZ(0);
+            animation: popIn 0.5s ease-out 0.5s forwards;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .add-btn:hover {
+            transform: scale(1.05) translateZ(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Glassmorphism Cart */
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 25px 50px var(--glass-shadow-dark);
+            border: 1px solid var(--glass-border);
+            min-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+            transform-style: preserve-3d;
+        }
+
+        .cart.open {
+            transform: translateX(0) rotateY(0deg);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .cart-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                transparent
+            );
+        }
+
+        .cart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cart-close {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: var(--border-radius);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .cart-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .checkout-btn:hover::before {
+            left: 100%;
+        }
+
+        .cart-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .cart-toggle:hover {
+            transform: scale(1.1) translateZ(10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            transform: translateZ(15px);
+        }
+
+        /* Decorative Elements */
+        .glass-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, var(--glass-border), transparent);
+            opacity: 0.2;
+            z-index: -1;
+            transform-style: preserve-3d;
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .glass-decoration-1 {
+            width: 300px;
+            height: 300px;
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .glass-decoration-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            right: 15%;
+            animation-delay: -4s;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            animation: float 15s infinite linear;
+            pointer-events: none;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .remove-btn {
+            background: rgba(255, 71, 87, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 55, 66, 0.8);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0) translateZ(0);
+            }
+            to {
+                transform: scale(1) translateZ(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateZ(0) rotateZ(0); }
+            50% { transform: translateY(-20px) translateZ(30px) rotateZ(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .promotions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .special-promo {
+                grid-column: 1;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cart {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+
+            .cart-toggle {
+                top: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .glass-decoration {
+                display: none;
+            }
+
+            .best-promotions {
+                padding: 25px;
+            }
+
+            .promotions-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-decoration glass-decoration-1"></div>
+    <div class="glass-decoration glass-decoration-2"></div>
+    
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>✨ Салон красоты ЭЛИТ ✨</h1>
+            <p>Выберите услуги для создания вашего идеального образа</p>
+        </div>
+
+        <!-- Best Promotions Section -->
+        <div class="best-promotions">
+            <div class="promotions-header">
+                <h2>🎉 Best Promotions 🎉</h2>
+                <p>Лучшие предложения месяца - не упустите возможность!</p>
+            </div>
+
+            <div class="promotions-grid">
+                <div class="promotion-card">
+                    <div class="promo-badge">-50%</div>
+                    <div class="promo-title">Комплекс "Королевская красота"</div>
+                    <div class="promo-description">
+                        Полный уход: чистка лица + массаж + маска + коррекция бровей + маникюр
+                    </div>
+                    <div class="promo-details">
+                        <div class="promo-price">
+                            <div class="old-price">8500 ₽</div>
+                            <div class="new-price">4250 ₽</div>
+                        </div>
+                        <div class="promo-validity">
+                            Действует до<br>31 декабря
+                        </div>
+                    </div>
+                    <button class="promo-btn" onclick="addPromoToCart('Комплекс Королевская красота', 4250, 240)">
+                        Забронировать со скидкой
+                    </button>
+                </div>
+
+                <div class="promotion-card">
+                    <div class="promo-badge">-30%</div>
+                    <div class="promo-title">SPA-релакс "Антистресс"</div>
+                    <div class="promo-description">
+                        Расслабляющий массаж всего тела + ароматерапия + обертывание
+                    </div>
+                    <div class="promo-details">
+                        <div class="promo-price">
+                            <div class="old-price">6000 ₽</div>
+                            <div class="new-price">4200 ₽</div>
+                        </div>
+                        <div class="promo-validity">
+                            Действует до<br>25 декабря
+                        </div>
+                    </div>
+                    <button class="promo-btn" onclick="addPromoToCart('SPA-релакс Антистресс', 4200, 180)">
+                        Забронировать со скидкой
+                    </button>
+                </div>
+
+                <div class="promotion-card">
+                    <div class="promo-badge">-40%</div>
+                    <div class="promo-title">Объемные ресницы 3D</div>
+                    <div class="promo-description">
+                        Наращивание ресниц 3D + ламинирование + коррекция бровей
+                    </div>
+                    <div class="promo-details">
+                        <div class="promo-price">
+                            <div class="old-price">5300 ₽</div>
+                            <div class="new-price">3180 ₽</div>
+                        </div>
+                        <div class="promo-validity">
+                            Действует до<br>20 декабря
+                        </div>
+                    </div>
+                    <button class="promo-btn" onclick="addPromoToCart('Объемные ресницы 3D', 3180, 210)">
+                        Забронировать со скидкой
+                    </button>
+                </div>
+
+                <div class="promotion-card">
+                    <div class="promo-badge">-35%</div>
+                    <div class="promo-title">Омоложение "Эликсир молодости"</div>
+                    <div class="promo-description">
+                        Инъекции ботокса + химический пилинг + увлажняющая терапия
+                    </div>
+                    <div class="promo-details">
+                        <div class="promo-price">
+                            <div class="old-price">12000 ₽</div>
+                            <div class="new-price">7800 ₽</div>
+                        </div>
+                        <div class="promo-validity">
+                            Действует до<br>30 декабря
+                        </div>
+                    </div>
+                    <button class="promo-btn" onclick="addPromoToCart('Омоложение Эликсир молодости', 7800, 150)">
+                        Забронировать со скидкой
+                    </button>
+                </div>
+
+                <div class="promotion-card special-promo">
+                    <div class="promo-badge">VIP</div>
+                    <div class="promo-title">🌟 MEGA DEAL 🌟<br>Годовой абонемент "Красота навсегда"</div>
+                    <div class="promo-description">
+                        Безлимитные визиты на весь год! Любые процедуры, любое количество раз.
+                        Экономия более 60% от стоимости отдельных процедур.
+                    </div>
+                    <div class="promo-details" style="justify-content: center;">
+                        <div class="promo-price">
+                            <div class="old-price" style="font-size: 1.2rem;">150000 ₽</div>
+                            <div class="new-price" style="font-size: 2.5rem;">59990 ₽</div>
+                        </div>
+                    </div>
+                    <button class="promo-btn" style="background: linear-gradient(135deg, #f39c12, #e67e22); font-size: 1.2rem; padding: 20px;" onclick="addPromoToCart('Годовой абонемент Красота навсегда', 59990, 0)">
+                        🔥 ПОЛУЧИТЬ MEGA DEAL 🔥
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💇‍♀️</div>
+                    <div class="category-title">Парикмахерские услуги</div>
+                </div>
+                
+                <div class="service-item" data-service="Стрижка женская" data-price="2500" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Стрижка женская</div>
+                        <div class="service-description">Модная стрижка с укладкой</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Стрижка мужская" data-price="1800" data-duration="45">
+                    <div class="service-info">
+                        <div class="service-name">Стрижка мужская</div>
+                        <div class="service-description">Классическая или современная стрижка</div>
+                    </div>
+                    <div class="service-duration">45 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Окрашивание" data-price="4500" data-duration="180">
+                    <div class="service-info">
+                        <div class="service-name">Окрашивание</div>
+                        <div class="service-description">Профессиональное окрашивание волос</div>
+                    </div>
+                    <div class="service-duration">180 мин</div>
+                    <div class="service-price">4500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Мелирование" data-price="3800" data-duration="150">
+                    <div class="service-info">
+                        <div class="service-name">Мелирование</div>
+                        <div class="service-description">Частичное осветление прядей</div>
+                    </div>
+                    <div class="service-duration">150 мин</div>
+                    <div class="service-price">3800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💅</div>
+                    <div class="category-title">Маникюр и педикюр</div>
+                </div>
+                
+                <div class="service-item" data-service="Классический маникюр" data-price="1200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Классический маникюр</div>
+                        <div class="service-description">Обрезной маникюр с покрытием</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">1200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Гель-лак" data-price="1800" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Гель-лак</div>
+                        <div class="service-description">Стойкое покрытие на 3-4 недели</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Наращивание ногтей" data-price="2500" data-duration="120">
+                    <div class="service-info">
+                        <div class="service-name">Наращивание ногтей</div>
+                        <div class="service-description">Гелевое наращивание с дизайном</div>
+                    </div>
+                    <div class="service-duration">120 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Педикюр" data-price="1500" data-duration="75">
+                    <div class="service-info">
+                        <div class="service-name">Педикюр</div>
+                        <div class="service-description">Аппаратный педикюр с покрытием</div>
+                    </div>
+                    <div class="service-duration">75 мин</div>
+                    <div class="service-price">1500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">🧴</div>
+                    <div class="category-title">Косметология</div>
+                </div>
+                
+                <div class="service-item" data-service="Чистка лица" data-price="3000" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Чистка лица</div>
+                        <div class="service-description">Глубокая чистка с паровой баней</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">3000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Пилинг" data-price="2200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Химический пилинг</div>
+                        <div class="service-description">Обновляющий пилинг для лица</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Массаж лица" data-price="1800" data-duration="45">
+                    <div class="service-info">
+                        <div class="service-name">Массаж лица</div>
+                        <div class="service-description">Омолаживающий массаж</div>
+                    </div>
+                    <div class="service-duration">45 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Ботокс" data-price="8000" data-duration="30">
+                    <div class="service-info">
+                        <div class="service-name">Инъекции ботокса</div>
+                        <div class="service-description">Коррекция мимических морщин</div>
+                    </div>
+                    <div class="service-duration">30 мин</div>
+                    <div class="service-price">8000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">👁️</div>
+                    <div class="category-title">Брови и ресницы</div>
+                </div>
+                
+                <div class="service-item" data-service="Коррекция бровей" data-price="800" data-duration="30">
+                    <div class="service-info">
+                        <div class="service-name">Коррекция бровей</div>
+                        <div class="service-description">Моделирование и окрашивание</div>
+                    </div>
+                    <div class="service-duration">30 мин</div>
+                    <div class="service-price">800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Наращивание ресниц" data-price="2000" data-duration="120">
+                    <div class="service-info">
+                        <div class="service-name">Наращивание ресниц</div>
+                        <div class="service-description">Классическое наращивание 1D</div>
+                    </div>
+                    <div class="service-duration">120 мин</div>
+                    <div class="service-price">2000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Объемное наращивание" data-price="3500" data-duration="150">
+                    <div class="service-info">
+                        <div class="service-name">Объемное наращивание 3D</div>
+                        <div class="service-description">Пышные объемные ресницы</div>
+                    </div>
+                    <div class="service-duration">150 мин</div>
+                    <div class="service-price">3500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Ламинирование ресниц" data-price="1200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Ламинирование ресниц</div>
+                        <div class="service-description">Подкручивание и питание ресниц</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">1200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💆‍♀️</div>
+                    <div class="category-title">SPA и массаж</div>
+                </div>
+                
+                <div class="service-item" data-service="Классический массаж" data-price="2500" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Классический массаж</div>
+                        <div class="service-description">Расслабляющий массаж всего тела</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Антицеллюлитный массаж" data-price="3000" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Антицеллюлитный массаж</div>
+                        <div class="service-description">Коррекция фигуры</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">3000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Обертывание" data-price="2200" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Обертывание</div>
+                        <div class="service-description">Водорослевое обертывание</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">2200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="SPA-программа" data-price="5000" data-duration="180">
+                    <div class="service-info">
+                        <div class="service-name">SPA-программа "Релакс"</div>
+                        <div class="service-description">Комплексная программа красоты и здоровья</div>
+                    </div>
+                    <div class="service-duration">180 мин</div>
+                    <div class="service-price">5000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="cart-toggle" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <div class="cart" id="cart">
+        <div class="cart-header">
+            <div class="cart-title">Ваш заказ</div>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        
+        <div id="cartItems"></div>
+        
+        <div class="cart-total" id="cartTotal">
+            Итого: 0 ₽
+        </div>
+        
+        <button class="checkout-btn" onclick="checkout()">
+            Оформить заказ
+        </button>
+    </div>
+
+    <script>
+        let cart = [];
+        let cartOpen = false;
+
+        // Add promo to cart function
+        function addPromoToCart(serviceName, price, duration) {
+            cart.push({ 
+                service: serviceName, 
+                price: price, 
+                duration: duration.toString() 
+            });
+            
+            updateCart();
+            
+            // Show success animation
+            event.target.textContent = '✅ Добавлено в корзину!';
+            event.target.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            event.target.style.transform = 'scale(1.05)';
+            
+            setTimeout(() => {
+                event.target.textContent = 'Забронировать со скидкой';
+                event.target.style.background = '';
+                event.target.style.transform = '';
+            }, 2000);
+            
+            // Show cart briefly
+            if (!cartOpen) {
+                setTimeout(() => {
+                    toggleCart();
+                    setTimeout(() => {
+                        if (cartOpen) toggleCart();
+                    }, 3000);
+                }, 500);
+            }
+        }
+
+        // Scrollytelling effects with 3D transformations
+        function handleScroll() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+
+            // Enhanced 3D animations for service categories
+            const categories = document.querySelectorAll('.service-category');
+            categories.forEach((category, index) => {
+                const rect = category.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight - 100) {
+                    setTimeout(() => {
+                        category.classList.add('visible');
+                    }, index * 150);
+                }
+                
+                // Apply parallax effect
+                const distance = rect.top;
+                const speed = 0.05 + (index * 0.02);
+                const yValue = distance * speed;
+                const rotateValue = distance * 0.01;
+                
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    category.style.transform = `translateY(${-yValue}px) rotateX(${-rotateValue}deg) translateZ(0)`;
+                }
+            });
+            
+            // Animate service items with staggered delay
+            const visibleCategories = document.querySelectorAll('.service-category.visible');
+            visibleCategories.forEach(category => {
+                const items = category.querySelectorAll('.service-item');
+                items.forEach((item, i) => {
+                    const delay = i * 50;
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateZ(0px)';
+                    }, delay);
+                });
+            });
+        }
+
+        // Create floating elements with glassmorphism effect
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elements = ['✨', '💎', '🌸', '💇‍♀️', '💅', '👁️', '💆‍♀️', '💫'];
+            
+            // Clear existing elements
+            container.innerHTML = '';
+            
+            // Create new elements with staggered animation
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    // More varied styles
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.top = Math.random() * 100 + '%';
+                    element.style.fontSize = (Math.random() * 30 + 15) + 'px';
+                    element.style.opacity = Math.random() * 0.5 + 0.1;
+                    
+                    // Unique animation parameters
+                    const duration = Math.random() * 15 + 10;
+                    const delay = Math.random() * 5;
+                    element.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                    
+                    container.appendChild(element);
+                    
+                    // Remove after a while to prevent clutter
+                    setTimeout(() => {
+                        if (container.contains(element)) {
+                            container.removeChild(element);
+                        }
+                    }, 30000);
+                }, i * 300);
+            }
+        }
+
+        function addToCart(button) {
+            const serviceItem = button.parentElement;
+            const service = serviceItem.dataset.service;
+            const price = parseInt(serviceItem.dataset.price);
+            const duration = serviceItem.dataset.duration;
+
+            // Enhanced 3D animation for button
+            button.style.transform = 'scale(0.8) translateZ(5px) rotateY(10deg)';
+            button.textContent = '✓ Добавлено';
+            button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1) translateZ(0px) rotateY(0deg)';
+                button.textContent = 'Добавить';
+                button.style.background = '';
+            }, 1000);
+
+            // 3D animation for the service item
+            serviceItem.style.transform = 'translateZ(20px) scale(1.02)';
+            setTimeout(() => {
+                serviceItem.style.transform = '';
+            }, 500);
+
+            // Add to cart
+            cart.push({ service, price, duration });
+            updateCart();
+            
+            // Show cart briefly with 3D animation
+            if (!cartOpen) {
+                setTimeout(() => {
+                    toggleCart();
+                    document.getElementById('cart').style.transform = 'translateX(0) rotateY(-10deg)';
+                    setTimeout(() => {
+                        document.getElementById('cart').style.transform = 'translateX(0) rotateY(0deg)';
+                        if (cartOpen) toggleCart();
+                    }, 2000);
+                }, 500);
+            }
+        }
+
+        function removeFromCart(index) {
+            // 3D animation for removal
+            const cartItems = document.querySelectorAll('.cart-item');
+            const item = cartItems[index];
+            
+            item.style.transform = 'translateX(100%) rotateY(90deg)';
+            item.style.opacity = '0';
+            
+            setTimeout(() => {
+                cart.splice(index, 1);
+                updateCart();
+            }, 300);
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartCount = document.getElementById('cartCount');
+
+            // Update count with animation
+            cartCount.textContent = cart.length;
+            if (cart.length > 0) {
+                cartCount.style.display = 'flex';
+                cartCount.style.transform = 'translateZ(15px) scale(1.2)';
+                setTimeout(() => {
+                    cartCount.style.transform = 'translateZ(15px) scale(1)';
+                }, 200);
+            } else {
+                cartCount.style.display = 'none';
+            }
+
+            // Update items
+            cartItems.innerHTML = '';
+            let total = 0;
+            let totalDuration = 0;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.style.opacity = '0';
+                cartItem.style.transform = 'translateY(20px)';
+                
+                cartItem.innerHTML = `
+                    <div>
+                        <div style="font-weight: 500; color: white;">${item.service}</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">${item.duration} мин</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 600; color: white;">${item.price} ₽</span>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">×</button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+                total += item.price;
+                totalDuration += parseInt(item.duration);
+                
+                // Staggered animation
+                setTimeout(() => {
+                    cartItem.style.opacity = '1';
+                    cartItem.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+
+            // Update total with 3D effect
+            if (cart.length > 0) {
+                const hours = Math.floor(totalDuration / 60);
+                const minutes = totalDuration % 60;
+                const timeStr = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+                
+                cartTotal.innerHTML = `
+                    <div>Итого: ${total} ₽</div>
+                    <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 5px;">Время: ${timeStr}</div>
+                `;
+                cartTotal.style.transform = 'translateZ(5px)';
+                setTimeout(() => {
+                    cartTotal.style.transform = 'translateZ(0)';
+                }, 300);
+            } else {
+                cartTotal.textContent = 'Корзина пуста';
+                cartTotal.style.transform = 'translateZ(0)';
+            }
+        }
+
+        function toggleCart() {
+            const cart = document.getElementById('cart');
+            cartOpen = !cartOpen;
+            
+            if (cartOpen) {
+                cart.classList.add('open');
+                cart.style.transform = 'translateX(0) rotateY(-5deg)';
+                setTimeout(() => {
+                    cart.style.transform = 'translateX(0) rotateY(0deg)';
+                }, 300);
+            } else {
+                cart.style.transform = 'translateX(20px) rotateY(5deg)';
+                setTimeout(() => {
+                    cart.style.transform = 'translateX(100%)';
+                    cart.classList.remove('open');
+                }, 200);
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const totalDuration = cart.reduce((sum, item) => sum + parseInt(item.duration), 0);
+            const hours = Math.floor(totalDuration / 60);
+            const minutes = totalDuration % 60;
+            const timeStr = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+
+            let orderSummary = 'Ваш заказ:\n\n';
+            cart.forEach(item => {
+                orderSummary += `• ${item.service} - ${item.price} ₽ (${item.duration} мин)\n`;
+            });
+            orderSummary += `\nИтого: ${total} ₽\nОбщее время: ${timeStr}\n\nПодтвердить заказ?`;
+
+            if (confirm(orderSummary)) {
+                // Enhanced checkout animation
+                const checkoutBtn = document.querySelector('.checkout-btn');
+                checkoutBtn.textContent = '✓ Заказ оформлен!';
+                checkoutBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                checkoutBtn.style.transform = 'translateY(-5px)';
+                
+                // Animate cart items disappearing
+                const cartItems = document.querySelectorAll('.cart-item');
+                cartItems.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.style.transform = 'translateX(100%) scale(0.8)';
+                        item.style.opacity = '0';
+                    }, i * 100);
+                });
+                
+                setTimeout(() => {
+                    cart = [];
+                    updateCart();
+                    
+                    // Reset button
+                    setTimeout(() => {
+                        checkoutBtn.textContent = 'Оформить заказ';
+                        checkoutBtn.style.background = '';
+                        checkoutBtn.style.transform = '';
+                        
+                        // Close cart with delay
+                        setTimeout(() => {
+                            toggleCart();
+                            // Show success message
+                            alert('Спасибо за заказ! Мы свяжемся с вами для подтверждения времени.');
+                        }, 500);
+                    }, 1000);
+                }, 1500);
+            }
+        }
+
+        // Initialize everything with improved animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial animations with staggered delay
+            setTimeout(() => {
+                // Create initial glass decorations
+                createFloatingElements();
+                
+                // Initialize categories with 3D effects
+                const categories = document.querySelectorAll('.service-category');
+                categories.forEach((category, index) => {
+                    // Initialize service items with opacity 0
+                    const items = category.querySelectorAll('.service-item');
+                    items.forEach(item => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateZ(-10px)';
+                    });
+                    
+                    // Delayed appearance for each category
+                    setTimeout(() => {
+                        category.classList.add('visible');
+                    }, 300 + index * 150);
+                });
+                
+                // Add 3D mouse effects
+                addMouseEffects();
+                
+                // Add touch gestures
+                addTouchGestures();
+            }, 500);
+
+            // Enhanced scroll event listeners
+            window.addEventListener('scroll', function() {
+                handleScroll();
+            });
+
+            // Initial scroll check
+            handleScroll();
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && cartOpen) {
+                    toggleCart();
+                }
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    toggleCart();
+                }
+            });
+
+            // Smooth scroll for better UX
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Regenerate floating elements periodically
+            setInterval(createFloatingElements, 30000);
+        });
+
+        // Add 3D mouse interaction effects
+        function addMouseEffects() {
+            const serviceItems = document.querySelectorAll('.service-item');
+            
+            serviceItems.forEach(item => {
+                item.addEventListener('mouseenter', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`;
+                    this.style.transform = 'translateY(-3px) translateZ(10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+                    
+                    // Animate child elements for 3D effect
+                    const serviceName = this.querySelector('.service-name');
+                    const serviceDesc = this.querySelector('.service-description');
+                    const servicePrice = this.querySelector('.service-price');
+                    
+                    if (serviceName) serviceName.style.transform = 'translateZ(15px)';
+                    if (serviceDesc) serviceDesc.style.transform = 'translateZ(10px)';
+                    if (servicePrice) servicePrice.style.transform = 'translateZ(15px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(255,255,255,0.1)';
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                    
+                    // Reset child elements
+                    const serviceName = this.querySelector('.service-name');
+                    const serviceDesc = this.querySelector('.service-description');
+                    const servicePrice = this.querySelector('.service-price');
+                    
+                    if (serviceName) serviceName.style.transform = '';
+                    if (serviceDesc) serviceDesc.style.transform = '';
+                    if (servicePrice) servicePrice.style.transform = '';
+                });
+                
+                item.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Calculate tilt effect (subtle)
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const tiltX = (y - centerY) / centerY * 2; // max 2 degrees
+                    const tiltY = (centerX - x) / centerX * 2; // max 2 degrees
+                    
+                    this.style.transform = `translateY(-3px) translateZ(10px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                    this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`;
+                });
+            });
+        }
+
+        // Add touch gestures for mobile
+        function addTouchGestures() {
+            let startY = 0;
+            const cart = document.getElementById('cart');
+            
+            cart.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            });
+            
+            cart.addEventListener('touchmove', function(e) {
+                if (!cartOpen) return;
+                
+                const currentY = e.touches[0].clientY;
+                const diffY = startY - currentY;
+                
+                if (diffY < -50) {
+                    toggleCart();
+                }
+            });
+            
+            // Add swipe to add to cart
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach(item => {
+                let startX = 0;
+                
+                item.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                });
+                
+                item.addEventListener('touchend', function(e) {
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = endX - startX;
+                    
+                    // Swipe left to add to cart
+                    if (diff < -50) {
+                        const addBtn = this.querySelector('.add-btn');
+                        if (addBtn) {
+                            addToCart(addBtn);
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html> 

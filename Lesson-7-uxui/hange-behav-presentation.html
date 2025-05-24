@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changing User Behavior in UX Design</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2a5a7a;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #b5e8ff 0%, #dcc0ff 50%, #ffd8e9 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Floating background shapes */
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+        }
+
+        body::before {
+            background: rgba(188, 230, 255, 0.6);
+            top: -100px;
+            left: -100px;
+            animation: float 18s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            background: rgba(255, 198, 216, 0.6);
+            bottom: -100px;
+            right: -100px;
+            animation: float 15s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, 50px);
+            }
+        }
+        
+        .presentation {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #2a5a7a;
+            padding: 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: #2a5a7a;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+        
+        .slide {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease;
+        }
+        
+        h2 {
+            color: #4a7bff;
+            font-size: 1.8rem;
+            margin-top: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+            padding-bottom: 0.5rem;
+        }
+        
+        .principles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .principle {
+            flex: 1 1 300px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .principle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(31, 38, 135, 0.15);
+        }
+        
+        h3 {
+            color: #9166cc;
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+        
+        ul {
+            padding-left: 1.2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .method {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-left: 4px solid rgba(145, 102, 204, 0.7);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 16px 16px 0;
+            box-shadow: 0 4px 20px rgba(31, 38, 135, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .example {
+            background: rgba(174, 213, 129, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            position: relative;
+            border: 1px solid rgba(174, 213, 129, 0.4);
+        }
+        
+        .example::before {
+            content: "Example";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: rgba(174, 213, 129, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 10px rgba(174, 213, 129, 0.3);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #2a5a7a;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .icon {
+            font-size: 2rem;
+            color: #9166cc;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 6px rgba(145, 102, 204, 0.4));
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <header>
+            <h1>Changing User Behavior in UX Design</h1>
+            <div class="subtitle">Strategies for effective behavioral design</div>
+        </header>
+
+        <section class="slide">
+            <h2>Support Conscious Action</h2>
+            <p>The process of changing user behavior involves understanding the factors that influence how people interact with your product, and applying strategies to help users adopt new, desirable behaviors.</p>
+            
+            <div class="principles">
+                <div class="principle">
+                    <h3>Understand Current Behavior</h3>
+                    <p>To effectively change user behavior, you first need to understand their current habits and patterns through user research.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Set Clear Goals</h3>
+                    <p>Define specific, measurable, attainable, and relevant goals for the behavior change you want to achieve.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Leverage Psychology</h3>
+                    <p>Utilize theories like the Fogg Behavior Model to design interventions that target key aspects of user behavior.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Design for Simplicity</h3>
+                    <p>Make it as easy as possible for users to adopt the desired behavior by reducing barriers and cognitive load.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Provide Feedback</h3>
+                    <p>Help users understand the impact of their actions through immediate, clear, and specific feedback.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Leverage Social Influence</h3>
+                    <p>Incorporate elements of social proof, competition, or collaboration into your UX design.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Educate and Encourage User</h2>
+            <p>Guide users through the intended flow of an application by encouraging them to change their behavior or habits through education and encouragement.</p>
+            
+            <div class="method">
+                <h3>Guidance</h3>
+                <p>Provide clear and concise instructions, explanations, and help text to ensure users understand how to use your application.</p>
+                <div class="example">
+                    Show a brief tutorial during a user's first interaction with your app, highlighting key features they may not be aware of.
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3>Feedback</h3>
+                <p>Give users real-time feedback as they interact with your application, ranging from basic notifications to detailed information.</p>
+                <div class="example">
+                    When a user creates a password, show an interactive strength meter indicating whether their chosen password is strong or weak.
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3>Positive Reinforcement</h3>
+                <p>Encourage users by rewarding them for achieving milestones or completing tasks through gamification elements.</p>
+                <div class="example">
+                    Award a badge to users who complete their profile or connect their social media accounts.
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3>Social Influence</h3>
+                <p>Utilize social proof to promote a change in user behavior by showcasing the actions or opinions of other users.</p>
+                <div class="example">
+                    Display the number of users who have completed a task or upvoted content, motivating others to follow the apparent trend.
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3>Personalization</h3>
+                <p>Cater to users by presenting them with tailored content based on their preferences and usage patterns.</p>
+                <div class="example">
+                    Offer users personalized recommendations based on their browsing history to enhance their experience.
+                </div>
+            </div>
+        </section>
+
+        <section class="slide">
+            <h2>Help User Think About Their Action</h2>
+            <p>Encourage users to think about their actions consciously by employing these effective methods in your UX design:</p>
+            
+            <div class="principles">
+                <div class="principle">
+                    <h3>Incentives</h3>
+                    <p>Offer rewards or incentives for completing specific actions, making users more likely to think about their actions and participate actively.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Progress Indicators</h3>
+                    <p>Display clear progress indicators to show users where they are in the process, helping them evaluate outcomes and stay motivated.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Feedback</h3>
+                    <p>Provide real-time feedback on actions through notifications, messages, or visual cues to inform users about results.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Guidance</h3>
+                    <p>Offer support through onboarding tutorials or tooltips to help users understand the effects and relevance of their actions.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Confirmation</h3>
+                    <p>Ask for confirmation before critical actions, compelling users to think about their choice and assess potential impact.</p>
+                </div>
+                
+                <div class="principle">
+                    <h3>Make it Personal</h3>
+                    <p>Connect outcomes to users' personal goals, making them more likely to think about actions in the context of their own life.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="footer">
+            <p>UX Design Presentation on Changing User Behavior</p>
+        </section>
+    </div>
+</body>
+</html>

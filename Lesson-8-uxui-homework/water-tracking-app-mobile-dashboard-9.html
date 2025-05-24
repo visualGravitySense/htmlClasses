@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дашборд модератора</title>
+    <style>
+        :root {
+            /* Light Theme (Default) */
+            --primary-color: #4e7df9;
+            --primary-light: #6e93fa;
+            --primary-dark: #3e67d9;
+            --secondary-color: #5bbdfa;
+            --success-color: #61d26c;
+            --danger-color: #ff6b6b;
+            --warning-color: #ffd76e;
+            --dark-color: #444;
+            --light-color: #e6e9ef;
+            --gray-color: #d1d9e6;
+            --shadow-light: #ffffff;
+            --shadow-dark: #b8c6e0;
+            --bg-color: #e6e9ef;
+            --text-color: #444;
+            --text-muted: #777;
+            --border-radius: 12px;
+            
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-bg-dark: rgba(75, 85, 115, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+            --glass-shadow-dark: rgba(0, 0, 0, 0.2);
+            --blur-strength: 10px;
+        }
+        
+        /* Performance mode - disable animations and hover effects */
+        [data-performance-mode="on"] * {
+            animation-duration: 0.0001s !important;
+            animation-delay: 0.0001s !important;
+            transition-duration: 0.0001s !important;
+            transition-delay: 0.0001s !important;
+        }
+        
+        [data-performance-mode="on"] .card:hover,
+        [data-performance-mode="on"] .btn:hover,
+        [data-performance-mode="on"] .status-badge:hover,
+        [data-performance-mode="on"] .navbar h1:hover::after,
+        [data-performance-mode="on"] .dropdown span:hover,
+        [data-performance-mode="on"] .tab-item:hover::before,
+        [data-performance-mode="on"] .sidebar-menu a:hover,
+        [data-performance-mode="on"] .user-item:hover .user-avatar,
+        [data-performance-mode="on"] .intake-button:hover {
+            transform: none !important;
+            box-shadow: inherit !important;
+            width: inherit !important;
+        }
+        
+        [data-performance-mode="on"] .water-3d-container,
+        [data-performance-mode="on"] .glass-cube,
+        [data-performance-mode="on"] .glass-decoration {
+            display: none !important;
+        }
+        
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --primary-color: #6e93fa;
+            --primary-light: #7ea3ff;
+            --primary-dark: #3e67d9;
+            --secondary-color: #5bbdfa;
+            --success-color: #61d26c;
+            --danger-color: #ff6b6b;
+            --warning-color: #ffd76e;
+            --dark-color: #e6e9ef;
+            --light-color: #252836;
+            --gray-color: #353846;
+            --shadow-light: #2f3342;
+            --shadow-dark: #1a1d27;
+            --bg-color: #252836;
+            --text-color: #e6e9ef;
+            --text-muted: #9ca3af;
+            
+            /* Glassmorphism Variables Dark Theme */
+            --glass-bg: rgba(45, 50, 70, 0.35);
+            --glass-bg-dark: rgba(35, 40, 60, 0.5);
+            --glass-border: rgba(70, 80, 120, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-shadow-dark: rgba(0, 0, 0, 0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(78, 125, 249, 0.15) 0%, transparent 30%),
+                radial-gradient(circle at 90% 50%, rgba(91, 189, 250, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(97, 210, 108, 0.15) 0%, transparent 35%);
+            background-attachment: fixed;
+        }
+        
+        [data-theme="dark"] body {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(78, 125, 249, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 50%, rgba(91, 189, 250, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(97, 210, 108, 0.1) 0%, transparent 35%);
+        }
+        
+        .container {
+            padding: 15px;
+            max-width: 100%;
+        }
+        
+        /* Glassmorphism Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            padding: 15px;
+            color: var(--text-color);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 20px var(--glass-shadow);
+            border-bottom: 1px solid var(--glass-border);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .navbar h1 {
+            font-size: 18px;
+            margin: 0;
+            color: var(--primary-color);
+        }
+        
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle:active {
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark);
+        }
+        
+        /* Theme switcher styles */
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .theme-switch-icon {
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-switch-icon:active {
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark);
+        }
+        
+        /* Glassmorphism Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            transition: all 0.3s ease;
+            z-index: 1001;
+            box-shadow: 5px 0 15px var(--glass-shadow);
+            border-right: 1px solid var(--glass-border);
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 15px;
+            background: linear-gradient(145deg, rgba(110, 147, 250, 0.8), rgba(62, 103, 217, 0.8));
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:active {
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .sidebar-menu {
+            padding: 15px;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 16px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .sidebar-menu a:hover {
+            color: var(--primary-color);
+            background-color: var(--glass-bg-dark);
+        }
+        
+        .sidebar-menu a.active {
+            color: var(--primary-color);
+            background-color: var(--glass-bg-dark);
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark);
+        }
+        
+        .main-content {
+            margin-top: 70px;
+            padding: 15px;
+        }
+        
+        /* Glassmorphism Cards */
+        .card {
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 20px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.5s ease, box-shadow 0.5s ease, background-color 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px) translateZ(10px) rotateX(2deg);
+            box-shadow: 0 15px 30px var(--glass-shadow-dark);
+        }
+        
+        .card-header {
+            padding: 18px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            color: var(--primary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            transform: translateZ(5px);
+        }
+        
+        [data-theme="dark"] .card-header {
+            background: linear-gradient(145deg, rgba(60, 70, 100, 0.1), rgba(40, 50, 80, 0.05));
+        }
+        
+        .card-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 18px;
+        }
+        
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0 10px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .tab-item {
+            padding: 12px 15px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            margin: 0 5px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+            background-color: var(--glass-bg-dark);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 18px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--text-color);
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark), 0 0 0 2px rgba(110, 147, 250, 0.3);
+            border-color: var(--primary-light);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--primary-color);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            transform-style: preserve-3d;
+        }
+        
+        .btn:hover {
+            background-color: var(--glass-bg-dark);
+            box-shadow: 0 8px 15px var(--glass-shadow);
+            transform: translateY(-3px) translateZ(5px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark);
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+        
+        .btn-success {
+            background: linear-gradient(145deg, rgba(97, 210, 108, 0.7), rgba(82, 200, 93, 0.7));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(97, 210, 108, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(145deg, rgba(255, 107, 107, 0.7), rgba(255, 82, 82, 0.7));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(145deg, rgba(255, 215, 110, 0.7), rgba(255, 206, 84, 0.7));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--dark-color);
+            border: 1px solid rgba(255, 215, 110, 0.3);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 2px 6px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .status-active {
+            background: linear-gradient(145deg, rgba(97, 210, 108, 0.7), rgba(82, 200, 93, 0.7));
+            color: white;
+            border-color: rgba(97, 210, 108, 0.3);
+        }
+        
+        .status-inactive {
+            background: linear-gradient(145deg, rgba(255, 107, 107, 0.7), rgba(255, 82, 82, 0.7));
+            color: white;
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .status-pending {
+            background: linear-gradient(145deg, rgba(255, 215, 110, 0.7), rgba(255, 206, 84, 0.7));
+            color: var(--dark-color);
+            border-color: rgba(255, 215, 110, 0.3);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .mt-2 {
+            margin-top: 8px;
+        }
+        
+        .mt-3 {
+            margin-top: 12px;
+        }
+        
+        .mt-4 {
+            margin-top: 16px;
+        }
+        
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+        
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+        
+        .mr-2 {
+            margin-right: 8px;
+        }
+        
+        .ml-2 {
+            margin-left: 8px;
+        }
+        
+        .text-sm {
+            font-size: 14px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .text-muted {
+            color: var(--text-muted);
+        }
+        
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            z-index: 1000;
+        }
+        
+        /* Glassmorphism Modal */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 25px 50px var(--glass-shadow-dark);
+            border: 1px solid var(--glass-border);
+            z-index: 1002;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+        }
+        
+        .modal-header {
+            padding: 18px;
+            background: linear-gradient(145deg, rgba(110, 147, 250, 0.8), rgba(62, 103, 217, 0.8));
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:active {
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-body {
+            padding: 18px;
+        }
+        
+        .modal-footer {
+            padding: 18px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid var(--glass-border);
+            gap: 10px;
+        }
+        
+        /* Glassmorphism switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: .4s;
+            border-radius: 30px;
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(230, 230, 240, 0.8));
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px var(--glass-shadow);
+        }
+        
+        input:checked + .slider {
+            background-color: rgba(110, 147, 250, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-color: rgba(110, 147, 250, 0.3);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 250, 0.8));
+        }
+        
+        /* Glassmorphism charts */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+        }
+        
+        .funnel-chart {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            padding: 15px;
+        }
+        
+        .funnel-step {
+            position: relative;
+            height: 45px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .funnel-step:hover {
+            transform: translateZ(5px) scale(1.02);
+        }
+        
+        .funnel-step:nth-child(1) {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(110, 147, 250, 0.8), rgba(62, 103, 217, 0.8));
+        }
+        
+        .funnel-step:nth-child(2) {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(145deg, rgba(96, 165, 255, 0.8), rgba(74, 149, 239, 0.8));
+        }
+        
+        .funnel-step:nth-child(3) {
+            width: 65%;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(145deg, rgba(112, 181, 255, 0.8), rgba(90, 165, 239, 0.8));
+        }
+        
+        .funnel-step:nth-child(4) {
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(145deg, rgba(138, 197, 255, 0.8), rgba(117, 181, 239, 0.8));
+        }
+        
+        .funnel-step:nth-child(5) {
+            width: 25%;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(145deg, rgba(176, 213, 255, 0.8), rgba(155, 197, 239, 0.8));
+            color: var(--dark-color);
+        }
+        
+        /* Glassmorphism Progress Bar */
+        .progress-bar {
+            height: 10px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-top: 5px;
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(110, 147, 250, 0.8), rgba(62, 103, 217, 0.8));
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 5px rgba(78, 125, 249, 0.5);
+        }
+
+        /* User item with glassmorphism */
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-item:hover {
+            background: linear-gradient(145deg, var(--glass-bg), var(--glass-bg-dark));
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(230, 233, 239, 0.05));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--primary-color);
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .user-item:hover .user-avatar {
+            transform: scale(1.1) translateZ(10px) rotateY(10deg);
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .user-email {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown span {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown span:active {
+            box-shadow: inset 0 2px 5px var(--glass-shadow-dark);
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            min-width: 180px;
+            box-shadow: 0 8px 20px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            z-index: 1;
+            border-radius: var(--border-radius);
+            right: 0;
+            padding: 5px 0;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-content a:hover {
+            color: var(--primary-color);
+            background-color: var(--glass-bg-dark);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .loader {
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top: 3px solid var(--primary-color);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
+            box-shadow: 0 4px 10px var(--glass-shadow);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+        
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: var(--border-radius);
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            outline: none;
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(110, 147, 250, 0.9), rgba(62, 103, 217, 0.9));
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .range-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(110, 147, 250, 0.9), rgba(62, 103, 217, 0.9));
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .donut-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                rgba(78, 125, 249, 0.8) 0% 25%,
+                rgba(96, 165, 255, 0.8) 25% 45%,
+                rgba(112, 181, 255, 0.8) 45% 60%,
+                rgba(138, 197, 255, 0.8) 60% 75%,
+                rgba(176, 213, 255, 0.8) 75% 100%
+            );
+            margin: 20px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .donut-chart::before {
+            content: "";
+            width: 80px;
+            height: 80px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 10px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px var(--glass-shadow);
+        }
+        
+        .legend-text {
+            font-size: 12px;
+            color: var(--text-color);
+        }
+        
+        /* Additional dark mode specific adjustments */
+        [data-theme="dark"] .sidebar-menu a:hover {
+            color: var(--primary-light);
+        }
+        
+        [data-theme="dark"] .sidebar-menu a.active {
+            color: var(--primary-light);
+        }
+        
+        [data-theme="dark"] .card-header {
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        [data-theme="dark"] .status-badge {
+            box-shadow: 0 4px 10px var(--glass-shadow);
+        }
+        
+        [data-theme="dark"] .modal-close {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Additional animations for glass elements */
+        .card, .btn, .user-avatar, .modal, .sidebar {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--glass-shadow-dark);
+        }
+        
+        /* Special glassmorphism effects for key elements */
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--glass-border), 
+                transparent
+            );
+        }
+        
+        /* Glass decorative elements */
+        .glass-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, var(--glass-border), transparent);
+            opacity: 0.2;
+            z-index: -1;
+            transform-style: preserve-3d;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .glass-decoration-1 {
+            width: 150px;
+            height: 150px;
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .glass-decoration-2 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            right: 15%;
+            animation-delay: -4s;
+        }
+        
+        /* Glass dividers */
+        .glass-divider {
+            height: 1px;
+            width: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--glass-border), 
+                transparent
+            );
+            margin: 15px 0;
+        }
+        
+        /* 3D decorative elements */
+        .glass-cube {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transform-style: preserve-3d;
+            animation: rotate3D 15s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .glass-cube-1 {
+            top: 25%;
+            left: 80%;
+        }
+        
+        .glass-cube-2 {
+            top: 70%;
+            left: 15%;
+            animation-delay: -5s;
+        }
+        
+        /* Abstract Geometric Shapes */
+        .abstract-shape {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+            transform-style: preserve-3d;
+        }
+        
+        [data-performance-mode="on"] .abstract-shape {
+            display: none !important;
+        }
+        
+        /* Circle */
+        .abstract-circle {
+            border-radius: 50%;
+            background: transparent;
+            border: 4px solid;
+            border-color: transparent;
+            box-sizing: border-box;
+            animation: circleRotate 20s linear infinite;
+        }
+        
+        .abstract-circle::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-color),
+                var(--secondary-color),
+                var(--success-color),
+                var(--primary-color)
+            );
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        .abstract-circle-1 {
+            width: 180px;
+            height: 180px;
+            top: 15%;
+            right: 10%;
+            animation-duration: 30s;
+        }
+        
+        .abstract-circle-2 {
+            width: 120px;
+            height: 120px;
+            bottom: 10%;
+            left: 5%;
+            animation-duration: 25s;
+            animation-direction: reverse;
+            opacity: 0.3;
+        }
+        
+        /* Triangle */
+        .abstract-triangle {
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 140px solid;
+            border-bottom-color: var(--glass-bg);
+            filter: drop-shadow(0 0 15px var(--glass-shadow));
+            animation: triangleRotate 25s ease-in-out infinite;
+        }
+        
+        .abstract-triangle-1 {
+            top: 60%;
+            right: 5%;
+            transform: rotate(30deg);
+        }
+        
+        .abstract-triangle-2 {
+            top: 20%;
+            left: 5%;
+            transform: rotate(-15deg) scale(0.6);
+            opacity: 0.3;
+        }
+        
+        /* Rectangle */
+        .abstract-rectangle {
+            width: 120px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-light), var(--secondary-color));
+            border-radius: 12px;
+            transform: rotate(-30deg);
+            animation: rectanglePulse 8s ease-in-out infinite;
+        }
+        
+        .abstract-rectangle-1 {
+            bottom: 30%;
+            left: 15%;
+            opacity: 0.2;
+        }
+        
+        /* Cross shape */
+        .abstract-cross {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .abstract-cross::before, 
+        .abstract-cross::after {
+            content: '';
+            position: absolute;
+            background-color: var(--primary-color);
+            opacity: 0.2;
+        }
+        
+        .abstract-cross::before {
+            width: 100%;
+            height: 20px;
+            top: 40px;
+        }
+        
+        .abstract-cross::after {
+            width: 20px;
+            height: 100%;
+            left: 40px;
+        }
+        
+        .abstract-cross-1 {
+            top: 35%;
+            left: 20%;
+            transform: rotate(15deg);
+            animation: crossRotate 15s linear infinite;
+        }
+        
+        /* Dotted pattern */
+        .abstract-dots {
+            width: 140px;
+            height: 140px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 10px;
+            transform: rotate(30deg);
+        }
+        
+        .abstract-dots span {
+            width: 10px;
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: dotPulse 3s ease-in-out infinite;
+        }
+        
+        .abstract-dots span:nth-child(2n) {
+            animation-delay: 0.5s;
+        }
+        
+        .abstract-dots span:nth-child(3n) {
+            animation-delay: 1s;
+        }
+        
+        .abstract-dots span:nth-child(4n) {
+            animation-delay: 1.5s;
+        }
+        
+        .abstract-dots-1 {
+            bottom: 15%;
+            right: 20%;
+        }
+        
+        /* Zigzag pattern */
+        .abstract-zigzag {
+            width: 150px;
+            height: 60px;
+            background-image: 
+                linear-gradient(135deg, transparent 0%, transparent 45%, 
+                var(--primary-color) 45%, var(--primary-color) 55%, 
+                transparent 55%, transparent 100%),
+                linear-gradient(45deg, transparent 0%, transparent 45%, 
+                var(--secondary-color) 45%, var(--secondary-color) 55%, 
+                transparent 55%, transparent 100%);
+            background-size: 20px 20px;
+            opacity: 0.15;
+            border-radius: 30px;
+        }
+        
+        .abstract-zigzag-1 {
+            top: 80%;
+            right: 15%;
+            transform: rotate(-10deg);
+        }
+        
+        /* Hexagon */
+        .abstract-hexagon {
+            width: 100px;
+            height: 58px;
+            background-color: var(--primary-color);
+            opacity: 0.2;
+            position: relative;
+            animation: hexagonPulse 10s ease-in-out infinite;
+        }
+        
+        .abstract-hexagon::before,
+        .abstract-hexagon::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+        }
+        
+        .abstract-hexagon::before {
+            bottom: 100%;
+            border-bottom: 29px solid var(--primary-color);
+        }
+        
+        .abstract-hexagon::after {
+            top: 100%;
+            border-top: 29px solid var(--primary-color);
+        }
+        
+        .abstract-hexagon-1 {
+            top: 55%;
+            left: 10%;
+            transform: rotate(15deg);
+        }
+        
+        /* Animations for abstract shapes */
+        @keyframes circleRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes triangleRotate {
+            0%, 100% { transform: rotate(30deg) translateY(0); }
+            50% { transform: rotate(25deg) translateY(-20px); }
+        }
+        
+        @keyframes rectanglePulse {
+            0%, 100% { transform: rotate(-30deg) scale(1); }
+            50% { transform: rotate(-25deg) scale(1.1); }
+        }
+        
+        @keyframes crossRotate {
+            0% { transform: rotate(15deg); }
+            100% { transform: rotate(375deg); }
+        }
+        
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.5); }
+        }
+        
+        @keyframes hexagonPulse {
+            0%, 100% { transform: rotate(15deg) scale(1); }
+            50% { transform: rotate(20deg) scale(1.1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateZ(0) rotateZ(0); }
+            50% { transform: translateY(-20px) translateZ(30px) rotateZ(5deg); }
+        }
+        
+        @keyframes rotate3D {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg); }
+        }
+        
+        /* Responsive adjustments for 3D elements */
+        @media (max-width: 768px) {
+            .water-3d-container {
+                width: 120px;
+                height: 180px;
+                top: auto;
+                bottom: 80px;
+                right: 20px;
+                transform: none;
+            }
+            
+            .glass-cube,
+            .abstract-shape {
+                display: none;
+            }
+            
+            .card:hover {
+                transform: translateY(-3px) translateZ(5px) rotateX(1deg);
+            }
+        }
+        
+        /* Add new style for 3D water visualization container */
+        .water-3d-container {
+            position: fixed;
+            top: 50%;
+            right: 5%;
+            width: 200px;
+            height: 300px;
+            z-index: 900;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        
+        /* Interactive 3D water progress card */
+        .water-progress-card {
+            position: relative;
+            min-height: 340px;
+            margin-bottom: 25px;
+            perspective: 1000px;
+        }
+        
+        .water-progress-card .card-body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .water-intake-scene {
+            width: 100%;
+            height: 240px;
+            margin: 0 auto;
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .water-cup-container {
+            width: 120px;
+            height: 180px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%) rotateX(-20deg) rotateY(20deg);
+            transition: transform 0.8s ease;
+        }
+        
+        .water-cup-container:hover {
+            transform: translate(-50%, -50%) rotateX(-15deg) rotateY(40deg);
+        }
+        
+        .water-cup {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0.2));
+            border-radius: 0 0 60px 60px;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-top: none;
+            transform-style: preserve-3d;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .water-cup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 60px 60px 0 0;
+            transform: translateZ(2px);
+        }
+        
+        .water-level {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to bottom, rgba(78, 125, 249, 0.7), rgba(91, 189, 250, 0.9));
+            transform-origin: bottom;
+            transition: height 1s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 10px rgba(91, 189, 250, 0.5);
+            animation: waterWave 3s ease-in-out infinite;
+        }
+        
+        @keyframes waterWave {
+            0%, 100% { transform: translateZ(1px) scaleY(1); }
+            50% { transform: translateZ(1px) scaleY(1.02); }
+        }
+        
+        .water-cup .measurement {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(255,255,255,0.3);
+            left: 0;
+            transform: translateZ(1px);
+        }
+        
+        .water-cup .measurement:nth-child(1) { bottom: 20%; }
+        .water-cup .measurement:nth-child(2) { bottom: 40%; }
+        .water-cup .measurement:nth-child(3) { bottom: 60%; }
+        .water-cup .measurement:nth-child(4) { bottom: 80%; }
+        
+        .water-stats {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .water-intake-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .intake-button {
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .intake-button:hover {
+            transform: translateZ(10px) scale(1.05);
+        }
+        
+        /* 3D goal progress indicator */
+        .goal-progress-3d {
+            width: 100%;
+            height: 40px;
+            position: relative;
+            margin-top: 15px;
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+        
+        .goal-track {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: var(--border-radius);
+            transform: translateZ(-5px);
+            box-shadow: inset 0 2px 5px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .goal-fill {
+            position: absolute;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(78, 125, 249, 0.8), rgba(91, 189, 250, 0.8));
+            border-radius: var(--border-radius);
+            transform: translateZ(5px);
+            box-shadow: 0 0 15px rgba(78, 125, 249, 0.4);
+            transition: width 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .goal-marker {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 2px;
+            height: 70%;
+            background-color: rgba(255,255,255,0.8);
+            transform: translateY(-50%) translateZ(8px);
+        }
+        
+        /* Add CSS for the water cylinder container */
+        .water-cylinder-container {
+            width: 100%;
+            height: 240px;
+            position: relative;
+        }
+        
+        /* Scrollytelling Styles */
+        .scrollytelling-section {
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+            scroll-behavior: smooth;
+            perspective: 1px;
+            transform-style: preserve-3d;
+            overscroll-behavior: contain;
+        }
+
+        .scroll-story {
+            min-height: 300vh;
+            position: relative;
+        }
+
+        .scroll-element {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .story-chapter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .story-chapter.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-progress {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 200px;
+            background-color: var(--glass-bg-dark);
+            border-radius: 2px;
+            z-index: 100;
+        }
+
+        .story-progress-fill {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+            height: 0%;
+            transition: height 0.2s;
+        }
+
+        .story-dots {
+            position: fixed;
+            right: 19px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            z-index: 101;
+        }
+
+        .story-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .story-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.5);
+        }
+
+        .scroll-visual {
+            width: 240px;
+            height: 240px;
+            position: absolute;
+            right: 10%;
+            opacity: 0;
+            transform: translateY(30px) rotate(0deg);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-visual.visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+        }
+
+        .chapter-headline {
+            font-size: 28px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .chapter-headline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.8s ease;
+        }
+
+        .story-chapter.active .chapter-headline::after {
+            width: 100%;
+        }
+
+        .chapter-content {
+            max-width: 60%;
+            margin-bottom: 20px;
+        }
+
+        .scroll-hint {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px var(--glass-shadow);
+            z-index: 100;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        .droplet-shape {
+            background: linear-gradient(180deg, var(--primary-light), var(--primary-dark));
+            width: 160px;
+            height: 160px;
+            border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+            transform: rotate(45deg);
+            box-shadow: 0 10px 25px var(--glass-shadow);
+            position: relative;
+        }
+
+        .droplet-shape::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            filter: blur(2px);
+        }
+
+        .wave-shape {
+            width: 200px;
+            height: 100px;
+            position: relative;
+            background: linear-gradient(180deg, var(--secondary-color), var(--primary-color));
+            border-radius: 100px 100px 0 0;
+            box-shadow: 0 10px 25px var(--glass-shadow);
+            overflow: hidden;
+        }
+
+        .wave-shape::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 40%;
+            animation: wave 8s linear infinite;
+        }
+
+        .wave-shape::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 35%;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .star-shape {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid var(--success-color);
+            border-left: 100px solid transparent;
+            transform: rotate(35deg);
+            box-shadow: 0 10px 25px var(--glass-shadow);
+        }
+
+        .star-shape:before {
+            content: '';
+            position: absolute;
+            height: 0;
+            width: 0;
+            top: -45px;
+            left: -65px;
+            border-bottom: 80px solid var(--success-color);
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            transform: rotate(-35deg);
+        }
+
+        .star-shape:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: -105px;
+            width: 0;
+            height: 0;
+            border-right: 100px solid transparent;
+            border-bottom: 70px solid var(--success-color);
+            border-left: 100px solid transparent;
+            transform: rotate(-70deg);
+        }
+
+        .circle-graph {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .circle-graph .progress-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .circle-graph .progress-ring circle {
+            width: 100%;
+            height: 100%;
+            fill: transparent;
+            stroke-width: 10;
+            stroke: var(--glass-bg-dark);
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .circle-graph .progress-ring circle.filled {
+            stroke: var(--primary-color);
+            stroke-linecap: round;
+        }
+
+        .circle-graph .percentage {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .circle-graph .label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative glass elements -->
+    <div class="glass-decoration glass-decoration-1"></div>
+    <div class="glass-decoration glass-decoration-2"></div>
+    
+    <!-- 3D Water Container Visualization -->
+    <div id="water-3d-container" class="water-3d-container"></div>
+    
+    <!-- Навигация -->
+    <div class="navbar">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <h1>Панель управления</h1>
+        <div class="flex items-center">
+            <div class="theme-switch" id="themeSwitch">
+                <div class="theme-switch-icon">🌙</div>
+            </div>
+            <div class="dropdown">
+                <span>👤</span>
+                <div class="dropdown-content">
+                    <a href="#">Профиль</a>
+                    <a href="#">Настройки</a>
+                    <a href="#">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Боковое меню -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Дашборд</h3>
+            <div class="close-btn" id="closeBtn">×</div>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="#" data-tab="conversion">Воронка конверсии</a></li>
+                <li><a href="#" data-tab="access">Управление доступом</a></li>
+                <li><a href="#" data-tab="recommendations">Рекомендательные алгоритмы</a></li>
+                <li><a href="#" data-tab="age">Анализ по возрасту</a></li>
+                <li><a href="#" data-tab="scrollytelling" class="active">Scrollytelling</a></li>
+                <li><a href="#">Общая статистика</a></li>
+                <li><a href="#">Активность пользователей</a></li>
+                <li><a href="#">Отчеты</a></li>
+                <li><a href="#">Настройки системы</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Модальное окно настроек темы -->
+    <div class="modal" id="themeModal">
+        <div class="modal-header">
+            <h5 class="modal-title">Настройки интерфейса</h5>
+            <div class="modal-close" id="closeThemeModal">×</div>
+        </div>
+        <div class="modal-body">
+            <div class="settings-row">
+                <div>
+                    <div class="user-name">Тёмный режим</div>
+                    <div class="text-sm text-muted">Переключить на тёмную тему</div>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="glass-divider"></div>
+            <div class="settings-row">
+                <div>
+                    <div class="user-name">Производительность</div>
+                    <div class="text-sm text-muted">Отключить анимации и эффекты наведения</div>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" id="performanceModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="glass-divider"></div>
+            <div class="settings-row">
+                <div>
+                    <div class="user-name">Размер шрифта</div>
+                    <div class="text-sm text-muted">Настройка размера текста</div>
+                </div>
+                <div>
+                    <input type="range" class="range-slider" min="1" max="3" value="2">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Затемнение при открытии меню -->
+    <div class="bg-overlay" id="bgOverlay"></div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Вкладка "Воронка конверсии" -->
+        <div class="tab-panel" id="conversion">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Воронка конверсии пользователей</h3>
+                    <button class="btn btn-sm">Экспорт</button>
+                </div>
+                <div class="card-body">
+                    <div class="tabs">
+                        <div class="tab-item active" data-content="daily">Ежедневно</div>
+                        <div class="tab-item" data-content="weekly">Еженедельно</div>
+                        <div class="tab-item" data-content="monthly">Ежемесячно</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="daily">
+                        <div class="funnel-chart">
+                            <div class="funnel-step">
+                                <span>Установки</span>
+                                <span>1200</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Регистрации</span>
+                                <span>1020</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Активации</span>
+                                <span>780</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Регулярные пользователи</span>
+                                <span>480</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Платящие пользователи</span>
+                                <span>300</span>
+                            </div>
+                        </div>
+                        <div class="glass-divider"></div>
+                        <div class="text-center mt-4">
+                            <div class="form-group">
+                                <label>Период</label>
+                                <select class="form-control">
+                                    <option>Сегодня</option>
+                                    <option>Вчера</option>
+                                    <option>Последние 7 дней</option>
+                                    <option>Последние 30 дней</option>
+                                    <option>Другой период</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="weekly">
+                        <div class="text-center">
+                            <div class="loader"></div>
+                            <p class="text-muted">Загрузка данных...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="monthly">
+                        <div class="text-center">
+                            <div class="loader"></div>
+                            <p class="text-muted">Загрузка данных...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Показатели эффективности</h3>
+                </div>
+                <div class="card-body">
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Коэффициент конверсии</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Удержание на 7 день</span>
+                                <span>42%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 42%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Удержание на 30 день</span>
+                                <span>18%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 18%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Управление доступом" -->
+        <div class="tab-panel" id="access">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Управление доступом</h3>
+                    <button class="btn btn-sm" id="addUserBtn">Добавить</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Поиск по имени или email">
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">АИ</div>
+                        <div class="user-info">
+                            <div class="user-name">Алексей Иванов</div>
+                            <div class="user-email">a.ivanov@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-active mr-2">Админ</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">ОП</div>
+                        <div class="user-info">
+                            <div class="user-name">Ольга Петрова</div>
+                            <div class="user-email">o.petrova@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-active mr-2">Модератор</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">ИС</div>
+                        <div class="user-info">
+                            <div class="user-name">Иван Сидоров</div>
+                            <div class="user-email">i.sidorov@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-inactive mr-2">Аналитик</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Активировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">МК</div>
+                        <div class="user-info">
+                            <div class="user-name">Мария Козлова</div>
+                            <div class="user-email">m.kozlova@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-pending mr-2">Наблюдатель</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Роли и разрешения</h3>
+                </div>
+                <div class="card-body">
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Администратор</div>
+                            <div class="text-sm text-muted">Полный доступ ко всем функциям</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Модератор</div>
+                            <div class="text-sm text-muted">Управление пользователями и контентом</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Аналитик</div>
+                            <div class="text-sm text-muted">Доступ к аналитике и отчетам</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Наблюдатель</div>
+                            <div class="text-sm text-muted">Только просмотр данных</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Рекомендательные алгоритмы" -->
+        <div class="tab-panel" id="recommendations">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Настройка рекомендательных алгоритмов</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Содержимое вкладки -->
+                    <div class="text-center">
+                        <div class="loader"></div>
+                        <p class="text-muted">Загрузка данных...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Анализ по возрасту" -->
+        <div class="tab-panel" id="age">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Анализ по возрасту</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Содержимое вкладки -->
+                    <div class="text-center">
+                        <div class="loader"></div>
+                        <p class="text-muted">Загрузка данных...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Scrollytelling" -->
+        <div class="tab-panel active" id="scrollytelling">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Scrollytelling: Путешествие капли воды</h3>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <div class="scrollytelling-section" id="storyScroller">
+                        <div class="scroll-story">
+                            <div class="scroll-element">
+                                <!-- Chapter 1 -->
+                                <div class="story-chapter" id="chapter1">
+                                    <h2 class="chapter-headline">Начало пути: Значение воды</h2>
+                                    <div class="chapter-content">
+                                        <p>Вода составляет 60% нашего тела и участвует во всех важных биологических процессах. Правильная гидратация - основа здоровья и жизненной энергии.</p>
+                                    </div>
+                                    <div class="scroll-visual droplet-visual">
+                                        <div class="droplet-shape"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Chapter 2 -->
+                                <div class="story-chapter" id="chapter2">
+                                    <h2 class="chapter-headline">Путешествие начинается</h2>
+                                    <div class="chapter-content">
+                                        <p>Когда вы пьете воду, она начинает свое путешествие, попадая в кровоток уже через 5 минут после потребления. 30 минут спустя вода распределяется по всему организму.</p>
+                                    </div>
+                                    <div class="scroll-visual wave-visual">
+                                        <div class="wave-shape"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Chapter 3 -->
+                                <div class="story-chapter" id="chapter3">
+                                    <h2 class="chapter-headline">Преимущества правильной гидратации</h2>
+                                    <div class="chapter-content">
+                                        <p>Регулярное потребление воды улучшает концентрацию на 14%, ускоряет метаболизм на 30% и снижает риск головных болей на 40%.</p>
+                                    </div>
+                                    <div class="scroll-visual star-visual">
+                                        <div class="star-shape"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Chapter 4 -->
+                                <div class="story-chapter" id="chapter4">
+                                    <h2 class="chapter-headline">Достижение ваших целей</h2>
+                                    <div class="chapter-content">
+                                        <p>Отслеживая потребление воды, вы создаете полезную привычку, которая значительно влияет на общее состояние здоровья и благополучие.</p>
+                                    </div>
+                                    <div class="scroll-visual circle-visual">
+                                        <div class="circle-graph">
+                                            <svg class="progress-ring" width="180" height="180">
+                                                <circle cx="90" cy="90" r="80" />
+                                                <circle class="filled" cx="90" cy="90" r="80" />
+                                            </svg>
+                                            <div class="percentage">87%</div>
+                                            <div class="label">Цель достигнута</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-progress">
+                            <div class="story-progress-fill" id="storyProgressFill"></div>
+                        </div>
+                        
+                        <div class="story-dots">
+                            <div class="story-dot active" data-chapter="chapter1"></div>
+                            <div class="story-dot" data-chapter="chapter2"></div>
+                            <div class="story-dot" data-chapter="chapter3"></div>
+                            <div class="story-dot" data-chapter="chapter4"></div>
+                        </div>
+                        
+                        <div class="scroll-hint" id="scrollHint">
+                            Прокрутите вниз, чтобы продолжить путешествие
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Скрипты -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu Toggle Functionality
+            const menuToggle = document.getElementById('menuToggle');
+            const closeBtn = document.getElementById('closeBtn');
+            const sidebar = document.getElementById('sidebar');
+            const bgOverlay = document.getElementById('bgOverlay');
+            
+            // Theme Switch Functionality
+            const themeSwitch = document.getElementById('themeSwitch');
+            const themeModal = document.getElementById('themeModal');
+            const closeThemeModal = document.getElementById('closeThemeModal');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const performanceModeToggle = document.getElementById('performanceModeToggle');
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedPerformanceMode = localStorage.getItem('performanceMode');
+            
+            // Apply the right theme on page load
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                if (darkModeToggle) darkModeToggle.checked = true;
+                themeSwitch.querySelector('.theme-switch-icon').innerHTML = '☀️';
+            }
+            
+            // Apply performance mode if saved
+            if (savedPerformanceMode === 'on') {
+                document.documentElement.setAttribute('data-performance-mode', 'on');
+                if (performanceModeToggle) performanceModeToggle.checked = true;
+            }
+            
+            // Performance mode toggle
+            if (performanceModeToggle) {
+                performanceModeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.documentElement.setAttribute('data-performance-mode', 'on');
+                        localStorage.setItem('performanceMode', 'on');
+                        
+                        // Stop Three.js animations if they're running
+                        if (window.stopThreeJsAnimations) {
+                            window.stopThreeJsAnimations();
+                        }
+                    } else {
+                        document.documentElement.removeAttribute('data-performance-mode');
+                        localStorage.setItem('performanceMode', 'off');
+                        
+                        // Restart Three.js animations
+                        if (window.restartThreeJsAnimations) {
+                            window.restartThreeJsAnimations();
+                        }
+                    }
+                });
+            }
+            
+            // Theme toggle event
+            themeSwitch.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeSwitch.querySelector('.theme-switch-icon').innerHTML = '🌙';
+                    if (darkModeToggle) darkModeToggle.checked = false;
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeSwitch.querySelector('.theme-switch-icon').innerHTML = '☀️';
+                    if (darkModeToggle) darkModeToggle.checked = true;
+                }
+            });
+            
+            // Show theme modal when clicking theme switch icon
+            themeSwitch.addEventListener('dblclick', function() {
+                themeModal.style.display = 'block';
+                bgOverlay.style.display = 'block';
+            });
+            
+            // Add quick access to performance mode
+            themeSwitch.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                if (performanceModeToggle) {
+                    performanceModeToggle.checked = !performanceModeToggle.checked;
+                    
+                    // Trigger the change event manually
+                    const event = new Event('change');
+                    performanceModeToggle.dispatchEvent(event);
+                }
+            });
+            
+            // Theme modal events
+            if (closeThemeModal) {
+                closeThemeModal.addEventListener('click', function() {
+                    themeModal.style.display = 'none';
+                    bgOverlay.style.display = 'none';
+                });
+            }
+            
+            // Dark mode checkbox in settings
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        themeSwitch.querySelector('.theme-switch-icon').innerHTML = '☀️';
+                    } else {
+                        document.documentElement.removeAttribute('data-theme');
+                        localStorage.setItem('theme', 'light');
+                        themeSwitch.querySelector('.theme-switch-icon').innerHTML = '🌙';
+                    }
+                });
+            }
+            
+            // Menu toggling
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.add('active');
+                bgOverlay.style.display = 'block';
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                bgOverlay.style.display = 'none';
+            });
+            
+            bgOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                themeModal.style.display = 'none';
+                bgOverlay.style.display = 'none';
+            });
+            
+            // Tab Functionality
+            const tabLinks = document.querySelectorAll('.sidebar-menu a[data-tab]');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hide all panels
+                    tabPanels.forEach(panel => {
+                        panel.classList.remove('active');
+                    });
+                    
+                    // Remove active class from all links
+                    tabLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding panel
+                    const panelId = this.getAttribute('data-tab');
+                    document.getElementById(panelId).classList.add('active');
+                    
+                    // Close sidebar on mobile
+                    sidebar.classList.remove('active');
+                    bgOverlay.style.display = 'none';
+                });
+            });
+            
+            // Inner tab functionality
+            const innerTabItems = document.querySelectorAll('.tab-item');
+            const innerTabContents = document.querySelectorAll('.tab-content');
+            
+            innerTabItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    innerTabItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    innerTabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show corresponding tab content
+                    const contentId = this.getAttribute('data-content');
+                    document.getElementById(contentId).classList.add('active');
+                });
+            });
+            
+            // Initialize 3D Water Visualization
+            initWater3D();
+            
+            // Manage Three.js animations
+            let animationFrameId = null;
+            
+            // Function to initialize and render 3D water bottle
+            function initWater3D() {
+                // Check if performance mode is on
+                if (document.documentElement.getAttribute('data-performance-mode') === 'on') {
+                    return; // Don't initialize 3D if in performance mode
+                }
+                
+                // Get the container for the 3D element
+                const container = document.getElementById('water-3d-container');
+                
+                // Set up scene
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x000000);
+                scene.background.alpha = 0;
+                
+                // Set up camera
+                const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 5;
+                
+                // Set up renderer with transparency
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setClearColor(0x000000, 0);
+                container.appendChild(renderer.domElement);
+                
+                // Add ambient light
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                // Add directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // Create bottle geometry (cylinder with rounded top)
+                const bottleGroup = new THREE.Group();
+                
+                // Bottle body (cylinder)
+                const bottleGeometry = new THREE.CylinderGeometry(1, 1, 4, 32);
+                const bottleMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0x6e93fa,
+                    transparent: true,
+                    opacity: 0.6,
+                    roughness: 0.1,
+                    metalness: 0.1,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1
+                });
+                const bottle = new THREE.Mesh(bottleGeometry, bottleMaterial);
+                bottleGroup.add(bottle);
+                
+                // Water inside bottle
+                const waterLevel = 0.60; // 60% full
+                const waterGeometry = new THREE.CylinderGeometry(0.9, 0.9, 4 * waterLevel, 32);
+                const waterMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0x5bbdfa,
+                    transparent: true,
+                    opacity: 0.8,
+                    roughness: 0.0,
+                    metalness: 0.1,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1
+                });
+                const water = new THREE.Mesh(waterGeometry, waterMaterial);
+                water.position.y = -2 * (1 - waterLevel);
+                bottleGroup.add(water);
+                
+                // Cap geometry (small cylinder)
+                const capGeometry = new THREE.CylinderGeometry(0.7, 0.7, 0.3, 32);
+                const capMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0x4e7df9,
+                    roughness: 0.2,
+                    metalness: 0.1
+                });
+                const cap = new THREE.Mesh(capGeometry, capMaterial);
+                cap.position.y = 2.15;
+                bottleGroup.add(cap);
+                
+                // Add bottle group to scene
+                scene.add(bottleGroup);
+                
+                // Animation
+                function animate() {
+                    // Don't animate if in performance mode
+                    if (document.documentElement.getAttribute('data-performance-mode') === 'on') {
+                        return;
+                    }
+                    
+                    animationFrameId = requestAnimationFrame(animate);
+                    
+                    // Rotate the bottle slightly for effect
+                    bottleGroup.rotation.y += 0.005;
+                    
+                    // Add subtle floating movement
+                    bottleGroup.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    if (document.documentElement.getAttribute('data-performance-mode') === 'on') {
+                        return;
+                    }
+                    
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                });
+                
+                // Start animation
+                animate();
+                
+                // Export functions to control animations
+                window.stopThreeJsAnimations = function() {
+                    if (animationFrameId !== null) {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                };
+                
+                window.restartThreeJsAnimations = function() {
+                    if (animationFrameId === null) {
+                        animate();
+                    }
+                };
+            }
+        });
+    </script>
+    
+    <!-- Add interactive 3D water progress card script -->
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add 3D water progress card after the first card in conversion tab
+            const conversionTab = document.getElementById('conversion');
+            const firstCard = conversionTab.querySelector('.card');
+            
+            // Create water progress card
+            const waterProgressCard = document.createElement('div');
+            waterProgressCard.className = 'card water-progress-card';
+            waterProgressCard.innerHTML = `
+                <div class="card-header">
+                    <h3 class="card-title">Прогресс потребления воды</h3>
+                    <button class="btn btn-sm">История</button>
+                </div>
+                <div class="card-body">
+                    <div class="water-intake-scene">
+                        <div id="water-cylinder-container" class="water-cylinder-container"></div>
+                    </div>
+                    <div class="water-stats">
+                        <h4>1.2 л / 2.0 л</h4>
+                        <p class="text-muted">60% дневной нормы</p>
+                    </div>
+                    <div class="goal-progress-3d">
+                        <div class="goal-track"></div>
+                        <div class="goal-fill"></div>
+                        <div class="goal-marker"></div>
+                    </div>
+                    <div class="water-intake-buttons">
+                        <button class="btn intake-button">+ 100 мл</button>
+                        <button class="btn intake-button">+ 250 мл</button>
+                        <button class="btn intake-button">+ 500 мл</button>
+                    </div>
+                </div>
+            `;
+            
+            // Insert after first card
+            firstCard.parentNode.insertBefore(waterProgressCard, firstCard.nextSibling);
+            
+            // Add interaction to the water intake buttons
+            const intakeButtons = document.querySelectorAll('.intake-button');
+            const waterStats = document.querySelector('.water-stats h4');
+            const waterStatsPercent = document.querySelector('.water-stats p');
+            const goalFill = document.querySelector('.goal-fill');
+            
+            let currentIntake = 1.2; // current intake in liters
+            const dailyGoal = 2.0;   // daily goal in liters
+            let waterBottleMesh, waterMesh;
+            let waterPercentage = (currentIntake / dailyGoal) * 100;
+            
+            // Initialize 3D cylinder
+            initWaterCylinder();
+            
+            intakeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Extract amount from button text (e.g. "+ 100 мл" -> 100)
+                    const amountText = this.textContent.trim();
+                    const amount = parseInt(amountText.match(/\d+/)[0]) / 1000; // convert to liters
+                    
+                    // Update intake
+                    currentIntake = Math.min(currentIntake + amount, dailyGoal);
+                    waterPercentage = (currentIntake / dailyGoal) * 100;
+                    
+                    // Update UI
+                    waterStats.textContent = `${currentIntake.toFixed(1)} л / ${dailyGoal.toFixed(1)} л`;
+                    waterStatsPercent.textContent = `${Math.round(waterPercentage)}% дневной нормы`;
+                    goalFill.style.width = `${waterPercentage}%`;
+                    
+                    // Update 3D water level
+                    if (waterMesh) {
+                        const waterLevel = waterPercentage / 100;
+                        const waterHeight = 4 * waterLevel;
+                        waterMesh.scale.y = waterLevel;
+                        waterMesh.position.y = -2 * (1 - waterLevel);
+                    }
+                    
+                    // Animate the button slightly
+                    this.style.transform = 'translateZ(5px) scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            function initWaterCylinder() {
+                // Get the container for the 3D element
+                const container = document.getElementById('water-cylinder-container');
+                
+                // Set up scene
+                const scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x000000);
+                scene.background.alpha = 0;
+                
+                // Set up camera
+                const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+                camera.position.z = 6;
+                
+                // Set up renderer with transparency
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setClearColor(0x000000, 0);
+                container.appendChild(renderer.domElement);
+                
+                // Add ambient light
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+                
+                // Add directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                scene.add(directionalLight);
+                
+                // Add spotlight for dramatic effect
+                const spotLight = new THREE.SpotLight(0x4e7df9, 0.8);
+                spotLight.position.set(-3, 5, 2);
+                spotLight.castShadow = true;
+                scene.add(spotLight);
+                
+                // Create cylinder group
+                const cylinderGroup = new THREE.Group();
+                
+                // Cylinder body - the bottle
+                const cylinderGeometry = new THREE.CylinderGeometry(1, 1, 4, 32);
+                const cylinderMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0x4e7df9,
+                    transparent: true,
+                    opacity: 0.3,
+                    roughness: 0.1,
+                    metalness: 0.2,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1
+                });
+                waterBottleMesh = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+                cylinderGroup.add(waterBottleMesh);
+                
+                // Water inside cylinder
+                const waterLevel = waterPercentage / 100; // convert percentage to 0-1 scale
+                const waterGeometry = new THREE.CylinderGeometry(0.8, 0.8, 4, 32);
+                const waterMaterial = new THREE.MeshPhysicalMaterial({
+                    color: 0x5bbdfa,
+                    transparent: true,
+                    opacity: 0.8,
+                    roughness: 0.0,
+                    metalness: 0.1,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: 0.1
+                });
+                waterMesh = new THREE.Mesh(waterGeometry, waterMaterial);
+                waterMesh.scale.y = waterLevel;
+                waterMesh.position.y = -2 * (1 - waterLevel);
+                cylinderGroup.add(waterMesh);
+                
+                // Add measurement lines
+                for (let i = 1; i <= 4; i++) {
+                    const lineHeight = -2 + i;
+                    const lineGeometry = new THREE.TorusGeometry(1.01, 0.02, 16, 32);
+                    const lineMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 0.5
+                    });
+                    const line = new THREE.Mesh(lineGeometry, lineMaterial);
+                    line.position.y = lineHeight;
+                    line.rotation.x = Math.PI / 2;
+                    cylinderGroup.add(line);
+                }
+                
+                // Add cylinder group to scene
+                scene.add(cylinderGroup);
+                
+                // Animation
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    // Rotate the cylinder slightly for effect
+                    cylinderGroup.rotation.y += 0.005;
+                    
+                    // Add subtle floating movement
+                    cylinderGroup.position.y = Math.sin(Date.now() * 0.001) * 0.1;
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                });
+                
+                // Make the cylinder interactive with mouse movement
+                container.addEventListener('mousemove', function(e) {
+                    const rect = container.getBoundingClientRect();
+                    const mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+                    const mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+                    
+                    // Rotate cylinder based on mouse position
+                    cylinderGroup.rotation.x = mouseY * 0.3;
+                    cylinderGroup.rotation.y = mouseX * 1.5;
+                });
+                
+                container.addEventListener('mouseleave', function() {
+                    // Reset rotation smoothly when mouse leaves
+                    gsap.to(cylinderGroup.rotation, {
+                        x: 0,
+                        y: cylinderGroup.rotation.y,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                });
+                
+                // Start animation
+                animate();
+            }
+        });
+    </script>
+    
+    <!-- Add JavaScript for Scrollytelling functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing code ...
+            
+            // Scrollytelling functionality
+            const scroller = document.getElementById('storyScroller');
+            const chapters = document.querySelectorAll('.story-chapter');
+            const visuals = document.querySelectorAll('.scroll-visual');
+            const progressFill = document.getElementById('storyProgressFill');
+            const storyDots = document.querySelectorAll('.story-dot');
+            const scrollHint = document.getElementById('scrollHint');
+            const circleFilled = document.querySelector('.circle-graph .progress-ring circle.filled');
+            
+            if (scroller) {
+                const scrollerHeight = scroller.scrollHeight - scroller.clientHeight;
+                
+                // Update chapter visibility based on scroll position
+                function updateScroll() {
+                    const scrollPosition = scroller.scrollTop;
+                    const scrollPercentage = (scrollPosition / scrollerHeight) * 100;
+                    
+                    // Update progress bar
+                    progressFill.style.height = `${scrollPercentage}%`;
+                    
+                    // Hide scroll hint after user starts scrolling
+                    if (scrollPosition > 50) {
+                        scrollHint.classList.add('hidden');
+                    } else {
+                        scrollHint.classList.remove('hidden');
+                    }
+                    
+                    // Calculate which chapter should be visible
+                    const chapterHeight = scrollerHeight / chapters.length;
+                    const currentChapterIndex = Math.min(
+                        Math.floor(scrollPosition / chapterHeight),
+                        chapters.length - 1
+                    );
+                    
+                    // Update chapter visibility
+                    chapters.forEach((chapter, index) => {
+                        if (index === currentChapterIndex) {
+                            chapter.classList.add('active');
+                            visuals[index].classList.add('visible');
+                            
+                            // Update active dot
+                            storyDots.forEach((dot, dotIndex) => {
+                                if (dotIndex === index) {
+                                    dot.classList.add('active');
+                                } else {
+                                    dot.classList.remove('active');
+                                }
+                            });
+                            
+                            // Special animation for circle graph
+                            if (index === 3 && circleFilled) {
+                                circleFilled.style.strokeDashoffset = 502 * (1 - 0.87); // 87% filled
+                            }
+                        } else {
+                            chapter.classList.remove('active');
+                            visuals[index].classList.remove('visible');
+                        }
+                    });
+                }
+                
+                // Add scroll event listener
+                scroller.addEventListener('scroll', updateScroll);
+                
+                // Initialize scroll state
+                updateScroll();
+                
+                // Handle dot navigation
+                storyDots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        const chapterHeight = scrollerHeight / chapters.length;
+                        const targetPosition = index * chapterHeight;
+                        
+                        scroller.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+<!-- Add 3D decorative cubes -->
+<div class="glass-cube glass-cube-1"></div>
+<div class="glass-cube glass-cube-2"></div>
+
+<!-- Add Abstract Geometric Shapes -->
+<div class="abstract-shape abstract-circle abstract-circle-1"></div>
+<div class="abstract-shape abstract-circle abstract-circle-2"></div>
+<div class="abstract-shape abstract-triangle abstract-triangle-1"></div>
+<div class="abstract-shape abstract-triangle abstract-triangle-2"></div>
+<div class="abstract-shape abstract-rectangle abstract-rectangle-1"></div>
+<div class="abstract-shape abstract-cross abstract-cross-1"></div>
+<div class="abstract-shape abstract-hexagon abstract-hexagon-1"></div>
+<div class="abstract-shape abstract-zigzag abstract-zigzag-1"></div>
+<div class="abstract-shape abstract-dots abstract-dots-1">
+    <!-- Create 25 dots for the grid -->
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+</html>
