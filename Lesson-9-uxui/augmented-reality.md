@@ -1,0 +1,1 @@
+**Augmented Reality Integration** - Real-world environment enhanced with digital elements

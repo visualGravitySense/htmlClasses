@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон красоты - Выберите услуги</title>
+    <style>
+        :root {
+            /* Light Theme (Default) */
+            --primary-color: #667eea;
+            --primary-light: #7e93fa;
+            --primary-dark: #4e67d9;
+            --secondary-color: #764ba2;
+            --secondary-light: #8c5ebd;
+            --secondary-dark: #613c87;
+            --success-color: #61d26c;
+            --danger-color: #ff6b6b;
+            --warning-color: #ffd76e;
+            --dark-color: #444;
+            --light-color: #e6e9ef;
+            --gray-color: #d1d9e6;
+            --shadow-light: #ffffff;
+            --shadow-dark: #b8c6e0;
+            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-color: #444;
+            --text-muted: #777;
+            --border-radius: 15px;
+            
+            /* Glassmorphism Variables */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-bg-dark: rgba(75, 85, 115, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
+            --glass-shadow-dark: rgba(0, 0, 0, 0.2);
+            --blur-strength: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInDown 1s ease-out forwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Glassmorphism Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+            perspective: 1000px;
+        }
+
+        .service-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .service-category.visible {
+            transform: translateY(0) rotateX(0deg);
+            opacity: 1;
+        }
+
+        .service-category:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 15px 30px var(--glass-shadow-dark);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .category-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                transparent
+            );
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Neumorphic Service Items */
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transform-style: preserve-3d;
+        }
+
+        .service-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .service-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-info {
+            flex: 1;
+            transform-style: preserve-3d;
+            transform: translateZ(5px);
+        }
+
+        .service-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .service-description {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .service-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-right: 15px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transform: translateZ(5px);
+        }
+
+        .service-duration {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-right: 15px;
+            background: rgba(0,0,0,0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            transform: translateZ(5px);
+        }
+
+        /* Glassmorphism Buttons */
+        .add-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            transform: scale(0) translateZ(0);
+            animation: popIn 0.5s ease-out 0.5s forwards;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .add-btn:hover {
+            transform: scale(1.05) translateZ(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .add-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Glassmorphism Cart */
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: 0 25px 50px var(--glass-shadow-dark);
+            border: 1px solid var(--glass-border);
+            min-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+            transform-style: preserve-3d;
+        }
+
+        .cart.open {
+            transform: translateX(0) rotateY(0deg);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .cart-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                var(--primary-color), 
+                var(--secondary-color), 
+                transparent
+            );
+        }
+
+        .cart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cart-close {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-close:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: var(--border-radius);
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .cart-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .checkout-btn:hover::before {
+            left: 100%;
+        }
+
+        .cart-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .cart-toggle:hover {
+            transform: scale(1.1) translateZ(10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            transform: translateZ(15px);
+        }
+
+        /* Decorative Elements */
+        .glass-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, var(--glass-border), transparent);
+            opacity: 0.2;
+            z-index: -1;
+            transform-style: preserve-3d;
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        .glass-decoration-1 {
+            width: 300px;
+            height: 300px;
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .glass-decoration-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            right: 15%;
+            animation-delay: -4s;
+        }
+
+        .glass-cube {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            transform-style: preserve-3d;
+            animation: rotate3D 15s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .glass-cube-1 {
+            top: 25%;
+            right: 10%;
+        }
+        
+        .glass-cube-2 {
+            bottom: 15%;
+            left: 5%;
+            animation-delay: -5s;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            animation: float 15s infinite linear;
+            pointer-events: none;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .remove-btn {
+            background: rgba(255, 71, 87, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 55, 66, 0.8);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            z-index: 1001;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0) translateZ(0);
+            }
+            to {
+                transform: scale(1) translateZ(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateZ(0) rotateZ(0); }
+            50% { transform: translateY(-20px) translateZ(30px) rotateZ(5deg); }
+        }
+
+        @keyframes rotate3D {
+            0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+            100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .cart {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+
+            .cart-toggle {
+                top: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .glass-cube,
+            .glass-decoration {
+                display: none;
+            }
+        }
+
+        /* Search Input with Glassmorphism */
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 30px;
+            border: none;
+            border-radius: 25px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--glass-border);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.8);
+        }
+
+        /* Quiz Styles with Glassmorphism */
+        .quiz-section {
+            margin: 50px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .quiz-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+        }
+
+        .quiz-header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 8px 20px;
+            display: inline-block;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .quiz-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            margin: 0 auto;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .quiz-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            z-index: -1;
+        }
+
+        .quiz-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .quiz-step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .quiz-question {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transform: translateZ(10px);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+
+        .quiz-option:hover {
+            transform: translateY(-5px) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .quiz-option.selected {
+            transform: translateY(-5px) translateZ(15px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border: 2px solid white;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+        }
+
+        .option-image {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover .option-image {
+            transform: scale(1.05);
+        }
+
+        .option-label {
+            padding: 15px;
+            color: white;
+            font-weight: 500;
+            text-align: center;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transform: translateZ(5px);
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .quiz-prev-btn, .quiz-next-btn, .quiz-finish-btn, .result-restart-btn, .result-add-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .quiz-prev-btn {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .quiz-prev-btn:hover, .quiz-next-btn:hover, .quiz-finish-btn:hover, .result-restart-btn:hover, .result-add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+
+        .quiz-prev-btn:active, .quiz-next-btn:active, .quiz-finish-btn:active, .result-restart-btn:active, .result-add-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .quiz-result.active {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+            animation: popIn 0.5s ease forwards;
+        }
+
+        .result-header {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .result-service {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+        }
+
+        .result-add-btn {
+            background: linear-gradient(135deg, var(--success-color), #2ecc71);
+            margin-right: 10px;
+        }
+
+        .result-restart-btn {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-container {
+                padding: 25px;
+            }
+            
+            .quiz-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .quiz-nav button {
+                width: 100%;
+            }
+        }
+
+        .kinetic-typography {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 40px 0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .kinetic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .kinetic-heading {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            font-weight: 800;
+            display: inline-block;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .kinetic-char {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), 
+                       color 0.4s ease, 
+                       text-shadow 0.4s ease;
+            animation: charFloat 3s ease-in-out infinite;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .kinetic-heading .kinetic-char:nth-child(odd) {
+            animation-delay: 0.2s;
+        }
+
+        .kinetic-heading .kinetic-char:nth-child(even) {
+            animation-delay: 0.3s;
+        }
+
+        .kinetic-heading .kinetic-char:nth-child(3n) {
+            animation-delay: 0.4s;
+        }
+
+        .kinetic-heading .kinetic-char:hover {
+            transform: translateY(-15px) scale(1.3) rotateY(15deg);
+            color: var(--warning-color);
+            text-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .kinetic-second-line {
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            transform-style: preserve-3d;
+            animation: secondLineAnimation 5s ease-in-out infinite;
+        }
+
+        .kinetic-second-line .kinetic-char {
+            animation: charWave 4s ease-in-out infinite;
+        }
+
+        .kinetic-second-line .kinetic-char:nth-child(odd) {
+            animation-delay: 0.3s;
+        }
+
+        .kinetic-second-line .kinetic-char:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .kinetic-offers {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            perspective: 1000px;
+        }
+
+        .kinetic-offer {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border-radius: 20px;
+            padding: 25px;
+            margin: 10px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            opacity: 0;
+            transform: translateY(50px) rotateX(10deg);
+            transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1), 
+                       opacity 0.6s ease, 
+                       box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .kinetic-offer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .kinetic-offer.active {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+            animation: offerFloat 4s ease-in-out infinite;
+        }
+
+        .kinetic-offer:nth-child(2).active {
+            animation-delay: 0.7s;
+        }
+
+        .kinetic-offer:nth-child(3).active {
+            animation-delay: 1.4s;
+        }
+
+        .kinetic-offer:hover {
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .offer-title {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 600;
+            transform: translateZ(10px);
+            position: relative;
+        }
+
+        .offer-title::after {
+            content: '';
+            position: absolute;
+            left: 25%;
+            bottom: -5px;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        }
+
+        .offer-description {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            transform: translateZ(5px);
+        }
+
+        @keyframes charFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes charWave {
+            0%, 100% { transform: translateY(0) rotateZ(0); }
+            25% { transform: translateY(-5px) rotateZ(-3deg); }
+            75% { transform: translateY(5px) rotateZ(3deg); }
+        }
+
+        @keyframes secondLineAnimation {
+            0%, 100% { transform: translateZ(0) rotateX(0); }
+            50% { transform: translateZ(20px) rotateX(5deg); }
+        }
+
+        @keyframes offerFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Background animated shapes for kinetic typography */
+        .kinetic-typography::before,
+        .kinetic-typography::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .kinetic-typography::before {
+            top: -100px;
+            left: -100px;
+            animation: moveShape 15s linear infinite;
+        }
+
+        .kinetic-typography::after {
+            bottom: -100px;
+            right: -100px;
+            animation: moveShape 15s linear infinite reverse;
+        }
+
+        @keyframes moveShape {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, 50px) scale(1.2); }
+            50% { transform: translate(0, 100px) scale(0.8); }
+            75% { transform: translate(-50px, 50px) scale(1.1); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-decoration glass-decoration-1"></div>
+    <div class="glass-decoration glass-decoration-2"></div>
+    <div class="glass-cube glass-cube-1"></div>
+    <div class="glass-cube glass-cube-2"></div>
+    
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>✨ Салон красоты ЭЛИТ ✨</h1>
+            <p>Выберите услуги для создания вашего идеального образа</p>
+        </div>
+
+        <div class="quiz-section">
+            <div class="quiz-header">
+                <h2>Квиз "Выбери свою процедуру"</h2>
+                <p>Ответьте на несколько вопросов и получите персональную рекомендацию</p>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-step active" data-step="1">
+                    <div class="quiz-question">Какой у вас тип кожи?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="dry">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1560750588-73207b1ef5b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Сухая</div>
+                        </div>
+                        <div class="quiz-option" data-value="oily">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1526758097130-bab247274f58?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Жирная</div>
+                        </div>
+                        <div class="quiz-option" data-value="combination">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1522661067900-ab829854a57f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Комбинированная</div>
+                        </div>
+                        <div class="quiz-option" data-value="normal">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1511424323602-d3c1a4c4bbe2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Нормальная</div>
+                        </div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="quiz-next-btn">Далее</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" data-step="2">
+                    <div class="quiz-question">Что вас больше всего беспокоит?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="wrinkles">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1571566882372-1598d88abd90?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Морщины</div>
+                        </div>
+                        <div class="quiz-option" data-value="acne">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1505944270255-72b8c68c6a70?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Акне</div>
+                        </div>
+                        <div class="quiz-option" data-value="pigmentation">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1581182800629-7d90482c44e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Пигментация</div>
+                        </div>
+                        <div class="quiz-option" data-value="dullness">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">Тусклость</div>
+                        </div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="quiz-prev-btn">Назад</button>
+                        <button class="quiz-next-btn">Далее</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" data-step="3">
+                    <div class="quiz-question">Сколько времени вы готовы уделить процедуре?</div>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="30min">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">30 минут</div>
+                        </div>
+                        <div class="quiz-option" data-value="60min">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1508387027939-27cccde53673?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">60 минут</div>
+                        </div>
+                        <div class="quiz-option" data-value="90min">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">90 минут</div>
+                        </div>
+                        <div class="quiz-option" data-value="120min+">
+                            <div class="option-image" style="background-image: url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80')"></div>
+                            <div class="option-label">2+ часа</div>
+                        </div>
+                    </div>
+                    <div class="quiz-nav">
+                        <button class="quiz-prev-btn">Назад</button>
+                        <button class="quiz-finish-btn">Получить результат</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-result">
+                    <div class="result-header">Ваша идеальная процедура</div>
+                    <div class="result-service" id="quizResultService">
+                        <!-- Результат будет загружен сюда -->
+                    </div>
+                    <button class="result-add-btn" id="addQuizResultBtn">Добавить в корзину</button>
+                    <button class="result-restart-btn">Пройти заново</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="kinetic-typography">
+            <div class="kinetic-container">
+                <h2 class="kinetic-heading">
+                    <span class="kinetic-char">С</span>
+                    <span class="kinetic-char">п</span>
+                    <span class="kinetic-char">е</span>
+                    <span class="kinetic-char">ц</span>
+                    <span class="kinetic-char">и</span>
+                    <span class="kinetic-char">а</span>
+                    <span class="kinetic-char">л</span>
+                    <span class="kinetic-char">ь</span>
+                    <span class="kinetic-char">н</span>
+                    <span class="kinetic-char">ы</span>
+                    <span class="kinetic-char">е</span>
+                </h2>
+                <h2 class="kinetic-heading kinetic-second-line">
+                    <span class="kinetic-char">П</span>
+                    <span class="kinetic-char">р</span>
+                    <span class="kinetic-char">е</span>
+                    <span class="kinetic-char">д</span>
+                    <span class="kinetic-char">л</span>
+                    <span class="kinetic-char">о</span>
+                    <span class="kinetic-char">ж</span>
+                    <span class="kinetic-char">е</span>
+                    <span class="kinetic-char">н</span>
+                    <span class="kinetic-char">и</span>
+                    <span class="kinetic-char">я</span>
+                </h2>
+                <div class="kinetic-offers">
+                    <div class="kinetic-offer active">
+                        <div class="offer-title">-20% на все процедуры в понедельник</div>
+                        <div class="offer-description">Начните неделю с заботы о себе</div>
+                    </div>
+                    <div class="kinetic-offer">
+                        <div class="offer-title">Комплекс «Идеальное лицо»</div>
+                        <div class="offer-description">Чистка + массаж + маска всего за 4500₽</div>
+                    </div>
+                    <div class="kinetic-offer">
+                        <div class="offer-title">Приведи подругу</div>
+                        <div class="offer-description">Получи скидку 15% на любую процедуру</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💇‍♀️</div>
+                    <div class="category-title">Парикмахерские услуги</div>
+                </div>
+                
+                <div class="service-item" data-service="Стрижка женская" data-price="2500" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Стрижка женская</div>
+                        <div class="service-description">Модная стрижка с укладкой</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Стрижка мужская" data-price="1800" data-duration="45">
+                    <div class="service-info">
+                        <div class="service-name">Стрижка мужская</div>
+                        <div class="service-description">Классическая или современная стрижка</div>
+                    </div>
+                    <div class="service-duration">45 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Окрашивание" data-price="4500" data-duration="180">
+                    <div class="service-info">
+                        <div class="service-name">Окрашивание</div>
+                        <div class="service-description">Профессиональное окрашивание волос</div>
+                    </div>
+                    <div class="service-duration">180 мин</div>
+                    <div class="service-price">4500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Мелирование" data-price="3800" data-duration="150">
+                    <div class="service-info">
+                        <div class="service-name">Мелирование</div>
+                        <div class="service-description">Частичное осветление прядей</div>
+                    </div>
+                    <div class="service-duration">150 мин</div>
+                    <div class="service-price">3800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💅</div>
+                    <div class="category-title">Маникюр и педикюр</div>
+                </div>
+                
+                <div class="service-item" data-service="Классический маникюр" data-price="1200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Классический маникюр</div>
+                        <div class="service-description">Обрезной маникюр с покрытием</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">1200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Гель-лак" data-price="1800" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Гель-лак</div>
+                        <div class="service-description">Стойкое покрытие на 3-4 недели</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Наращивание ногтей" data-price="2500" data-duration="120">
+                    <div class="service-info">
+                        <div class="service-name">Наращивание ногтей</div>
+                        <div class="service-description">Гелевое наращивание с дизайном</div>
+                    </div>
+                    <div class="service-duration">120 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Педикюр" data-price="1500" data-duration="75">
+                    <div class="service-info">
+                        <div class="service-name">Педикюр</div>
+                        <div class="service-description">Аппаратный педикюр с покрытием</div>
+                    </div>
+                    <div class="service-duration">75 мин</div>
+                    <div class="service-price">1500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">🧴</div>
+                    <div class="category-title">Косметология</div>
+                </div>
+                
+                <div class="service-item" data-service="Чистка лица" data-price="3000" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Чистка лица</div>
+                        <div class="service-description">Глубокая чистка с паровой баней</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">3000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Пилинг" data-price="2200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Химический пилинг</div>
+                        <div class="service-description">Обновляющий пилинг для лица</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Массаж лица" data-price="1800" data-duration="45">
+                    <div class="service-info">
+                        <div class="service-name">Массаж лица</div>
+                        <div class="service-description">Омолаживающий массаж</div>
+                    </div>
+                    <div class="service-duration">45 мин</div>
+                    <div class="service-price">1800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Ботокс" data-price="8000" data-duration="30">
+                    <div class="service-info">
+                        <div class="service-name">Инъекции ботокса</div>
+                        <div class="service-description">Коррекция мимических морщин</div>
+                    </div>
+                    <div class="service-duration">30 мин</div>
+                    <div class="service-price">8000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">👁️</div>
+                    <div class="category-title">Брови и ресницы</div>
+                </div>
+                
+                <div class="service-item" data-service="Коррекция бровей" data-price="800" data-duration="30">
+                    <div class="service-info">
+                        <div class="service-name">Коррекция бровей</div>
+                        <div class="service-description">Моделирование и окрашивание</div>
+                    </div>
+                    <div class="service-duration">30 мин</div>
+                    <div class="service-price">800 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Наращивание ресниц" data-price="2000" data-duration="120">
+                    <div class="service-info">
+                        <div class="service-name">Наращивание ресниц</div>
+                        <div class="service-description">Классическое наращивание 1D</div>
+                    </div>
+                    <div class="service-duration">120 мин</div>
+                    <div class="service-price">2000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Объемное наращивание" data-price="3500" data-duration="150">
+                    <div class="service-info">
+                        <div class="service-name">Объемное наращивание 3D</div>
+                        <div class="service-description">Пышные объемные ресницы</div>
+                    </div>
+                    <div class="service-duration">150 мин</div>
+                    <div class="service-price">3500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Ламинирование ресниц" data-price="1200" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Ламинирование ресниц</div>
+                        <div class="service-description">Подкручивание и питание ресниц</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">1200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="category-header">
+                    <div class="category-icon">💆‍♀️</div>
+                    <div class="category-title">SPA и массаж</div>
+                </div>
+                
+                <div class="service-item" data-service="Классический массаж" data-price="2500" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Классический массаж</div>
+                        <div class="service-description">Расслабляющий массаж всего тела</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">2500 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Антицеллюлитный массаж" data-price="3000" data-duration="60">
+                    <div class="service-info">
+                        <div class="service-name">Антицеллюлитный массаж</div>
+                        <div class="service-description">Коррекция фигуры</div>
+                    </div>
+                    <div class="service-duration">60 мин</div>
+                    <div class="service-price">3000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="Обертывание" data-price="2200" data-duration="90">
+                    <div class="service-info">
+                        <div class="service-name">Обертывание</div>
+                        <div class="service-description">Водорослевое обертывание</div>
+                    </div>
+                    <div class="service-duration">90 мин</div>
+                    <div class="service-price">2200 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+
+                <div class="service-item" data-service="SPA-программа" data-price="5000" data-duration="180">
+                    <div class="service-info">
+                        <div class="service-name">SPA-программа "Релакс"</div>
+                        <div class="service-description">Комплексная программа красоты и здоровья</div>
+                    </div>
+                    <div class="service-duration">180 мин</div>
+                    <div class="service-price">5000 ₽</div>
+                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="cart-toggle" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <div class="cart" id="cart">
+        <div class="cart-header">
+            <div class="cart-title">Ваш заказ</div>
+            <button class="cart-close" onclick="toggleCart()">×</button>
+        </div>
+        
+        <div id="cartItems"></div>
+        
+        <div class="cart-total" id="cartTotal">
+            Итого: 0 ₽
+        </div>
+        
+        <button class="checkout-btn" onclick="checkout()">
+            Оформить заказ
+        </button>
+    </div>
+
+    <script>
+        let cart = [];
+        let cartOpen = false;
+
+        // Scrollytelling effects with 3D transformations
+        function handleScroll() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+
+            // Enhanced 3D animations for service categories
+            const categories = document.querySelectorAll('.service-category');
+            categories.forEach((category, index) => {
+                const rect = category.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top < windowHeight - 100) {
+                    setTimeout(() => {
+                        category.classList.add('visible');
+                    }, index * 150);
+                }
+                
+                // Apply parallax effect
+                const distance = rect.top;
+                const speed = 0.05 + (index * 0.02);
+                const yValue = distance * speed;
+                const rotateValue = distance * 0.01;
+                
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    category.style.transform = `translateY(${-yValue}px) rotateX(${-rotateValue}deg) translateZ(0)`;
+                }
+            });
+            
+            // Animate service items with staggered delay
+            const visibleCategories = document.querySelectorAll('.service-category.visible');
+            visibleCategories.forEach(category => {
+                const items = category.querySelectorAll('.service-item');
+                items.forEach((item, i) => {
+                    const delay = i * 50;
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateZ(0px)';
+                    }, delay);
+                });
+            });
+        }
+
+        // Create floating elements with glassmorphism effect
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elements = ['✨', '💎', '🌸', '💇‍♀️', '💅', '👁️', '💆‍♀️', '💫'];
+            
+            // Clear existing elements
+            container.innerHTML = '';
+            
+            // Create new elements with staggered animation
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    element.textContent = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    // More varied styles
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.top = Math.random() * 100 + '%';
+                    element.style.fontSize = (Math.random() * 30 + 15) + 'px';
+                    element.style.opacity = Math.random() * 0.5 + 0.1;
+                    
+                    // Unique animation parameters
+                    const duration = Math.random() * 15 + 10;
+                    const delay = Math.random() * 5;
+                    element.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                    
+                    container.appendChild(element);
+                    
+                    // Remove after a while to prevent clutter
+                    setTimeout(() => {
+                        if (container.contains(element)) {
+                            container.removeChild(element);
+                        }
+                    }, 30000);
+                }, i * 300);
+            }
+        }
+
+        function addToCart(button) {
+            const serviceItem = button.parentElement;
+            const service = serviceItem.dataset.service;
+            const price = parseInt(serviceItem.dataset.price);
+            const duration = serviceItem.dataset.duration;
+
+            // Enhanced 3D animation for button
+            button.style.transform = 'scale(0.8) translateZ(5px) rotateY(10deg)';
+            button.textContent = '✓ Добавлено';
+            button.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1) translateZ(0px) rotateY(0deg)';
+                button.textContent = 'Добавить';
+                button.style.background = '';
+            }, 1000);
+
+            // 3D animation for the service item
+            serviceItem.style.transform = 'translateZ(20px) scale(1.02)';
+            setTimeout(() => {
+                serviceItem.style.transform = '';
+            }, 500);
+
+            // Add to cart
+            cart.push({ service, price, duration });
+            updateCart();
+            
+            // Show cart briefly with 3D animation
+            if (!cartOpen) {
+                setTimeout(() => {
+                    toggleCart();
+                    document.getElementById('cart').style.transform = 'translateX(0) rotateY(-10deg)';
+                    setTimeout(() => {
+                        document.getElementById('cart').style.transform = 'translateX(0) rotateY(0deg)';
+                        if (cartOpen) toggleCart();
+                    }, 2000);
+                }, 500);
+            }
+        }
+
+        function removeFromCart(index) {
+            // 3D animation for removal
+            const cartItems = document.querySelectorAll('.cart-item');
+            const item = cartItems[index];
+            
+            item.style.transform = 'translateX(100%) rotateY(90deg)';
+            item.style.opacity = '0';
+            
+            setTimeout(() => {
+                cart.splice(index, 1);
+                updateCart();
+            }, 300);
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartCount = document.getElementById('cartCount');
+
+            // Update count with animation
+            cartCount.textContent = cart.length;
+            if (cart.length > 0) {
+                cartCount.style.display = 'flex';
+                cartCount.style.transform = 'translateZ(15px) scale(1.2)';
+                setTimeout(() => {
+                    cartCount.style.transform = 'translateZ(15px) scale(1)';
+                }, 200);
+            } else {
+                cartCount.style.display = 'none';
+            }
+
+            // Update items
+            cartItems.innerHTML = '';
+            let total = 0;
+            let totalDuration = 0;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.style.opacity = '0';
+                cartItem.style.transform = 'translateY(20px)';
+                
+                cartItem.innerHTML = `
+                    <div>
+                        <div style="font-weight: 500; color: white;">${item.service}</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">${item.duration} мин</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 600; color: white;">${item.price} ₽</span>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">×</button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+                total += item.price;
+                totalDuration += parseInt(item.duration);
+                
+                // Staggered animation
+                setTimeout(() => {
+                    cartItem.style.opacity = '1';
+                    cartItem.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+
+            // Update total with 3D effect
+            if (cart.length > 0) {
+                const hours = Math.floor(totalDuration / 60);
+                const minutes = totalDuration % 60;
+                const timeStr = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+                
+                cartTotal.innerHTML = `
+                    <div>Итого: ${total} ₽</div>
+                    <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 5px;">Время: ${timeStr}</div>
+                `;
+                cartTotal.style.transform = 'translateZ(5px)';
+                setTimeout(() => {
+                    cartTotal.style.transform = 'translateZ(0)';
+                }, 300);
+            } else {
+                cartTotal.textContent = 'Корзина пуста';
+                cartTotal.style.transform = 'translateZ(0)';
+            }
+        }
+
+        function toggleCart() {
+            const cart = document.getElementById('cart');
+            cartOpen = !cartOpen;
+            
+            if (cartOpen) {
+                cart.classList.add('open');
+                cart.style.transform = 'translateX(0) rotateY(-5deg)';
+                setTimeout(() => {
+                    cart.style.transform = 'translateX(0) rotateY(0deg)';
+                }, 300);
+            } else {
+                cart.style.transform = 'translateX(20px) rotateY(5deg)';
+                setTimeout(() => {
+                    cart.style.transform = 'translateX(100%)';
+                    cart.classList.remove('open');
+                }, 200);
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Корзина пуста!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const totalDuration = cart.reduce((sum, item) => sum + parseInt(item.duration), 0);
+            const hours = Math.floor(totalDuration / 60);
+            const minutes = totalDuration % 60;
+            const timeStr = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes}м`;
+
+            let orderSummary = 'Ваш заказ:\n\n';
+            cart.forEach(item => {
+                orderSummary += `• ${item.service} - ${item.price} ₽ (${item.duration} мин)\n`;
+            });
+            orderSummary += `\nИтого: ${total} ₽\nОбщее время: ${timeStr}\n\nПодтвердить заказ?`;
+
+            if (confirm(orderSummary)) {
+                // Enhanced checkout animation
+                const checkoutBtn = document.querySelector('.checkout-btn');
+                checkoutBtn.textContent = '✓ Заказ оформлен!';
+                checkoutBtn.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                checkoutBtn.style.transform = 'translateY(-5px)';
+                
+                // Animate cart items disappearing
+                const cartItems = document.querySelectorAll('.cart-item');
+                cartItems.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.style.transform = 'translateX(100%) scale(0.8)';
+                        item.style.opacity = '0';
+                    }, i * 100);
+                });
+                
+                setTimeout(() => {
+                    cart = [];
+                    updateCart();
+                    
+                    // Reset button
+                    setTimeout(() => {
+                        checkoutBtn.textContent = 'Оформить заказ';
+                        checkoutBtn.style.background = '';
+                        checkoutBtn.style.transform = '';
+                        
+                        // Close cart with delay
+                        setTimeout(() => {
+                            toggleCart();
+                            // Show success message
+                            alert('Спасибо за заказ! Мы свяжемся с вами для подтверждения времени.');
+                        }, 500);
+                    }, 1000);
+                }, 1500);
+            }
+        }
+
+        // Add search functionality with glassmorphism
+        function addSearchFunctionality() {
+            // Create search container
+            const searchContainer = document.createElement('div');
+            searchContainer.style.position = 'relative';
+            searchContainer.style.marginBottom = '30px';
+            
+            // Create search input
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Поиск услуг...';
+            searchInput.className = 'search-input';
+            
+            // Initial animation
+            searchInput.style.opacity = '0';
+            searchInput.style.transform = 'translateY(20px)';
+            
+            // Add to container
+            searchContainer.appendChild(searchInput);
+            
+            // Add to page
+            const header = document.querySelector('.header');
+            header.appendChild(searchContainer);
+            
+            // Animate in
+            setTimeout(() => {
+                searchInput.style.opacity = '1';
+                searchInput.style.transform = 'translateY(0)';
+            }, 1000);
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const serviceItems = document.querySelectorAll('.service-item');
+                const categories = document.querySelectorAll('.service-category');
+                
+                categories.forEach(category => {
+                    let hasVisibleItems = false;
+                    const items = category.querySelectorAll('.service-item');
+                    
+                    items.forEach(item => {
+                        const serviceName = item.dataset.service.toLowerCase();
+                        const serviceDesc = item.querySelector('.service-description').textContent.toLowerCase();
+                        
+                        if (serviceName.includes(searchTerm) || serviceDesc.includes(searchTerm)) {
+                            item.style.display = 'flex';
+                            item.style.animation = 'popIn 0.5s forwards';
+                            hasVisibleItems = true;
+                        } else {
+                            item.style.animation = '';
+                            item.style.opacity = '0';
+                            setTimeout(() => {
+                                if (!serviceName.includes(searchTerm) && !serviceDesc.includes(searchTerm)) {
+                                    item.style.display = 'none';
+                                }
+                            }, 300);
+                        }
+                    });
+                    
+                    if (hasVisibleItems) {
+                        category.style.display = 'block';
+                        category.style.animation = 'fadeInDown 0.5s forwards';
+                    } else {
+                        category.style.animation = '';
+                        category.style.opacity = '0';
+                        setTimeout(() => {
+                            if (!hasVisibleItems) {
+                                category.style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Add focus effects
+            searchInput.addEventListener('focus', function() {
+                this.style.boxShadow = '0 15px 40px rgba(102, 126, 234, 0.3)';
+                this.style.transform = 'translateY(-2px) scale(1.02)';
+            });
+            
+            searchInput.addEventListener('blur', function() {
+                this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        }
+
+        // Initialize everything with improved animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial animations with staggered delay
+            setTimeout(() => {
+                // Create initial glass decorations
+                createFloatingElements();
+                
+                // Add search functionality
+                addSearchFunctionality();
+                
+                // Initialize quiz
+                initQuiz();
+                
+                // Initialize kinetic typography animations
+                initKineticTypography();
+                
+                // Initialize categories with 3D effects
+                const categories = document.querySelectorAll('.service-category');
+                categories.forEach((category, index) => {
+                    // Initialize service items with opacity 0
+                    const items = category.querySelectorAll('.service-item');
+                    items.forEach(item => {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateZ(-10px)';
+                    });
+                    
+                    // Delayed appearance for each category
+                    setTimeout(() => {
+                        category.classList.add('visible');
+                    }, 300 + index * 150);
+                });
+                
+                // Add 3D mouse effects
+                addMouseEffects();
+                
+                // Add touch gestures
+                addTouchGestures();
+            }, 500);
+
+            // Enhanced scroll event listeners
+            window.addEventListener('scroll', function() {
+                handleScroll();
+            });
+
+            // Initial scroll check
+            handleScroll();
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && cartOpen) {
+                    toggleCart();
+                }
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    toggleCart();
+                }
+            });
+
+            // Smooth scroll for better UX
+            document.documentElement.style.scrollBehavior = 'smooth';
+            
+            // Regenerate floating elements periodically
+            setInterval(createFloatingElements, 30000);
+        });
+
+        // Add 3D mouse interaction effects
+        function addMouseEffects() {
+            const serviceItems = document.querySelectorAll('.service-item');
+            
+            serviceItems.forEach(item => {
+                item.addEventListener('mouseenter', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`;
+                    this.style.transform = 'translateY(-3px) translateZ(10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0,0,0,0.15)';
+                    
+                    // Animate child elements for 3D effect
+                    const serviceName = this.querySelector('.service-name');
+                    const serviceDesc = this.querySelector('.service-description');
+                    const servicePrice = this.querySelector('.service-price');
+                    
+                    if (serviceName) serviceName.style.transform = 'translateZ(15px)';
+                    if (serviceDesc) serviceDesc.style.transform = 'translateZ(10px)';
+                    if (servicePrice) servicePrice.style.transform = 'translateZ(15px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(255,255,255,0.1)';
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                    
+                    // Reset child elements
+                    const serviceName = this.querySelector('.service-name');
+                    const serviceDesc = this.querySelector('.service-description');
+                    const servicePrice = this.querySelector('.service-price');
+                    
+                    if (serviceName) serviceName.style.transform = '';
+                    if (serviceDesc) serviceDesc.style.transform = '';
+                    if (servicePrice) servicePrice.style.transform = '';
+                });
+                
+                item.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Calculate tilt effect (subtle)
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const tiltX = (y - centerY) / centerY * 2; // max 2 degrees
+                    const tiltY = (centerX - x) / centerX * 2; // max 2 degrees
+                    
+                    this.style.transform = `translateY(-3px) translateZ(10px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+                    this.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1))`;
+                });
+            });
+        }
+
+        // Add touch gestures for mobile
+        function addTouchGestures() {
+            let startY = 0;
+            const cart = document.getElementById('cart');
+            
+            cart.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            });
+            
+            cart.addEventListener('touchmove', function(e) {
+                if (!cartOpen) return;
+                
+                const currentY = e.touches[0].clientY;
+                const diffY = startY - currentY;
+                
+                if (diffY < -50) {
+                    toggleCart();
+                }
+            });
+            
+            // Add swipe to add to cart
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach(item => {
+                let startX = 0;
+                
+                item.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                });
+                
+                item.addEventListener('touchend', function(e) {
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = endX - startX;
+                    
+                    // Swipe left to add to cart
+                    if (diff < -50) {
+                        const addBtn = this.querySelector('.add-btn');
+                        if (addBtn) {
+                            addToCart(addBtn);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Quiz functionality
+        let quizAnswers = {
+            skin: '',
+            concern: '',
+            duration: ''
+        };
+        
+        function initQuiz() {
+            // Handle option selection
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            quizOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from siblings
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.quiz-option');
+                    siblings.forEach(sib => sib.classList.remove('selected'));
+                    
+                    // Add selected class to this option with animation
+                    this.classList.add('selected');
+                    this.style.transform = 'scale(1.05) translateZ(20px)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px) translateZ(15px)';
+                    }, 300);
+                    
+                    // Store the answer
+                    const step = this.closest('.quiz-step');
+                    const stepNum = step.dataset.step;
+                    const value = this.dataset.value;
+                    
+                    if (stepNum === '1') quizAnswers.skin = value;
+                    if (stepNum === '2') quizAnswers.concern = value;
+                    if (stepNum === '3') quizAnswers.duration = value;
+                });
+            });
+            
+            // Handle navigation
+            const nextButtons = document.querySelectorAll('.quiz-next-btn');
+            nextButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const currentStep = this.closest('.quiz-step');
+                    const currentStepNum = parseInt(currentStep.dataset.step);
+                    const nextStepNum = currentStepNum + 1;
+                    const nextStep = document.querySelector(`.quiz-step[data-step="${nextStepNum}"]`);
+                    
+                    if (nextStep) {
+                        // Check if an option is selected in the current step
+                        const selectedOption = currentStep.querySelector('.quiz-option.selected');
+                        if (!selectedOption) {
+                            // Animate button to indicate error
+                            this.style.transform = 'translateX(10px)';
+                            setTimeout(() => {
+                                this.style.transform = 'translateX(-10px)';
+                                setTimeout(() => {
+                                    this.style.transform = '';
+                                }, 100);
+                            }, 100);
+                            return;
+                        }
+                        
+                        // Animate current step out
+                        currentStep.style.opacity = '0';
+                        currentStep.style.transform = 'translateX(-50px)';
+                        
+                        // Animate next step in
+                        setTimeout(() => {
+                            currentStep.classList.remove('active');
+                            currentStep.style.transform = '';
+                            
+                            nextStep.classList.add('active');
+                            nextStep.style.transform = 'translateX(50px)';
+                            nextStep.style.opacity = '0';
+                            
+                            // Force reflow
+                            nextStep.offsetHeight;
+                            
+                            nextStep.style.transform = '';
+                            nextStep.style.opacity = '1';
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Handle previous buttons
+            const prevButtons = document.querySelectorAll('.quiz-prev-btn');
+            prevButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const currentStep = this.closest('.quiz-step');
+                    const currentStepNum = parseInt(currentStep.dataset.step);
+                    const prevStepNum = currentStepNum - 1;
+                    const prevStep = document.querySelector(`.quiz-step[data-step="${prevStepNum}"]`);
+                    
+                    if (prevStep) {
+                        // Animate current step out
+                        currentStep.style.opacity = '0';
+                        currentStep.style.transform = 'translateX(50px)';
+                        
+                        // Animate previous step in
+                        setTimeout(() => {
+                            currentStep.classList.remove('active');
+                            currentStep.style.transform = '';
+                            
+                            prevStep.classList.add('active');
+                            prevStep.style.transform = 'translateX(-50px)';
+                            prevStep.style.opacity = '0';
+                            
+                            // Force reflow
+                            prevStep.offsetHeight;
+                            
+                            prevStep.style.transform = '';
+                            prevStep.style.opacity = '1';
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Handle finish button
+            const finishButton = document.querySelector('.quiz-finish-btn');
+            if (finishButton) {
+                finishButton.addEventListener('click', function() {
+                    const currentStep = this.closest('.quiz-step');
+                    const selectedOption = currentStep.querySelector('.quiz-option.selected');
+                    
+                    if (!selectedOption) {
+                        // Animate button to indicate error
+                        this.style.transform = 'translateX(10px)';
+                        setTimeout(() => {
+                            this.style.transform = 'translateX(-10px)';
+                            setTimeout(() => {
+                                this.style.transform = '';
+                            }, 100);
+                        }, 100);
+                        return;
+                    }
+                    
+                    // Animate fade out
+                    currentStep.style.opacity = '0';
+                    currentStep.style.transform = 'scale(0.9)';
+                    
+                    // Show result
+                    setTimeout(() => {
+                        currentStep.classList.remove('active');
+                        currentStep.style.transform = '';
+                        
+                        // Determine the recommended service based on answers
+                        const recommendedService = getRecommendedService(quizAnswers);
+                        
+                        // Populate result
+                        const resultService = document.getElementById('quizResultService');
+                        const resultDiv = document.querySelector('.quiz-result');
+                        
+                        if (resultService && recommendedService) {
+                            resultService.innerHTML = `
+                                <div class="service-name" style="font-size: 1.5rem; margin-bottom: 15px;">${recommendedService.name}</div>
+                                <div class="service-description" style="margin-bottom: 20px;">${recommendedService.description}</div>
+                                <div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
+                                    <div class="service-duration" style="font-size: 1rem; background: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 20px;">${recommendedService.duration} мин</div>
+                                    <div class="service-price" style="font-size: 1.5rem; font-weight: 600;">${recommendedService.price} ₽</div>
+                                </div>
+                            `;
+                            
+                            // Add click handler for the add to cart button
+                            const addResultBtn = document.getElementById('addQuizResultBtn');
+                            if (addResultBtn) {
+                                addResultBtn.onclick = function() {
+                                    cart.push({ 
+                                        service: recommendedService.name, 
+                                        price: recommendedService.price, 
+                                        duration: recommendedService.duration 
+                                    });
+                                    updateCart();
+                                    
+                                    // Animate button
+                                    this.textContent = '✓ Добавлено!';
+                                    this.style.transform = 'scale(1.1)';
+                                    this.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                                    
+                                    setTimeout(() => {
+                                        this.textContent = 'Добавить в корзину';
+                                        this.style.transform = '';
+                                    }, 2000);
+                                };
+                            }
+                        }
+                        
+                        // Show the result with animation
+                        resultDiv.classList.add('active');
+                        
+                        // Add restart handler
+                        const restartBtn = document.querySelector('.result-restart-btn');
+                        if (restartBtn) {
+                            restartBtn.addEventListener('click', function() {
+                                // Reset answers
+                                quizAnswers = { skin: '', concern: '', duration: '' };
+                                
+                                // Reset selected options
+                                const options = document.querySelectorAll('.quiz-option');
+                                options.forEach(opt => opt.classList.remove('selected'));
+                                
+                                // Hide result
+                                resultDiv.classList.remove('active');
+                                
+                                // Show first step
+                                setTimeout(() => {
+                                    const firstStep = document.querySelector('.quiz-step[data-step="1"]');
+                                    firstStep.classList.add('active');
+                                }, 300);
+                            });
+                        }
+                    }, 300);
+                });
+            }
+        }
+        
+        function getRecommendedService(answers) {
+            // Define some recommended services based on combinations of answers
+            const recommendations = [
+                {
+                    skin: 'dry',
+                    concern: 'wrinkles',
+                    service: {
+                        name: 'Увлажняющая анти-возрастная процедура',
+                        description: 'Интенсивное увлажнение с применением гиалуроновой кислоты и антивозрастных компонентов.',
+                        duration: '90',
+                        price: 3800
+                    }
+                },
+                {
+                    skin: 'dry',
+                    concern: 'dullness',
+                    service: {
+                        name: 'Питательная маска с витаминами',
+                        description: 'Насыщение кожи витаминами и питательными веществами для сияния.',
+                        duration: '60',
+                        price: 2400
+                    }
+                },
+                {
+                    skin: 'oily',
+                    concern: 'acne',
+                    service: {
+                        name: 'Глубокое очищение с пилингом',
+                        description: 'Процедура для проблемной кожи с глубоким очищением пор и салонным пилингом.',
+                        duration: '75',
+                        price: 2800
+                    }
+                },
+                {
+                    skin: 'combination',
+                    concern: 'pigmentation',
+                    service: {
+                        name: 'Осветляющая процедура для выравнивания тона',
+                        description: 'Комплексная процедура, направленная на борьбу с пигментацией и выравнивание тона кожи.',
+                        duration: '90',
+                        price: 3200
+                    }
+                },
+                {
+                    skin: 'normal',
+                    concern: 'wrinkles',
+                    service: {
+                        name: 'Лифтинг-процедура',
+                        description: 'Подтягивающая процедура для лица с эффектом лифтинга.',
+                        duration: '60',
+                        price: 3500
+                    }
+                }
+            ];
+            
+            // Find matching recommendation or default
+            let match = recommendations.find(rec => 
+                rec.skin === answers.skin && 
+                rec.concern === answers.concern
+            );
+            
+            // If no exact match, find by skin type
+            if (!match) {
+                match = recommendations.find(rec => rec.skin === answers.skin);
+            }
+            
+            // If still no match, return default
+            if (!match) {
+                return {
+                    name: 'Консультация косметолога',
+                    description: 'Персональная консультация с нашим экспертом для подбора оптимального ухода для вашей кожи.',
+                    duration: '30',
+                    price: 1000
+                };
+            }
+            
+            // Adjust service based on duration preference if needed
+            const service = {...match.service};
+            
+            if (answers.duration === '30min' && parseInt(service.duration) > 30) {
+                service.name = 'Экспресс ' + service.name.toLowerCase();
+                service.description = 'Ускоренная версия процедуры с сохранением основных преимуществ.';
+                service.duration = '30';
+                service.price = Math.floor(service.price * 0.6);
+            } else if (answers.duration === '120min+' && parseInt(service.duration) < 120) {
+                service.name = 'Премиум ' + service.name.toLowerCase();
+                service.description = 'Расширенная версия процедуры с дополнительными этапами и массажем.';
+                service.duration = '120';
+                service.price = Math.floor(service.price * 1.5);
+            }
+            
+            return service;
+        }
+
+        // Initialize Kinetic Typography animations
+        function initKineticTypography() {
+            // Initialize the offers with staggered animation
+            const offers = document.querySelectorAll('.kinetic-offer');
+            offers.forEach((offer, index) => {
+                setTimeout(() => {
+                    offer.classList.add('active');
+                }, index * 300);
+            });
+            
+            // Add effect to characters when mouse moves
+            const kineticContainer = document.querySelector('.kinetic-container');
+            const chars = document.querySelectorAll('.kinetic-char');
+            
+            if (kineticContainer && chars.length > 0) {
+                kineticContainer.addEventListener('mousemove', function(e) {
+                    const containerRect = kineticContainer.getBoundingClientRect();
+                    const centerX = containerRect.width / 2;
+                    const centerY = containerRect.height / 2;
+                    const mouseX = e.clientX - containerRect.left;
+                    const mouseY = e.clientY - containerRect.top;
+                    
+                    // Calculate distance from center
+                    const distX = (mouseX - centerX) / centerX;
+                    const distY = (mouseY - centerY) / centerY;
+                    
+                    // Apply transforms to each character based on mouse position
+                    chars.forEach((char, index) => {
+                        const factor = index % 5 === 0 ? 1.2 : 
+                                     index % 3 === 0 ? 0.8 : 1;
+                        
+                        // Calculate 3D rotation and translation
+                        const rotateX = -distY * 10 * factor;
+                        const rotateY = distX * 10 * factor;
+                        const translateZ = Math.abs(distX * distY) * 30;
+                        
+                        // Apply the 3D transform
+                        char.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(${translateZ}px)`;
+                        
+                        // Gradually return to original position when mouse leaves
+                        clearTimeout(char.timeoutId);
+                        char.timeoutId = setTimeout(() => {
+                            char.style.transform = '';
+                        }, 1000);
+                    });
+                });
+                
+                // Reset all characters when mouse leaves
+                kineticContainer.addEventListener('mouseleave', function() {
+                    chars.forEach(char => {
+                        clearTimeout(char.timeoutId);
+                        char.style.transform = '';
+                    });
+                });
+            }
+            
+            // Cycle through offers automatically
+            let activeOfferIndex = 0;
+            setInterval(() => {
+                // Hide current offer
+                offers[activeOfferIndex].classList.remove('active');
+                
+                // Update index
+                activeOfferIndex = (activeOfferIndex + 1) % offers.length;
+                
+                // Show next offer with animation
+                setTimeout(() => {
+                    offers[activeOfferIndex].classList.add('active');
+                }, 300);
+            }, 5000);
+            
+            // Add parallax effect on scroll
+            window.addEventListener('scroll', function() {
+                const kinetic = document.querySelector('.kinetic-typography');
+                if (!kinetic) return;
+                
+                const scrollY = window.scrollY;
+                const kineticPos = kinetic.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // Only apply effect when element is in viewport
+                if (kineticPos.top < windowHeight && kineticPos.bottom > 0) {
+                    const depth = scrollY * 0.05;
+                    const headings = document.querySelectorAll('.kinetic-heading');
+                    
+                    headings.forEach((heading, index) => {
+                        const direction = index % 2 === 0 ? 1 : -1;
+                        heading.style.transform = `translateX(${depth * direction}px)`;
+                    });
+                }
+            });
+            
+            // Add text scramble effect on headings
+            const headings = document.querySelectorAll('.kinetic-heading');
+            headings.forEach(heading => {
+                heading.addEventListener('mouseenter', function() {
+                    const chars = this.querySelectorAll('.kinetic-char');
+                    chars.forEach((char, index) => {
+                        setTimeout(() => {
+                            char.style.transform = 'translateY(-20px) scale(1.2) rotateY(15deg)';
+                            char.style.color = 'var(--warning-color)';
+                            char.style.textShadow = '0 15px 25px rgba(0,0,0,0.4)';
+                            
+                            setTimeout(() => {
+                                char.style.transform = '';
+                                char.style.color = '';
+                                char.style.textShadow = '';
+                            }, 600);
+                        }, index * 50);
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+                

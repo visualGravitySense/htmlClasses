@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дашборд модератора</title>
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #03A9F4;
+            --success-color: #4CAF50;
+            --danger-color: #F44336;
+            --warning-color: #FFC107;
+            --dark-color: #333;
+            --light-color: #f4f4f4;
+            --gray-color: #eaeaea;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            padding: 15px;
+            max-width: 100%;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            padding: 15px;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+        
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: white;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+        
+        .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .sidebar-menu {
+            padding: 15px;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 10px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: var(--gray-color);
+            color: var(--primary-color);
+        }
+        
+        .main-content {
+            margin-top: 60px;
+            padding: 15px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-title {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-color);
+        }
+        
+        .tab-item {
+            padding: 12px 15px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .tab-item.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .status-inactive {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .status-pending {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .mt-2 {
+            margin-top: 8px;
+        }
+        
+        .mt-3 {
+            margin-top: 12px;
+        }
+        
+        .mt-4 {
+            margin-top: 16px;
+        }
+        
+        .mb-2 {
+            margin-bottom: 8px;
+        }
+        
+        .mb-3 {
+            margin-bottom: 12px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+        
+        .mr-2 {
+            margin-right: 8px;
+        }
+        
+        .ml-2 {
+            margin-left: 8px;
+        }
+        
+        .text-sm {
+            font-size: 14px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .text-muted {
+            color: #777;
+        }
+        
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1002;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+        }
+        
+        .modal-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 15px;
+        }
+        
+        .modal-footer {
+            padding: 15px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid var(--gray-color);
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .funnel-chart {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .funnel-step {
+            position: relative;
+            height: 40px;
+            margin-bottom: 10px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            justify-content: space-between;
+        }
+        
+        .funnel-step:nth-child(1) {
+            width: 100%;
+        }
+        
+        .funnel-step:nth-child(2) {
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #42A5F5;
+        }
+        
+        .funnel-step:nth-child(3) {
+            width: 65%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #64B5F6;
+        }
+        
+        .funnel-step:nth-child(4) {
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #90CAF9;
+        }
+        
+        .funnel-step:nth-child(5) {
+            width: 25%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #BBDEFB;
+            color: var(--dark-color);
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--gray-color);
+        }
+        
+        .user-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--gray-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .user-email {
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .user-actions {
+            display: flex;
+        }
+        
+        .donut-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-color) 0% 25%,
+                #42A5F5 25% 45%,
+                #64B5F6 45% 60%,
+                #90CAF9 60% 75%,
+                #BBDEFB 75% 100%
+            );
+            margin: 20px auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .donut-chart::before {
+            content: "";
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 5px;
+        }
+        
+        .legend-text {
+            font-size: 12px;
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            right: 0;
+        }
+        
+        .dropdown-content a {
+            color: black;
+            padding: 10px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: var(--gray-color);
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid var(--primary-color);
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-color);
+        }
+        
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: var(--gray-color);
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <div class="navbar">
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <h1>Панель управления</h1>
+        <div class="dropdown">
+            <span>👤</span>
+            <div class="dropdown-content">
+                <a href="#">Профиль</a>
+                <a href="#">Настройки</a>
+                <a href="#">Выйти</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Боковое меню -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>Дашборд</h3>
+            <div class="close-btn" id="closeBtn">×</div>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="#" class="active" data-tab="conversion">Воронка конверсии</a></li>
+                <li><a href="#" data-tab="access">Управление доступом</a></li>
+                <li><a href="#" data-tab="recommendations">Рекомендательные алгоритмы</a></li>
+                <li><a href="#" data-tab="age">Анализ по возрасту</a></li>
+                <li><a href="#">Общая статистика</a></li>
+                <li><a href="#">Активность пользователей</a></li>
+                <li><a href="#">Отчеты</a></li>
+                <li><a href="#">Настройки системы</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Затемнение при открытии меню -->
+    <div class="bg-overlay" id="bgOverlay"></div>
+    
+    <!-- Основной контент -->
+    <div class="main-content">
+        <!-- Вкладка "Воронка конверсии" -->
+        <div class="tab-panel active" id="conversion">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Воронка конверсии пользователей</h3>
+                    <button class="btn btn-sm">Экспорт</button>
+                </div>
+                <div class="card-body">
+                    <div class="tabs">
+                        <div class="tab-item active" data-content="daily">Ежедневно</div>
+                        <div class="tab-item" data-content="weekly">Еженедельно</div>
+                        <div class="tab-item" data-content="monthly">Ежемесячно</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="daily">
+                        <div class="funnel-chart">
+                            <div class="funnel-step">
+                                <span>Установки</span>
+                                <span>1200</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Регистрации</span>
+                                <span>1020</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Активации</span>
+                                <span>780</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Регулярные пользователи</span>
+                                <span>480</span>
+                            </div>
+                            <div class="funnel-step">
+                                <span>Платящие пользователи</span>
+                                <span>300</span>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <div class="form-group">
+                                <label>Период</label>
+                                <select class="form-control">
+                                    <option>Сегодня</option>
+                                    <option>Вчера</option>
+                                    <option>Последние 7 дней</option>
+                                    <option>Последние 30 дней</option>
+                                    <option>Другой период</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="weekly">
+                        <div class="text-center">
+                            <div class="loader"></div>
+                            <p class="text-muted">Загрузка данных...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="monthly">
+                        <div class="text-center">
+                            <div class="loader"></div>
+                            <p class="text-muted">Загрузка данных...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Показатели эффективности</h3>
+                </div>
+                <div class="card-body">
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Коэффициент конверсии</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Удержание на 7 день</span>
+                                <span>42%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 42%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div>
+                            <div class="flex justify-between">
+                                <span>Удержание на 30 день</span>
+                                <span>18%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: 18%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Управление доступом" -->
+        <div class="tab-panel" id="access">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Управление доступом</h3>
+                    <button class="btn btn-sm" id="addUserBtn">Добавить</button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Поиск по имени или email">
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">АИ</div>
+                        <div class="user-info">
+                            <div class="user-name">Алексей Иванов</div>
+                            <div class="user-email">a.ivanov@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-active mr-2">Админ</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">ОП</div>
+                        <div class="user-info">
+                            <div class="user-name">Ольга Петрова</div>
+                            <div class="user-email">o.petrova@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-active mr-2">Модератор</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">ИС</div>
+                        <div class="user-info">
+                            <div class="user-name">Иван Сидоров</div>
+                            <div class="user-email">i.sidorov@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-inactive mr-2">Аналитик</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Активировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-item">
+                        <div class="user-avatar">МК</div>
+                        <div class="user-info">
+                            <div class="user-name">Мария Козлова</div>
+                            <div class="user-email">m.kozlova@example.com</div>
+                        </div>
+                        <div class="user-actions">
+                            <span class="status-badge status-pending mr-2">Наблюдатель</span>
+                            <div class="dropdown">
+                                <span>⋮</span>
+                                <div class="dropdown-content">
+                                    <a href="#">Редактировать</a>
+                                    <a href="#">Изменить роль</a>
+                                    <a href="#">Деактивировать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Роли и разрешения</h3>
+                </div>
+                <div class="card-body">
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Администратор</div>
+                            <div class="text-sm text-muted">Полный доступ ко всем функциям</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Модератор</div>
+                            <div class="text-sm text-muted">Управление пользователями и контентом</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Аналитик</div>
+                            <div class="text-sm text-muted">Доступ к аналитике и отчетам</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-row">
+                        <div>
+                            <div class="user-name">Наблюдатель</div>
+                            <div class="text-sm text-muted">Только просмотр данных</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm">Изменить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Вкладка "Рекомендательные алгоритмы" -->
+        <div class="tab-panel" id="recommendations">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Настройка рекомендательных алго
