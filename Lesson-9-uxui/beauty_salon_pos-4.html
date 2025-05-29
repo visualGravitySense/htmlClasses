@@ -7,40 +7,40 @@
     <style>
         :root {
             /* Light Theme (Default) */
-            --primary-color: #667eea;
-            --primary-light: #7e93fa;
-            --primary-dark: #4e67d9;
-            --secondary-color: #764ba2;
-            --secondary-light: #8c5ebd;
-            --secondary-dark: #613c87;
-            --success-color: #61d26c;
-            --danger-color: #ff6b6b;
-            --warning-color: #ffd76e;
-            --dark-color: #444;
-            --light-color: #e6e9ef;
-            --gray-color: #d1d9e6;
+            --primary-color: #e8f4fd;
+            --primary-light: #f5f9ff;
+            --primary-dark: #d1e7f7;
+            --secondary-color: #f0f8ff;
+            --secondary-light: #f8fbff;
+            --secondary-dark: #e1f0ff;
+            --success-color: #e8f5e8;
+            --danger-color: #ffe8e8;
+            --warning-color: #fff8e1;
+            --dark-color: #666;
+            --light-color: #ffffff;
+            --gray-color: #f5f5f5;
             --shadow-light: #ffffff;
-            --shadow-dark: #b8c6e0;
-            --bg-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --text-color: #444;
-            --text-muted: #777;
+            --shadow-dark: #e0e0e0;
+            --bg-color: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+            --text-color: #333;
+            --text-muted: #666;
             --border-radius: 15px;
             
             /* Glassmorphism Variables */
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-bg-dark: rgba(75, 85, 115, 0.3);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: rgba(0, 0, 0, 0.1);
-            --glass-shadow-dark: rgba(0, 0, 0, 0.2);
-            --blur-strength: 10px;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg-dark: rgba(248, 251, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: rgba(0, 0, 0, 0.05);
+            --glass-shadow-dark: rgba(0, 0, 0, 0.1);
+            --blur-strength: 5px;
             
             /* Neumorphic Minimalism Variables */
-            --neuro-bg: #e6e9ef;
+            --neuro-bg: #ffffff;
             --neuro-shadow-light: #ffffff;
-            --neuro-shadow-dark: #b8c6e0;
+            --neuro-shadow-dark: #e0e0e0;
             --neuro-border-radius: 20px;
-            --neuro-text-color: #5a6c7d;
-            --neuro-accent: #667eea;
+            --neuro-text-color: #333;
+            --neuro-accent: #e8f4fd;
         }
 
         * {
@@ -76,10 +76,10 @@
         }
 
         .header h1 {
-            color: white;
+            color: var(--text-color);
             font-size: 3rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             position: relative;
             display: inline-block;
         }
@@ -91,19 +91,19 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, white, transparent);
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
 
         .header p {
-            color: rgba(255,255,255,0.9);
+            color: var(--text-muted);
             font-size: 1.2rem;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             padding: 10px 20px;
             display: inline-block;
             border-radius: 30px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         /* Glassmorphism Services Grid */
@@ -177,9 +177,9 @@
 
         .category-title {
             font-size: 1.8rem;
-            color: white;
+            color: var(--text-color);
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         /* Neumorphic Service Items */
@@ -194,10 +194,10 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.8);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
             transform-style: preserve-3d;
         }
 
@@ -206,7 +206,7 @@
         }
 
         .service-item:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.95);
             transform: translateY(-3px) translateZ(5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
@@ -220,30 +220,30 @@
         .service-name {
             font-size: 1.1rem;
             font-weight: 500;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 5px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .service-description {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.8);
+            color: var(--text-muted);
         }
 
         .service-price {
             font-size: 1.2rem;
             font-weight: 600;
-            color: white;
+            color: var(--text-color);
             margin-right: 15px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
             transform: translateZ(5px);
         }
 
         .service-duration {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             margin-right: 15px;
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.05);
             padding: 5px 10px;
             border-radius: 20px;
             transform: translateZ(5px);
@@ -252,7 +252,7 @@
         /* Glassmorphism Buttons */
         .add-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            color: var(--text-color);
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
@@ -261,10 +261,10 @@
             transition: all 0.3s ease;
             transform: scale(0) translateZ(0);
             animation: popIn 0.5s ease-out 0.5s forwards;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .add-btn:hover {
@@ -329,16 +329,16 @@
         .cart-title {
             font-size: 1.3rem;
             font-weight: 600;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: var(--text-color);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .cart-close {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
             font-size: 1.5rem;
             cursor: pointer;
-            color: white;
+            color: var(--text-color);
             transition: all 0.3s ease;
             width: 36px;
             height: 36px;
@@ -350,7 +350,7 @@
         }
 
         .cart-close:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.1);
             transform: rotate(90deg);
         }
 
@@ -361,14 +361,14 @@
             padding: 15px;
             margin-bottom: 10px;
             border-radius: var(--border-radius);
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(0,0,0,0.1);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
 
         .cart-item:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.05);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
@@ -380,23 +380,23 @@
         .cart-total {
             font-size: 1.3rem;
             font-weight: 600;
-            color: white;
+            color: var(--text-color);
             text-align: center;
             margin: 20px 0;
             padding: 15px;
             border-radius: var(--border-radius);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+            background: var(--primary-color);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .checkout-btn {
             width: 100%;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            color: var(--text-color);
             border: none;
             padding: 15px;
             border-radius: var(--border-radius);
@@ -404,10 +404,10 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
         }
@@ -440,7 +440,7 @@
             backdrop-filter: blur(var(--blur-strength));
             -webkit-backdrop-filter: blur(var(--blur-strength));
             border: 1px solid var(--glass-border);
-            color: white;
+            color: var(--text-color);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -666,7 +666,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(var(--blur-strength));
             -webkit-backdrop-filter: blur(var(--blur-strength));
-            color: white;
+            color: var(--text-color);
             font-size: 1rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid var(--glass-border);
@@ -675,7 +675,7 @@
         }
         
         .search-input::placeholder {
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
         }
         
         .search-input:focus {
@@ -698,10 +698,10 @@
         }
 
         .quiz-header h2 {
-            color: white;
+            color: var(--text-color);
             font-size: 2.2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             position: relative;
             display: inline-block;
         }
@@ -713,19 +713,19 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, white, transparent);
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
 
         .quiz-header p {
-            color: rgba(255,255,255,0.9);
+            color: var(--text-muted);
             font-size: 1.1rem;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             padding: 8px 20px;
             display: inline-block;
             border-radius: 30px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .quiz-container {
@@ -770,11 +770,11 @@
 
         .quiz-question {
             font-size: 1.5rem;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 30px;
             text-align: center;
             font-weight: 500;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transform: translateZ(10px);
         }
 
@@ -786,12 +786,12 @@
         }
 
         .quiz-option {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: var(--border-radius);
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             transform-style: preserve-3d;
             transform: translateZ(0);
         }
@@ -799,14 +799,14 @@
         .quiz-option:hover {
             transform: translateY(-5px) translateZ(10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.9);
         }
 
         .quiz-option.selected {
             transform: translateY(-5px) translateZ(15px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border: 2px solid white;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+            border: 2px solid var(--primary-color);
+            background: var(--primary-light);
         }
 
         .option-image {
@@ -823,11 +823,11 @@
 
         .option-label {
             padding: 15px;
-            color: white;
+            color: var(--text-color);
             font-weight: 500;
             text-align: center;
             font-size: 1.1rem;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transform: translateZ(5px);
         }
 
@@ -839,7 +839,7 @@
 
         .quiz-prev-btn, .quiz-next-btn, .quiz-finish-btn, .result-restart-btn, .result-add-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            color: var(--text-color);
             border: none;
             padding: 12px 25px;
             border-radius: 25px;
@@ -847,14 +847,14 @@
             font-weight: 500;
             font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .quiz-prev-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .quiz-prev-btn:hover, .quiz-next-btn:hover, .quiz-finish-btn:hover, .result-restart-btn:hover, .result-add-btn:hover {
@@ -884,19 +884,19 @@
 
         .result-header {
             font-size: 1.8rem;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 25px;
             font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .result-service {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: var(--border-radius);
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             transform-style: preserve-3d;
             transform: translateZ(10px);
         }
@@ -948,7 +948,7 @@
             overflow: hidden;
             margin: 40px 0;
             border-radius: var(--border-radius);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
         .kinetic-container {
@@ -960,9 +960,9 @@
 
         .kinetic-heading {
             font-size: 3.5rem;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 20px;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
             font-weight: 800;
             display: inline-block;
             transform-style: preserve-3d;
@@ -999,9 +999,9 @@
 
         .kinetic-second-line {
             font-size: 2.5rem;
-            color: rgba(255,255,255,0.9);
+            color: var(--text-muted);
             margin-bottom: 30px;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.1);
             position: relative;
             transform-style: preserve-3d;
             animation: secondLineAnimation 5s ease-in-out infinite;
@@ -1027,7 +1027,7 @@
         }
 
         .kinetic-offer {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.9);
             backdrop-filter: blur(var(--blur-strength));
             -webkit-backdrop-filter: blur(var(--blur-strength));
             border-radius: 20px;
@@ -1036,8 +1036,8 @@
             flex: 1;
             min-width: 200px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.1);
             opacity: 0;
             transform: translateY(50px) rotateX(10deg);
             transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1), 
@@ -1076,15 +1076,15 @@
 
         .kinetic-offer:hover {
             transform: scale(1.05) translateZ(20px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background: rgba(255,255,255,1);
         }
 
         .offer-title {
             font-size: 1.4rem;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             font-weight: 600;
             transform: translateZ(10px);
             position: relative;
@@ -1097,13 +1097,13 @@
             bottom: -5px;
             width: 50%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
 
         .offer-description {
             font-size: 1.1rem;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            color: var(--text-muted);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
             transform: translateZ(5px);
         }
 
@@ -1379,20 +1379,20 @@
         }
 
         .bg-layer-1 {
-            background: radial-gradient(circle at 30% 70%, rgba(102, 126, 234, 0.1), transparent 70%),
-                        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1), transparent 70%);
+            background: radial-gradient(circle at 30% 70%, rgba(232, 244, 253, 0.3), transparent 70%),
+                        radial-gradient(circle at 80% 20%, rgba(240, 248, 255, 0.3), transparent 70%);
             animation-delay: 0s;
         }
 
         .bg-layer-2 {
-            background: radial-gradient(circle at 60% 30%, rgba(255, 215, 110, 0.08), transparent 60%),
-                        radial-gradient(circle at 20% 80%, rgba(97, 210, 108, 0.08), transparent 60%);
+            background: radial-gradient(circle at 60% 30%, rgba(255, 248, 225, 0.2), transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(232, 245, 232, 0.2), transparent 60%);
             animation-delay: -7s;
         }
 
         .bg-layer-3 {
-            background: radial-gradient(circle at 90% 60%, rgba(255, 107, 107, 0.06), transparent 50%),
-                        radial-gradient(circle at 10% 40%, rgba(102, 126, 234, 0.06), transparent 50%);
+            background: radial-gradient(circle at 90% 60%, rgba(255, 232, 232, 0.15), transparent 50%),
+                        radial-gradient(circle at 10% 40%, rgba(232, 244, 253, 0.15), transparent 50%);
             animation-delay: -14s;
         }
 
@@ -1449,22 +1449,22 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(232, 244, 253, 0.6);
             border-radius: 50%;
             transform-style: preserve-3d;
             animation: particleFloat 12s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(232, 244, 253, 0.3);
         }
 
         .particle-large {
             width: 8px;
             height: 8px;
-            background: rgba(102, 126, 234, 0.4);
+            background: rgba(240, 248, 255, 0.4);
             animation-duration: 15s;
         }
 
         .particle-colored {
-            background: rgba(118, 75, 162, 0.5);
+            background: rgba(255, 248, 225, 0.5);
             animation-duration: 18s;
             animation-delay: -5s;
         }
@@ -1475,13 +1475,13 @@
             width: 200px;
             height: 200px;
             background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.02) 0%, 
-                rgba(102, 126, 234, 0.08) 50%, 
-                rgba(118, 75, 162, 0.04) 100%);
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(232, 244, 253, 0.2) 50%, 
+                rgba(240, 248, 255, 0.1) 100%);
             border-radius: 20px;
             transform-style: preserve-3d;
             transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(232, 244, 253, 0.3);
             backdrop-filter: blur(1px);
             -webkit-backdrop-filter: blur(1px);
         }
@@ -1493,8 +1493,8 @@
             height: 100px;
             bottom: 0;
             background: linear-gradient(45deg, 
-                rgba(102, 126, 234, 0.1), 
-                rgba(118, 75, 162, 0.1));
+                rgba(232, 244, 253, 0.2), 
+                rgba(240, 248, 255, 0.2));
             transform-style: preserve-3d;
             animation: wave3D 8s ease-in-out infinite;
             clip-path: polygon(
@@ -1539,7 +1539,7 @@
         /* Animated 3D Rings */
         .ring-3d {
             position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(232, 244, 253, 0.3);
             border-radius: 50%;
             transform-style: preserve-3d;
             animation: rotateRing 20s linear infinite;
@@ -1555,7 +1555,7 @@
         .ring-medium {
             width: 150px;
             height: 150px;
-            border-color: rgba(102, 126, 234, 0.15);
+            border-color: rgba(240, 248, 255, 0.4);
             animation-duration: 18s;
             animation-direction: reverse;
         }
@@ -1563,7 +1563,7 @@
         .ring-small {
             width: 80px;
             height: 80px;
-            border-color: rgba(118, 75, 162, 0.2);
+            border-color: rgba(255, 248, 225, 0.5);
             animation-duration: 12s;
         }
 
@@ -1634,9 +1634,9 @@
         .interactive-plane:hover {
             transform: rotateX(10deg) rotateY(10deg) translateZ(20px);
             background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.05) 0%, 
-                rgba(102, 126, 234, 0.15) 50%, 
-                rgba(118, 75, 162, 0.08) 100%);
+                rgba(255, 255, 255, 0.2) 0%, 
+                rgba(232, 244, 253, 0.4) 50%, 
+                rgba(240, 248, 255, 0.2) 100%);
         }
 
         /* 3D Perspective for main container */
@@ -1937,52 +1937,7 @@
         </div>
 
         <div class="services-grid">
-            <div class="service-category neumorphic">
-                <div class="category-header">
-                    <div class="category-icon">💇‍♀️</div>
-                    <div class="category-title">Парикмахерские услуги</div>
-                </div>
-                
-                <div class="service-item" data-service="Стрижка женская" data-price="2500" data-duration="60">
-                    <div class="service-info">
-                        <div class="service-name">Стрижка женская</div>
-                        <div class="service-description">Модная стрижка с укладкой</div>
-                    </div>
-                    <div class="service-duration">60 мин</div>
-                    <div class="service-price">2500 ₽</div>
-                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
-                </div>
 
-                <div class="service-item" data-service="Стрижка мужская" data-price="1800" data-duration="45">
-                    <div class="service-info">
-                        <div class="service-name">Стрижка мужская</div>
-                        <div class="service-description">Классическая или современная стрижка</div>
-                    </div>
-                    <div class="service-duration">45 мин</div>
-                    <div class="service-price">1800 ₽</div>
-                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
-                </div>
-
-                <div class="service-item" data-service="Окрашивание" data-price="4500" data-duration="180">
-                    <div class="service-info">
-                        <div class="service-name">Окрашивание</div>
-                        <div class="service-description">Профессиональное окрашивание волос</div>
-                    </div>
-                    <div class="service-duration">180 мин</div>
-                    <div class="service-price">4500 ₽</div>
-                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
-                </div>
-
-                <div class="service-item" data-service="Мелирование" data-price="3800" data-duration="150">
-                    <div class="service-info">
-                        <div class="service-name">Мелирование</div>
-                        <div class="service-description">Частичное осветление прядей</div>
-                    </div>
-                    <div class="service-duration">150 мин</div>
-                    <div class="service-price">3800 ₽</div>
-                    <button class="add-btn" onclick="addToCart(this)">Добавить</button>
-                </div>
-            </div>
 
             <div class="service-category">
                 <div class="category-header">

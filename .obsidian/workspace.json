@@ -67,12 +67,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Figma Plugins.md",
+                "file": "Lesson-10-uxui/class-10-uxui.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Figma Plugins"
+              "title": "class-10-uxui"
             }
           }
         ],
@@ -223,9 +223,17 @@
   },
   "active": "324b692c390bf436",
   "lastOpenFiles": [
+    "Lesson-10-uxui/tmp/design_systems.html",
+    "Lesson-10-uxui/tmp",
+    "Lesson-10-uxui/design-system-pre.html",
+    "Lesson-10-uxui/design_systems.html",
+    "Lesson-10-uxui/DesignSystem.md",
+    "Lesson-10-uxui/class-10-uxui.md",
+    "Lesson-10-uxui/Tokens.md",
+    "Figma Plugins.md",
+    "Lesson-10-uxui",
     "Lesson-8-uxui-homework/All-Web-Styles-Guide.md",
     "Lesson-7-uxui/Support Conscious Action.md",
-    "Figma Plugins.md",
     "Lesson-7-uxui/UI-components-beh-chang.md",
     "Lesson-7-uxui/Create Your Own Design System.md",
     "Lesson-8-uxui-homework/Screens Flow and animations.md",
@@ -239,13 +247,9 @@
     "Lesson-7-uxui/water-tracking-app-mobile-dashboard-5 copy.html",
     "docs/img/Pasted Image 20250521225202_716.png",
     "docs/img/Pasted image 20250520232759.png",
-    "docs/img/1738143131641.jfif",
     "Lesson-6-uxui/class-1-ux-ui.md",
     "Lesson-5/Behavior Change Strategies.md",
     "Excalidraw/app-behavious.excalidraw.md",
-    "Lesson-7-uxui",
-    "Lesson-6-uxui/water-tracking-app - 1.html",
-    "Lesson-6-uxui/water-tracking-app - Copy.html",
     "Lesson-6-uxui/class-1-ux-ui-task.md",
     "docs/design-roles-scripts-userProfile.md",
     "Lesson-4/lesson-4-task.md",
@@ -264,10 +268,6 @@
     "Lesson-4/img/Make_things-Fountain_Institute.jpeg",
     "Lesson-4/img/images.jpeg",
     "Lesson-4/img/gru.jpg",
-    "Lesson-4/img/drake.jpg",
-    "Excalidraw/UX Concept development.18.excalidraw.md",
-    "Lesson-4/Class-4-html.md",
-    "Lesson-3-hw/user-profile-card-development.md",
-    "docs/HW/Community Hub/Achievements Community Hub GammaIntelligence.md"
+    "Lesson-4/img/drake.jpg"
   ]
 }

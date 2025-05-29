@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дизайн-системы и дизайн-токены</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 183, 197, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(162, 210, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(196, 181, 253, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #fef7ff 0%, #f0f9ff 50%, #f7fee7 100%);
+            color: #374151;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(251, 191, 36, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
+            transform: rotate(15deg);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px 60px 80px;
+            background: 
+                linear-gradient(125deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.85) 100%);
+            border-radius: 30px 5px 25px 15px;
+            margin: 20px;
+            box-shadow: 
+                -5px 15px 35px rgba(139, 92, 246, 0.1),
+                5px -5px 25px rgba(251, 191, 36, 0.08),
+                0 25px 50px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(196, 181, 253, 0.3);
+            overflow-y: auto;
+            position: relative;
+            transform: rotate(-0.5deg);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(255, 183, 197, 0.4), transparent 70%);
+            border-radius: 50% 20% 80% 40%;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            left: 20px;
+            width: 80px;
+            height: 200px;
+            background: linear-gradient(45deg, rgba(162, 210, 255, 0.3), transparent);
+            border-radius: 100% 0% 50% 20%;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.8em;
+            color: #1f2937;
+            margin-bottom: 35px;
+            text-align: left;
+            font-weight: 400;
+            line-height: 1.1;
+            transform: rotate(-1deg);
+            margin-left: -10px;
+            text-shadow: 2px 2px 4px rgba(196, 181, 253, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20px;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, #fbbf24, #ec4899);
+            border-radius: 3px;
+            transform: rotate(1deg);
+        }
+
+        .slide h2 {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.9em;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            transform: rotate(0.5deg);
+            margin-left: 30px;
+            border-left: 4px solid #fbbf24;
+            padding-left: 15px;
+        }
+
+        .slide h3 {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4em;
+            color: #ec4899;
+            margin-bottom: 15px;
+            margin-top: 25px;
+            font-weight: 600;
+            transform: rotate(-0.3deg);
+            text-decoration: underline;
+            text-decoration-color: rgba(251, 191, 36, 0.5);
+            text-decoration-thickness: 2px;
+            text-underline-offset: 5px;
+        }
+
+        .slide h4 {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.3em;
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transform: rotate(0.1deg);
+        }
+
+        .slide p, .slide li {
+            font-family: 'Georgia', serif;
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            color: #4b5563;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        .slide ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+            transform: rotate(0.2deg);
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .slide li::marker {
+            color: #fbbf24;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1deg);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: 2px solid #ec4899;
+            border-radius: 25px 8px 20px 12px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 0.9em;
+            color: #1f2937;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                3px 6px 15px rgba(139, 92, 246, 0.2),
+                -2px -2px 10px rgba(251, 191, 36, 0.3);
+            transform: rotate(1deg);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            transform: rotate(-1deg) translateY(-3px);
+            box-shadow: 
+                5px 10px 20px rgba(139, 92, 246, 0.3),
+                -3px -3px 15px rgba(236, 72, 153, 0.2);
+        }
+
+        .nav-btn:first-child {
+            transform: rotate(-1.5deg);
+        }
+
+        .nav-btn:last-child {
+            transform: rotate(1.5deg);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, rgba(196, 181, 253, 0.8), rgba(162, 210, 255, 0.7));
+            padding: 12px 20px;
+            border-radius: 15px 25px 10px 20px;
+            border: 2px solid rgba(236, 72, 153, 0.4);
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 1em;
+            color: #1f2937;
+            z-index: 1000;
+            transform: rotate(2deg);
+            box-shadow: 3px 6px 12px rgba(139, 92, 246, 0.15);
+        }
+
+        .design-example {
+            background: linear-gradient(125deg, rgba(255, 183, 197, 0.2), rgba(196, 181, 253, 0.15));
+            border-radius: 20px 5px 25px 8px;
+            padding: 25px 30px;
+            margin: 25px 0;
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+            transform: rotate(-0.5deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .design-example::before {
+            content: '✦';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5em;
+            color: #fbbf24;
+            transform: rotate(15deg);
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            transform: rotate(1deg);
+        }
+
+        .color-swatch {
+            width: 75px;
+            height: 75px;
+            border-radius: 50% 20% 80% 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 0.8em;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                2px 4px 8px rgba(0, 0, 0, 0.1),
+                inset 1px 1px 3px rgba(255, 255, 255, 0.3);
+            transform: rotate(15deg);
+            transition: transform 0.3s ease;
+        }
+
+        .color-swatch:nth-child(even) {
+            transform: rotate(-15deg);
+            border-radius: 30% 70% 20% 80%;
+        }
+
+        .color-swatch:hover {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .figma-steps {
+            background: 
+                linear-gradient(135deg, rgba(162, 210, 255, 0.4), rgba(196, 181, 253, 0.3)),
+                radial-gradient(circle at 70% 30%, rgba(255, 183, 197, 0.25), transparent);
+            color: #1f2937;
+            border-radius: 8px 30px 15px 25px;
+            padding: 30px 35px;
+            margin: 30px 0;
+            border: 3px solid rgba(251, 191, 36, 0.4);
+            transform: rotate(0.8deg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .figma-steps::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #fbbf24, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .figma-steps h4 {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #8b5cf6;
+            text-transform: none;
+            transform: rotate(-0.5deg);
+            text-decoration: overline;
+            text-decoration-color: #ec4899;
+        }
+
+        .figma-steps ol {
+            margin-left: 25px;
+            transform: rotate(-0.3deg);
+        }
+
+        .figma-steps li {
+            margin-bottom: 15px;
+            font-size: 1em;
+            line-height: 1.6;
+            font-family: 'Georgia', serif;
+            position: relative;
+        }
+
+        .figma-steps li::marker {
+            color: #ec4899;
+            font-weight: bold;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+            transform: rotate(0deg);
+        }
+
+        .example-card {
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+            border-radius: 20px 8px 18px 10px;
+            padding: 30px;
+            border: 2px solid rgba(162, 210, 255, 0.6);
+            box-shadow: 
+                4px 8px 20px rgba(139, 92, 246, 0.15),
+                -2px -2px 10px rgba(251, 191, 36, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+            transform: rotate(0.2deg);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .example-card:nth-child(even) {
+            transform: rotate(-0.3deg);
+            border-radius: 10px 20px 8px 18px;
+        }
+
+        .example-card:nth-child(3n) {
+            transform: rotate(0.4deg);
+        }
+
+        .example-card::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.4), transparent);
+            border-radius: 50%;
+        }
+
+        .example-card:hover {
+            transform: rotate(0deg) translateY(-3px);
+            box-shadow: 
+                6px 12px 30px rgba(139, 92, 246, 0.25),
+                -3px -3px 15px rgba(251, 191, 36, 0.2);
+            border-color: #ec4899;
+        }
+
+        .example-card h3,
+        .example-card h4 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .example-card p {
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+
+        .example-card ul {
+            margin-left: 20px;
+            transform: none;
+        }
+
+        .example-card li {
+            color: #4b5563;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .figma-steps {
+            background: 
+                linear-gradient(135deg, rgba(162, 210, 255, 0.5), rgba(196, 181, 253, 0.4)),
+                radial-gradient(circle at 70% 30%, rgba(255, 183, 197, 0.3), transparent);
+            color: #1f2937;
+            border-radius: 15px 25px 12px 20px;
+            padding: 35px 40px;
+            margin: 30px 0;
+            border: 3px solid rgba(251, 191, 36, 0.5);
+            transform: rotate(0.3deg);
+            position: relative;
+            overflow: visible;
+        }
+
+        .figma-steps h4 {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: #1f2937;
+            text-transform: none;
+            transform: rotate(-0.2deg);
+            text-decoration: overline;
+            text-decoration-color: #ec4899;
+        }
+
+        .figma-steps ol {
+            margin-left: 25px;
+            transform: none;
+        }
+
+        .figma-steps li {
+            margin-bottom: 18px;
+            font-size: 1.05em;
+            line-height: 1.7;
+            font-family: 'Georgia', serif;
+            position: relative;
+            color: #374151;
+        }
+
+        .design-example {
+            background: linear-gradient(125deg, rgba(255, 183, 197, 0.3), rgba(196, 181, 253, 0.25));
+            border-radius: 18px 8px 20px 10px;
+            padding: 30px 35px;
+            margin: 25px 0;
+            border: 2px dashed rgba(139, 92, 246, 0.4);
+            transform: rotate(-0.2deg);
+            position: relative;
+            overflow: visible;
+        }
+
+        .design-example h3 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .design-example p {
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        .pro-tip {
+            background: 
+                linear-gradient(135deg, rgba(5, 150, 105, 0.4), rgba(162, 210, 255, 0.35)),
+                radial-gradient(circle at 80% 20%, rgba(255, 183, 197, 0.25), transparent);
+            color: #1f2937;
+            padding: 30px 35px;
+            border-radius: 20px 10px 25px 15px;
+            margin: 25px 0;
+            border: 3px solid rgba(5, 150, 105, 0.5);
+            position: relative;
+            transform: rotate(-0.3deg);
+            overflow: visible;
+        }
+
+        .pro-tip::before {
+            content: "⚡";
+            font-size: 2em;
+            margin-right: 15px;
+            display: inline-block;
+            transform: rotate(10deg);
+            filter: drop-shadow(2px 2px 4px rgba(251, 191, 36, 0.5));
+        }
+
+        .pro-tip::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            right: -12px;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.4), transparent);
+            border-radius: 50%;
+        }
+
+        .component-preview {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 25px 0;
+            padding: 30px;
+            background: 
+                linear-gradient(135deg, rgba(196, 181, 253, 0.2), rgba(162, 210, 255, 0.15));
+            border-radius: 15px 8px 18px 10px;
+            border: 2px dotted rgba(236, 72, 153, 0.5);
+            transform: rotate(0.2deg);
+        }
+
+        .typography-example {
+            font-family: 'Georgia', serif;
+            transform: rotate(-0.3deg);
+            padding: 25px;
+            background: rgba(255, 183, 197, 0.15);
+            border-radius: 15px;
+            border-left: 5px solid #fbbf24;
+        }
+
+        .typography-example h1 { 
+            font-size: 2.2em; 
+            margin-bottom: 12px; 
+            color: #8b5cf6;
+            font-weight: 400;
+            transform: rotate(0.2deg);
+        }
+        .typography-example h2 { 
+            font-size: 1.8em; 
+            margin-bottom: 10px; 
+            color: #ec4899;
+            font-weight: 300;
+            font-family: 'Arial', sans-serif;
+        }
+        .typography-example h3 { 
+            font-size: 1.4em; 
+            margin-bottom: 8px; 
+            color: #059669;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+        .typography-example p { 
+            font-size: 1em; 
+            line-height: 1.7; 
+            color: #4b5563;
+            font-weight: 400;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px 5px 15px 8px;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+            box-shadow: 3px 6px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: rotate(0deg) scale(1.05);
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1f2937;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #8b5cf6;
+            border: 2px solid #ec4899;
+            padding: 10px 22px;
+            border-radius: 8px 20px 5px 15px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            transform: rotate(1.5deg);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(236, 72, 153, 0.1);
+            transform: rotate(0deg);
+            border-color: #fbbf24;
+            color: #059669;
+        }
+
+        .input-example {
+            padding: 12px 16px;
+            border: 2px solid #c4b5fd;
+            border-radius: 15px 5px 12px 8px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #1f2937;
+            transition: all 0.3s ease;
+            transform: rotate(-1deg);
+        }
+
+        .input-example:focus {
+            border-color: #fbbf24;
+            outline: none;
+            transform: rotate(0deg);
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .spacing-example {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin: 20px 0;
+            transform: rotate(0.8deg);
+        }
+
+        .spacing-box {
+            background: linear-gradient(45deg, #fbbf24, #ec4899);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 50% 20% 80% 30%;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            font-weight: 600;
+            transform: rotate(-10deg);
+            transition: transform 0.3s ease;
+        }
+
+        .spacing-box:nth-child(even) {
+            transform: rotate(10deg);
+            background: linear-gradient(45deg, #8b5cf6, #059669);
+        }
+
+        .spacing-box:hover {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(251, 191, 36, 0.6), rgba(236, 72, 153, 0.4));
+            padding: 4px 10px;
+            border-radius: 15px 3px 12px 6px;
+            font-family: 'Arial', sans-serif;
+            font-weight: 700;
+            color: #1f2937;
+            transform: rotate(-1deg);
+            display: inline-block;
+            margin: 0 3px;
+            box-shadow: 2px 4px 8px rgba(251, 191, 36, 0.2);
+        }
+
+        .title-slide {
+            text-align: center;
+            justify-content: center;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(196, 181, 253, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 183, 197, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+            color: #1f2937;
+            border: 3px solid rgba(139, 92, 246, 0.3);
+            transform: rotate(-0.3deg);
+        }
+
+        .title-slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            color: #8b5cf6;
+            font-weight: 400;
+            text-align: center;
+            transform: rotate(1deg);
+            line-height: 1.1;
+            text-shadow: 3px 3px 6px rgba(236, 72, 153, 0.2);
+        }
+
+        .title-slide p {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.4em;
+            color: #ec4899;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transform: rotate(-0.5deg);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">20</span>
+        </div>
+
+        <!-- Слайд 1: Титульный -->
+        <div class="slide active title-slide">
+            <h1>Дизайн-системы и дизайн-токены</h1>
+            <p>Полный курс для UX/UI дизайнеров</p>
+            <p style="font-size: 1.2em; margin-top: 30px;">Продолжительность: 3 часа</p>
+        </div>
+
+        <!-- Слайд 2: Программа курса -->
+        <div class="slide">
+            <h1>Программа курса</h1>
+            <div class="example-grid">
+                <div class="example-card">
+                    <h3>Модуль 1</h3>
+                    <p><strong>Введение в дизайн-системы</strong></p>
+                    <p>45 минут</p>
+                </div>
+                <div class="example-card">
+                    <h3>Модуль 2</h3>
+                    <p><strong>Дизайн-токены - основа системы</strong></p>
+                    <p>50 минут</p>
+                </div>
+                <div class="example-card">
+                    <h3>Модуль 3</h3>
+                    <p><strong>Компонентная библиотека</strong></p>
+                    <p>60 минут</p>
+                </div>
+                <div class="example-card">
+                    <h3>Модуль 4</h3>
+                    <p><strong>Организация и масштабирование</strong></p>
+                    <p>30 минут</p>
+                </div>
+                <div class="example-card">
+                    <h3>Модуль 5</h3>
+                    <p><strong>Внедрение и сотрудничество</strong></p>
+                    <p>35 минут</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 3: Что такое дизайн-система -->
+        <div class="slide">
+            <h1>Что такое дизайн-система?</h1>
+            
+            <div class="design-example">
+                <h3>Определение</h3>
+                <p><span class="highlight">Дизайн-система</span> — это набор переиспользуемых компонентов, стандартов и принципов, которые обеспечивают консистентность в дизайне продукта</p>
+            </div>
+
+            <h3>Отличия от других инструментов:</h3>
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>UI Kit</h4>
+                    <p>Набор готовых элементов интерфейса без правил использования</p>
+                </div>
+                <div class="example-card">
+                    <h4>Style Guide</h4>
+                    <p>Документ с визуальными стандартами бренда</p>
+                </div>
+                <div class="example-card">
+                    <h4>Design System</h4>
+                    <p>Живая система с компонентами, токенами, принципами и процессами</p>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Примеры успешных систем:</strong> Material Design (Google), Human Interface Guidelines (Apple), Carbon (IBM), Polaris (Shopify)
+            </div>
+        </div>
+
+        <!-- Слайд 4: Зачем нужны дизайн-системы -->
+        <div class="slide">
+            <h1>Зачем нужны дизайн-системы?</h1>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🎯 Консистентность</h4>
+                    <p>Единообразный пользовательский опыт на всех платформах и продуктах</p>
+                </div>
+                <div class="example-card">
+                    <h4>⚡ Скорость</h4>
+                    <p>Ускорение процесса дизайна и разработки в 3-5 раз</p>
+                </div>
+                <div class="example-card">
+                    <h4>📈 Масштабируемость</h4>
+                    <p>Легкое добавление новых продуктов и функций</p>
+                </div>
+                <div class="example-card">
+                    <h4>🤝 Командная работа</h4>
+                    <p>Единый язык между дизайнерами и разработчиками</p>
+                </div>
+                <div class="example-card">
+                    <h4>💰 Экономия</h4>
+                    <p>Снижение технического долга и затрат на поддержку</p>
+                </div>
+                <div class="example-card">
+                    <h4>✅ Качество</h4>
+                    <p>Меньше ошибок, лучше accessibility и UX</p>
+                </div>
+            </div>
+
+            <div class="design-example">
+                <h3>Статистика</h3>
+                <p>Компании с внедренными дизайн-системами экономят до <span class="highlight">40% времени</span> на создание новых интерфейсов</p>
+            </div>
+        </div>
+
+        <!-- Слайд 5: Практическое задание 1 -->
+        <div class="slide">
+            <h1>Практическое задание 1</h1>
+            <h2>Анализ существующих дизайн-систем</h2>
+
+            <div class="figma-steps">
+                <h4>Пошаговая инструкция в Figma:</h4>
+                <ol>
+                    <li><strong>Создание файла:</strong> Нажмите "+" → "Design File" → назовите "Анализ дизайн-систем"</li>
+                    <li><strong>Подготовка фреймов:</strong> Нажмите F → создайте 3 фрейма размером 1200x800px каждый</li>
+                    <li><strong>Именование:</strong> Переименуйте фреймы: "Material Design", "Apple HIG", "IBM Carbon"</li>
+                    <li><strong>Исследование:</strong> Откройте в новых вкладках:
+                        <ul>
+                            <li>material.io/design</li>
+                            <li>developer.apple.com/design</li>
+                            <li>carbondesignsystem.com</li>
+                        </ul>
+                    </li>
+                    <li><strong>Создание секций:</strong> В каждом фрейме создайте прямоугольники для разделов</li>
+                    <li><strong>Добавление текста:</strong> Нажмите T → добавьте заголовки и описания</li>
+                    <li><strong>Цвета:</strong> Создайте цветовые палитры, используя Rectangle (R) + Fill</li>
+                    <li><strong>Типографика:</strong> Продемонстрируйте шрифтовые иерархии</li>
+                    <li><strong>Скриншоты:</strong> Добавьте примеры компонентов (копируйте изображения)</li>
+                    <li><strong>Выводы:</strong> Создайте сравнительную таблицу внизу</li>
+                </ol>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Время выполнения:</strong> 25 минут. <strong>Результат:</strong> Понимание различных подходов к построению дизайн-систем
+            </div>
+        </div>
+
+        <!-- Слайд 6: Что такое дизайн-токены -->
+        <div class="slide">
+            <h1>Что такое дизайн-токены?</h1>
+
+            <div class="design-example">
+                <h3>Определение</h3>
+                <p><span class="highlight">Дизайн-токены</span> — именованные сущности, которые хранят визуальные свойства дизайна как единый источник правды (Single Source of Truth)</p>
+            </div>
+
+            <h3>Примеры токенов:</h3>
+            <div class="color-palette">
+                <div class="color-swatch" style="background: #3B82F6;">Blue-500</div>
+                <div class="color-swatch" style="background: #EF4444;">Red-500</div>
+                <div class="color-swatch" style="background: #10B981;">Green-500</div>
+                <div class="color-swatch" style="background: #F59E0B;">Yellow-500</div>
+            </div>
+
+            <div class="spacing-example">
+                <span>Отступы:</span>
+                <div class="spacing-box">4px</div>
+                <div class="spacing-box">8px</div>
+                <div class="spacing-box">16px</div>
+                <div class="spacing-box">24px</div>
+                <div class="spacing-box">32px</div>
+            </div>
+
+            <div class="typography-example">
+                <h1>Заголовок H1 - 32px</h1>
+                <h2>Заголовок H2 - 24px</h2>
+                <h3>Заголовок H3 - 20px</h3>
+                <p>Основной текст - 16px</p>
+            </div>
+        </div>
+
+        <!-- Слайд 7: Типы дизайн-токенов -->
+        <div class="slide">
+            <h1>Типы дизайн-токенов</h1>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🔹 Глобальные (Primitive)</h4>
+                    <p><strong>Базовые значения:</strong></p>
+                    <p>color-blue-500: #3B82F6<br>
+                    size-4: 16px<br>
+                    font-family-sans: 'Inter'</p>
+                </div>
+                <div class="example-card">
+                    <h4>🔸 Алиас (Semantic)</h4>
+                    <p><strong>Семантические роли:</strong></p>
+                    <p>color-primary: {color-blue-500}<br>
+                    color-text-primary: {color-gray-900}<br>
+                    spacing-medium: {size-4}</p>
+                </div>
+                <div class="example-card">
+                    <h4>🔶 Компонентные</h4>
+                    <p><strong>Для конкретных компонентов:</strong></p>
+                    <p>button-primary-bg: {color-primary}<br>
+                    card-padding: {spacing-medium}<br>
+                    input-border: {color-gray-300}</p>
+                </div>
+            </div>
+
+            <div class="design-example">
+                <h3>Иерархия токенов</h3>
+                <p>Глобальные → Алиас → Компонентные</p>
+                <p>Изменение глобального токена автоматически обновляет все связанные элементы</p>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Принцип именования:</strong> category-property-variant-state<br>
+                Пример: color-background-primary-hover
+            </div>
+        </div>
+
+        <!-- Слайд 8: Категории токенов -->
+        <div class="slide">
+            <h1>Категории дизайн-токенов</h1>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🎨 Цвета (Colors)</h4>
+                    <p>Primary, Secondary, Success, Warning, Error, Neutral</p>
+                    <div class="color-palette">
+                        <div class="color-swatch" style="background: #667eea; font-size: 0.7em;">Primary</div>
+                        <div class="color-swatch" style="background: #764ba2; font-size: 0.7em;">Secondary</div>
+                        <div class="color-swatch" style="background: #00b894; font-size: 0.7em;">Success</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>📝 Типографика</h4>
+                    <p>Font families, sizes, weights, line heights</p>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 24px; font-weight: bold;">Heading</div>
+                        <div style="font-size: 16px;">Body text</div>
+                        <div style="font-size: 12px; color: #666;">Caption</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>📏 Отступы (Spacing)</h4>
+                    <p>Margins, paddings, gaps</p>
+                    <div class="spacing-example">
+                        <div class="spacing-box">xs</div>
+                        <div class="spacing-box">sm</div>
+                        <div class="spacing-box">md</div>
+                        <div class="spacing-box">lg</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>📐 Размеры (Sizing)</h4>
+                    <p>Width, height, min/max sizes</p>
+                </div>
+                <div class="example-card">
+                    <h4>🖼️ Границы (Borders)</h4>
+                    <p>Border width, style, radius</p>
+                    <div style="margin-top:10px;">
+                        <div style="border: 1px solid #ccc; padding: 5px; border-radius: 4px; margin-bottom: 5px;">Thin border</div>
+                        <div style="border: 2px solid #667eea; padding: 5px; border-radius: 8px;">Thick border</div>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>🌫️ Тени (Shadows)</h4>
+                    <p>Box shadows, elevation levels</p>
+                    <div style="margin-top:10px;">
+                        <div style="box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; margin-bottom: 5px;">Light shadow</div>
+                        <div style="box-shadow: 0 8px 16px rgba(0,0,0,0.15); padding: 10px;">Strong shadow</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 9: Практическое задание 2 -->
+        <div class="slide">
+            <h1>Практическое задание 2</h1>
+            <h2>Создание базовых дизайн-токенов</h2>
+
+            <div class="figma-steps">
+                <h4>Создание файла и структуры:</h4>
+                <ol>
+                    <li><strong>Новый файл:</strong> Создайте файл "Дизайн-токены"</li>
+                    <li><strong>Страницы:</strong> Создайте страницы: "Colors", "Typography", "Spacing", "Documentation"</li>
+                    <li><strong>Фреймы:</strong> На каждой странице создайте фрейм 1400x1000px</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Создание цветовой палитры:</h4>
+                <ol>
+                    <li><strong>Основные цвета:</strong> Создайте 5 квадратов 100x100px для Primary, Secondary, Success, Warning, Error</li>
+                    <li><strong>Оттенки:</strong> Для каждого цвета создайте 9 квадратов 60x60px (50, 100, 200...900)</li>
+                    <li><strong>Именование:</strong> Переименуйте слои: "Primary/500", "Primary/600" и т.д.</li>
+                    <li><strong>Стили:</strong> Создайте Color Styles (4 точки → Create Style)</li>
+                    <li><strong>Нейтральные:</strong> Создайте grayscale от white до black (9 оттенков)</li>
+                    <li><strong>Организация:</strong> Сгруппируйте цвета в папки по категориям</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Типографическая система:</h4>
+                <ol>
+                    <li><strong>Шрифты:</strong> Выберите 2 шрифта (заголовки + основной текст)</li>
+                    <li><strong>Масштаб:</strong> Создайте текстовые блоки: H1(32px), H2(24px), H3(20px), H4(18px), Body(16px), Caption(12px)</li>
+                    <li><strong>Параметры:</strong> Установите line-height: 1.2 для заголовков, 1.5 для текста</li>
+                    <li><strong>Text Styles:</strong> Создайте стили для каждого размера</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Слайд 10: Практическое задание 2 (продолжение) -->
+        <div class="slide">
+            <h1>Задание 2 (продолжение)</h1>
+
+            <div class="figma-steps">
+                <h4>Система отступов:</h4>
+                <ol>
+                    <li><strong>Модульная сетка:</strong> Создайте прямоугольники для значений: 4, 8, 12, 16, 24, 32, 48, 64, 96px</li>
+                    <li><strong>Визуализация:</strong> Сделайте высоту прямоугольников равной значению отступа</li>
+                    <li><strong>Подписи:</strong> Добавьте названия: xs, sm, md, lg, xl, 2xl, 3xl, 4xl, 5xl</li>
+                    <li><strong>Примеры:</strong> Покажите применение в компонентах</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Документация:</h4>
+                <ol>
+                    <li><strong>Заголовки:</strong> Создайте заголовки разделов</li>
+                    <li><strong>Описания:</strong> Добавьте правила использования каждого токена</li>
+                    <li><strong>Примеры:</strong> Покажите правильное и неправильное применение</li>
+                    <li><strong>Таблицы:</strong> Создайте таблицы с именами токенов и значениями</li>
+                </ol>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Время:</strong> 25 минут. <strong>Горячие клавиши:</strong> R (прямоугольник), T (текст), Ctrl+G (группировка), F (фрейм)
+            </div>
+
+            <div class="design-example">
+                <h3>Результат</h3>
+                <p>Базовый набор дизайн-токенов, готовый для использования в компонентах</p>
+            </div>
+        </div>
+
+        <!-- Слайд 11: Принципы создания компонентов -->
+        <div class="slide">
+            <h1>Принципы создания компонентов</h1>
+
+            <div class="design-example">
+                <h3>Atomic Design методология</h3>
+                <p><strong>Атомы</strong> → <strong>Молекулы</strong> → <strong>Организмы</strong> → <strong>Шаблоны</strong> → <strong>Страницы</strong></p>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>⚛️ Атомы</h4>
+                    <p>Базовые элементы: кнопки, поля ввода, иконки</p>
+                    <div class="component-preview">
+                        <button class="btn-primary">Button</button>
+                        <input class="input-example" placeholder="Input field">
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>🧬 Молекулы</h4>
+                    <p>Группы атомов: поисковая строка, карточка продукта</p>
+                    <div class="component-preview">
+                        <input class="input-example" placeholder="Поиск..." style="width: 150px;">
+                        <button class="btn-primary" style="padding: 12px 16px;">🔍</button>
+                    </div>
+                </div>
+                <div class="example-card">
+                    <h4>🦠 Организмы</h4>
+                    <p>Комплексные секции: хедер, футер, форма</p>
+                </div>
+            </div>
+
+            <h3>Ключевые принципы:</h3>
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>♻️ Переиспользуемость</h4>
+                    <p>Один компонент - множество контекстов использования</p>
+                </div>
+                <div class="example-card">
+                    <h4>🔧 Композиция</h4>
+                    <p>Сложные компоненты состоят из простых</p>
+                </div>
+                <div class="example-card">
+                    <h4>📱 Адаптивность</h4>
+                    <p>Компоненты работают на всех устройствах</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Слайд 12: Анатомия компонента -->
+        <div class="slide">
+            <h1>Анатомия компонента в Figma</h1>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🎛️ Properties (Пропсы)</h4>
+                    <p>Настраиваемые параметры компонента</p>
+                    <ul>
+                        <li>Boolean (вкл/выкл)</li>
+                        <li>Instance Swap (замена элементов)</li>
+                        <li>Text (текстовые значения)</li>
+                        <li>Variant (выбор варианта)</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>🎨 Variants (Варианты)</h4>
+                    <p>Различные версии одного компонента</p>
+                    <ul>
+                        <li>Size: Small, Medium, Large</li>
+                        <li>Type: Primary, Secondary, Outline</li>
+                        <li>State: Default, Hover, Disabled</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>🔄 States (Состояния)</h4>
+                    <p>Интерактивные состояния</p>
+                    <ul>
+                        <li>Default (по умолчанию)</li>
+                        <li>Hover (наведение)</li>
+                        <li>Active (нажатие)</li>
+                        <li>Disabled (отключено)</li>
+                        <li>Focus (фокус)</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>📐 Auto Layout</h4>
+                    <p>Автоматическое позиционирование</p>
+                    <ul>
+                        <li>Direction (направление)</li>
+                        <li>Spacing (отступы)</li>
+                        <li>Padding (внутренние отступы)</li>
+                        <li>Resizing (изменение размера)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Совет:</strong> Начинайте с самого простого состояния компонента, затем добавляйте варианты и состояния постепенно
+            </div>
+        </div>
+
+        <!-- Слайд 13: Практическое задание 3 - Часть 1 -->
+        <div class="slide">
+            <h1>Практическое задание 3 (Часть 1)</h1>
+            <h2>Создание атомарных компонентов</h2>
+
+            <div class="figma-steps">
+                <h4>Создание кнопки (Button):</h4>
+                <ol>
+                    <li><strong>Базовая форма:</strong> Создайте прямоугольник 120x40px с border-radius 8px</li>
+                    <li><strong>Текст:</strong> Добавьте текст "Button" внутрь, выровняйте по центру</li>
+                    <li><strong>Auto Layout:</strong> Выделите оба элемента → Shift+A → настройте padding 12px horizontal, 8px vertical</li>
+                    <li><strong>Стили:</strong> Примените цвет из ваших токенов (Primary-500)</li>
+                    <li><strong>Компонент:</strong> Выделите → Ctrl+Alt+K → назовите "Button"</li>
+                    <li><strong>Варианты:</strong> Дублируйте (Ctrl+D) → измените цвета → выделите все → объедините в варианты</li>
+                    <li><strong>Properties:</strong> Настройте свойства:
+                        <ul>
+                            <li>Type: Primary, Secondary, Outline, Ghost</li>
+                            <li>Size: Small (32px), Medium (40px), Large (48px)</li>
+                            <li>State: Default, Hover, Disabled</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Создание поля ввода (Input):</h4>
+                <ol>
+                    <li><strong>Контейнер:</strong> Прямоугольник 240x40px, border 1px, radius 6px</li>
+                    <li><strong>Текст:</strong> Добавьте placeholder "Enter text..."</li>
+                    <li><strong>Auto Layout:</strong> Настройте padding 12px</li>
+                    <li><strong>Состояния:</strong> Default, Focus (синяя граница), Error (красная граница), Disabled</li>
+                    <li><strong>Компонент:</strong> Создайте компонент с вариантами состояний</li>
+                </ol>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Горячие клавиши:</strong> Ctrl+Alt+K (создать компонент), Shift+A (Auto Layout), Alt+Drag (дублировать)
+            </div>
+        </div>
+
+        <!-- Слайд 14: Практическое задание 3 - Часть 2 -->
+        <div class="slide">
+            <h1>Задание 3 (Часть 2)</h1>
+            <h2>Молекулярные и организменные компоненты</h2>
+
+            <div class="figma-steps">
+                <h4>Создание карточки (Card):</h4>
+                <ol>
+                    <li><strong>Основа:</strong> Прямоугольник 280x320px, radius 12px, тень</li>
+                    <li><strong>Изображение:</strong> Добавьте placeholder 280x160px вверху</li>
+                    <li><strong>Контент:</strong> Добавьте заголовок, описание, цену</li>
+                    <li><strong>Кнопка:</strong> Вставьте созданный ранее компонент Button</li>
+                    <li><strong>Auto Layout:</strong> Настройте вертикальный Auto Layout с отступами</li>
+                    <li><strong>Варианты:</strong> Создайте варианты с/без изображения, разные размеры</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Создание навигации (Header):</h4>
+                <ol>
+                    <li><strong>Контейнер:</strong> Прямоугольник во всю ширину (1200px) высотой 64px</li>
+                    <li><strong>Логотип:</strong> Добавьте текст или изображение логотипа слева</li>
+                    <li><strong>Меню:</strong> Создайте горизонтальный список ссылок по центру</li>
+                    <li><strong>Действия:</strong> Добавьте кнопки справа (Login, Sign Up)</li>
+                    <li><strong>Auto Layout:</strong> Настройте горизонтальный Auto Layout</li>
+                    <li><strong>Адаптивность:</strong> Настройте Constraints для растягивания</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Создание формы:</h4>
+                <ol>
+                    <li><strong>Контейнер:</strong> Создайте фрейм для формы</li>
+                    <li><strong>Поля:</strong> Добавьте несколько Input компонентов</li>
+                    <li><strong>Лейблы:</strong> Добавьте подписи к каждому полю</li>
+                    <li><strong>Кнопки:</strong> Добавьте кнопки Submit и Cancel</li>
+                    <li><strong>Компоновка:</strong> Используйте Auto Layout для вертикального размещения</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Слайд 15: Организация компонентов -->
+        <div class="slide">
+            <h1>Организация компонентной библиотеки</h1>
+
+            <div class="design-example">
+                <h3>Структура файла библиотеки</h3>
+                <p>📁 <strong>Design System</strong><br>
+                   ├── 📄 Cover (обложка с описанием)<br>
+                   ├── 📄 Foundation (токены)<br>
+                   ├── 📄 Atoms (атомарные компоненты)<br>
+                   ├── 📄 Molecules (молекулярные)<br>
+                   ├── 📄 Organisms (организмы)<br>
+                   ├── 📄 Templates (шаблоны)<br>
+                   └── 📄 Examples (примеры использования)
+                </p>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🏷️ Именование</h4>
+                    <p><strong>Структура:</strong> Category/Component/Variant</p>
+                    <ul>
+                        <li>Buttons/Primary/Large</li>
+                        <li>Forms/Input/Error</li>
+                        <li>Cards/Product/Default</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>📚 Документация</h4>
+                    <p>Для каждого компонента:</p>
+                    <ul>
+                        <li>Описание назначения</li>
+                        <li>Правила использования</li>
+                        <li>Do's and Don'ts</li>
+                        <li>Интерактивные примеры</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>🔄 Версионирование</h4>
+                    <p>Система версий:</p>
+                    <ul>
+                        <li>Major: кардинальные изменения</li>
+                        <li>Minor: новые компоненты</li>
+                        <li>Patch: исправления и улучшения</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Совет:</strong> Используйте описания компонентов и cover-страницы для быстрой навигации по библиотеке
+            </div>
+        </div>
+
+        <!-- Слайд 16: Практическое задание 4 -->
+        <div class="slide">
+            <h1>Практическое задание 4</h1>
+            <h2>Организация системы</h2>
+
+            <div class="figma-steps">
+                <h4>Создание мастер-файла:</h4>
+                <ol>
+                    <li><strong>Новый файл:</strong> Создайте "Design System Hub"</li>
+                    <li><strong>Cover страница:</strong> Создайте обложку с:
+                        <ul>
+                            <li>Название системы</li>
+                            <li>Версия и дата обновления</li>
+                            <li>Описание и принципы</li>
+                            <li>Контакты команды</li>
+                        </ul>
+                    </li>
+                    <li><strong>Навигация:</strong> Создайте оглавление с ссылками на страницы</li>
+                    <li><strong>Страницы:</strong> Создайте страницы для каждой категории</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Foundation страница:</h4>
+                <ol>
+                    <li><strong>Цвета:</strong> Разместите все цветовые токены с кодами</li>
+                    <li><strong>Типографика:</strong> Покажите все текстовые стили</li>
+                    <li><strong>Отступы:</strong> Визуализируйте систему spacing</li>
+                    <li><strong>Сетка:</strong> Опишите принципы grid system</li>
+                    <li><strong>Иконки:</strong> Разместите библиотеку иконок</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Changelog и гайдлайны:</h4>
+                <ol>
+                    <li><strong>История изменений:</strong> Создайте таблицу с версиями</li>
+                    <li><strong>Quick Start:</strong> Пошаговое руководство для новичков</li>
+                    <li><strong>Contribution:</strong> Процесс предложения изменений</li>
+                    <li><strong>Support:</strong> Контакты для помощи</li>
+                </ol>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Время:</strong> 15 минут. Используйте шаблоны и копирование для ускорения работы
+            </div>
+        </div>
+
+        <!-- Слайд 17: Handoff процесс -->
+        <div class="slide">
+            <h1>Передача дизайна в разработку</h1>
+
+            <div class="design-example">
+                <h3>Design-to-Development Workflow</h3>
+                <p>Дизайнер → <span class="highlight">Design System</span> ← Разработчик</p>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>🔧 Figma Dev Mode</h4>
+                    <ul>
+                        <li>Автоматическая генерация CSS</li>
+                        <li>Спецификации компонентов</li>
+                        <li>Экспорт ассетов</li>
+                        <li>Измерения и отступы</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>📋 Спецификации</h4>
+                    <ul>
+                        <li>Все состояния компонентов</li>
+                        <li>Поведение при взаимодействии</li>
+                        <li>Responsive breakpoints</li>
+                        <li>Accessibility требования</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>🔄 Синхронизация</h4>
+                    <ul>
+                        <li>Design Tokens в коде</li>
+                        <li>Автоматический экспорт</li>
+                        <li>CI/CD интеграция</li>
+                        <li>Version control</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Инструменты:</strong> Figma Tokens Plugin, Style Dictionary, Storybook, Design System Manager
+            </div>
+        </div>
+
+        <!-- Слайд 18: Практическое задание 5 -->
+        <div class="slide">
+            <h1>Практическое задание 5</h1>
+            <h2>Подготовка к передаче разработчикам</h2>
+
+            <div class="figma-steps">
+                <h4>Включение Dev Mode:</h4>
+                <ol>
+                    <li><strong>Активация:</strong> Нажмите кнопку "Dev Mode" в правом верхнем углу</li>
+                    <li><strong>Выбор компонента:</strong> Кликните на любой компонент</li>
+                    <li><strong>Инспектор:</strong> Изучите панель справа с CSS свойствами</li>
+                    <li><strong>Копирование:</strong> Скопируйте CSS код для разработчика</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Создание спецификаций:</h4>
+                <ol>
+                    <li><strong>Аннотации:</strong> Добавьте заметки для разработчиков (комментарии)</li>
+                    <li><strong>Состояния:</strong> Убедитесь, что все состояния компонентов видны</li>
+                    <li><strong>Измерения:</strong> Проверьте правильность отступов и размеров</li>
+                    <li><strong>Экспорт:</strong> Подготовьте иконки и изображения для экспорта</li>
+                </ol>
+            </div>
+
+            <div class="figma-steps">
+                <h4>Checklist передачи:</h4>
+                <ol>
+                    <li><strong>✅ Токены:</strong> Все значения соответствуют design tokens</li>
+                    <li><strong>✅ Состояния:</strong> Все интерактивные состояния описаны</li>
+                    <li><strong>✅ Responsive:</strong> Поведение на разных экранах определено</li>
+                    <li><strong>✅ Accessibility:</strong> Контрастность, focus states, ARIA labels</li>
+                    <li><strong>✅ Анимации:</strong> Transitions и micro-interactions описаны</li>
+                    <li><strong>✅ Документация:</strong> Правила использования компонентов</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Слайд 19: Домашнее задание -->
+        <div class="slide">
+            <h1>Домашнее задание</h1>
+            <h2>Создание реальной дизайн-системы</h2>
+
+            <div class="design-example">
+                <h3>Задача</h3>
+                <p>Создайте полноценную дизайн-систему для выбранного проекта и подготовьте 10-минутную презентацию</p>
+            </div>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>1️⃣ Выбор проекта</h4>
+                    <ul>
+                        <li>E-commerce платформа</li>
+                        <li>Образовательное приложение</li>
+                        <li>Финтех продукт</li>
+                        <li>Социальная сеть</li>
+                        <li>Или ваш собственный проект</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>2️⃣ Дизайн-токены</h4>
+                    <ul>
+                        <li>Полная цветовая палитра (30+ цветов)</li>
+                        <li>Типографическая система</li>
+                        <li>Spacing система</li>
+                        <li>Shadows, borders, radii</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>3️⃣ Компоненты</h4>
+                    <ul>
+                        <li>15-20 переиспользуемых компонентов</li>
+                        <li>Все основные состояния</li>
+                        <li>Responsive поведение</li>
+                        <li>Документация к каждому</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>4️⃣ Применение</h4>
+                    <ul>
+                        <li>3-5 готовых страниц</li>
+                        <li>Consistency проверка</li>
+                        <li>Mobile версии</li>
+                        <li>User flow демонстрация</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Критерии оценки:</strong> Качество токенов (25%), Компоненты (35%), Документация (20%), Практическое применение (20%)
+            </div>
+        </div>
+
+        <!-- Слайд 20: Заключение и ресурсы -->
+        <div class="slide">
+            <h1>Заключение</h1>
+
+            <div class="design-example">
+                <h3>Чему вы научились:</h3>
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4>📚 Теория</h4>
+                        <ul>
+                            <li>Понимание дизайн-систем</li>
+                            <li>Структура и принципы</li>
+                            <li>Типы дизайн-токенов</li>
+                        </ul>
+                    </div>
+                    <div class="example-card">
+                        <h4>🛠 Практика</h4>
+                        <ul>
+                            <li>Создание токенов в Figma</li>
+                            <li>Построение компонентов</li>
+                            <li>Организация библиотеки</li>
+                        </ul>
+                    </div>
+                    <div class="example-card">
+                        <h4>🤝 Процессы</h4>
+                        <ul>
+                            <li>Документирование систем</li>
+                            <li>Handoff разработчикам</li>
+                            <li>Поддержка и развитие</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>📚 Ресурсы для изучения:</h3>
+            <div class="example-grid">
+                <div class="example-card">
+                    <h4>Книги</h4>
+                    <ul>
+                        <li>"Atomic Design" - Brad Frost</li>
+                        <li>"Design Systems" - Alla Kholmatova</li>
+                        <li>"Building Design Systems" - Sarrah Vesselov</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>Примеры систем</h4>
+                    <ul>
+                        <li>Material Design (Google)</li>
+                        <li>Human Interface Guidelines (Apple)</li>
+                        <li>Carbon Design System (IBM)</li>
+                        <li>Polaris (Shopify)</li>
+                    </ul>
+                </div>
+                <div class="example-card">
+                    <h4>Инструменты</h4>
+                    <ul>
+                        <li>Figma Tokens Plugin</li>
+                        <li>Style Dictionary</li>
+                        <li>Storybook</li>
+                        <li>Design System Manager</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pro-tip">
+                <strong>Помните:</strong> Дизайн-система - это живой организм. Начинайте с малого и развивайте постепенно вместе с продуктом и командой!
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Назад</button>
+        <button class="nav-btn" onclick="nextSlide()">Вперед →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
