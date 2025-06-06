@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX/UI Kit - Компоненты для логина и дашборда</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .kit-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .kit-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .kit-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .kit-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .component-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        /* Input Components */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-field.error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .input-field.success {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .input-password {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #6b7280;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: #374151;
+        }
+
+        .input-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-success {
+            color: #10b981;
+            font-size: 0.875rem;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Button Components */
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-loading .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Alert Components */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* Card Components */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.7;
+        }
+
+        /* Navigation Components */
+        .navbar {
+            background: white;
+            padding: 16px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+        }
+
+        .nav-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .nav-link.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Form Components */
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-links {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .form-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 8px;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-text {
+            height: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-button {
+            height: 48px;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .kit-container {
+                padding: 20px;
+            }
+            
+            .components-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kit-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Demo specific styles */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .color-item {
+            text-align: center;
+        }
+
+        .color-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .color-name {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="kit-container">
+        <!-- Header -->
+        <div class="kit-header">
+            <h1 class="kit-title">UX/UI Kit</h1>
+            <p class="kit-subtitle">Готовые компоненты для создания формы логина и дашборда</p>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="section">
+            <h2 class="section-title">🎨 Цветовая палитра</h2>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-circle" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                    <div class="color-name">Primary Gradient</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #667eea;"></div>
+                    <div class="color-name">Primary Blue</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #10b981;"></div>
+                    <div class="color-name">Success Green</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #ef4444;"></div>
+                    <div class="color-name">Error Red</div>
+                </div>
+                <div class="color-item">
+                    <div class="color-circle" style="background: #6b7280;"></div>
+                    <div class="color-name">Text Gray</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Components -->
+        <div class="section">
+            <h2 class="section-title">📝 Поля ввода</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3 class="component-title">Обычное поле</h3>
+                    <div class="input-group">
+                        <label class="input-label">Email адрес</label>
+                        <input type="email" class="input-field" placeholder="example@email.com">
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Поле с ошибкой</h3>
+                    <div class="input-group">
+                        <label class="input-label">Email адрес</label>
+                        <input type="email" class="input-field error" value="invalid-email">
+                        <div class="input-error">⚠️ Неверный формат email</div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Успешное поле</h3>
+                    <div class="input-group">
+                        <label class="input-label">Email адрес</label>
+                        <input type="email" class="input-field success" value="user@example.com">
+                        <div class="input-success">✅ Email корректный</div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Поле пароля</h3>
+                    <div class="input-group">
+                        <label class="input-label">Пароль</label>
+                        <div class="input-password">
+                            <input type="password" class="input-field" placeholder="Введите пароль" id="demo-password">
+                            <button type="button" class="password-toggle" onclick="togglePassword('demo-password')">👁️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button Components -->
+        <div class="section">
+            <h2 class="section-title">🔘 Кнопки</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3 class="component-title">Основные кнопки</h3>
+                    <div class="demo-grid">
+                        <button class="btn btn-primary">Войти</button>
+                        <button class="btn btn-secondary">Отмена</button>
+                        <button class="btn btn-danger">Выйти</button>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Состояния загрузки</h3>
+                    <div class="demo-grid">
+                        <button class="btn btn-primary btn-loading">
+                            <span class="spinner">⟳</span> Загрузка...
+                        </button>
+                        <button class="btn btn-primary">
+                            ✓ Успешно
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Components -->
+        <div class="section">
+            <h2 class="section-title">🚨 Уведомления</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3 class="component-title">Типы уведомлений</h3>
+                    <div class="alert alert-success">
+                        ✅ Вход выполнен успешно!
+                    </div>
+                    <div class="alert alert-error">
+                        ❌ Неверный логин или пароль
+                    </div>
+                    <div class="alert alert-info">
+                        ℹ️ Проверьте ваш email для подтверждения
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Components -->
+        <div class="section">
+            <h2 class="section-title">📊 Карточки дашборда</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3 class="component-title">Статистическая карточка</h3>
+                    <div class="card">
+                        <div class="card-header">Активные пользователи</div>
+                        <div class="card-stats">
+                            <div>
+                                <div class="stat-number">2,847</div>
+                                <div class="stat-label">+12% за месяц</div>
+                            </div>
+                            <div class="stat-icon">👥</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Карточка продаж</h3>
+                    <div class="card">
+                        <div class="card-header">Общий доход</div>
+                        <div class="card-stats">
+                            <div>
+                                <div class="stat-number">₽89,420</div>
+                                <div class="stat-label">+5.2% за неделю</div>
+                            </div>
+                            <div class="stat-icon">💰</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="component-card">
+                    <h3 class="component-title">Карточка заказов</h3>
+                    <div class="card">
+                        <div class="card-header">Новые заказы</div>
+                        <div class="card-stats">
+                            <div>
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">За сегодня</div>
+                            </div>
+                            <div class="stat-icon">📦</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Components -->
+        <div class="section">
+            <h2 class="section-title">🧭 Навигация</h2>
+            <div class="component-card">
+                <h3 class="component-title">Навигационная панель</h3>
+                <div class="navbar">
+                    <div class="nav-brand">Dashboard</div>
+                    <ul class="nav-menu">
+                        <li><a href="#" class="nav-link active">Главная</a></li>
+                        <li><a href="#" class="nav-link">Аналитика</a></li>
+                        <li><a href="#" class="nav-link">Настройки</a></li>
+                    </ul>
+                    <div class="user-menu">
+                        <div class="user-avatar">ИП</div>
+                        <button class="btn btn-secondary">Выйти</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Components -->
+        <div class="section">
+            <h2 class="section-title">📋 Форма логина</h2>
+            <div class="component-card">
+                <h3 class="component-title">Полная форма входа</h3>
+                <div class="form-container">
+                    <h2 class="form-title">Добро пожаловать</h2>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Email адрес</label>
+                        <input type="email" class="input-field" placeholder="example@email.com">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Пароль</label>
+                        <div class="input-password">
+                            <input type="password" class="input-field" placeholder="Введите пароль" id="login-password">
+                            <button type="button" class="password-toggle" onclick="togglePassword('login-password')">👁️</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
+                        Войти в систему
+                    </button>
+
+                    <div class="form-links">
+                        <a href="#" class="form-link">Забыли пароль?</a>
+                        <a href="#" class="form-link">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading States -->
+        <div class="section">
+            <h2 class="section-title">⏳ Состояния загрузки</h2>
+            <div class="components-grid">
+                <div class="component-card">
+                    <h3 class="component-title">Skeleton Loading</h3>
+                    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                    <div class="skeleton skeleton-text" style="width: 40%;"></div>
+                    <div class="skeleton skeleton-button" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁️';
+            }
+        }
+
+        // Демонстрация анимаций
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация карточек при наведении
+            const cards = document.querySelectorAll('.component-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Демонстрация состояний кнопок
+            const loadingBtn = document.querySelector('.btn-loading');
+            if (loadingBtn) {
+                setInterval(() => {
+                    const spinner = loadingBtn.querySelector('.spinner');
+                    if (spinner) {
+                        spinner.style.transform = 'rotate(' + (Date.now() / 10) % 360 + 'deg)';
+                    }
+                }, 16);
+            }
+        });
+    </script>
+</body>
+</html>
