@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System & UX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slide {
+            display: none;
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #f8fafc;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+        }
+
+        p, li {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #60a5fa;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(96, 165, 250, 0.3) 0%, rgba(147, 51, 234, 0.3) 100%);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .flow-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .flow-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px);
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .flow-step h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #60a5fa;
+        }
+
+        .flow-step p {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .journey-map {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .journey-step {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(147, 51, 234, 0.2));
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .journey-step::after {
+            content: "→";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #60a5fa;
+        }
+
+        .journey-step:last-child::after {
+            display: none;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .definition-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 25px 0;
+            border-left: 5px solid #60a5fa;
+        }
+
+        .figma-tips {
+            background: linear-gradient(135deg, rgba(255, 100, 100, 0.2), rgba(255, 200, 0, 0.2));
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff6464;
+        }
+
+        .figma-tips h4 {
+            color: #ff6464;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .figma-steps {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .figma-steps ol {
+            padding-left: 20px;
+        }
+
+        .figma-steps ol li {
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+
+        .figma-steps ol li::marker {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .practice-section {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.2));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+        }
+
+        .registration-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .reg-step {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .reg-step::after {
+            content: "↓";
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: #34d399;
+        }
+
+        .reg-step:last-child::after {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .journey-map {
+                grid-template-columns: 1fr;
+            }
+            
+            .registration-flow {
+                flex-direction: column;
+            }
+            
+            .reg-step::after {
+                content: "↓";
+                bottom: -25px;
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-counter">1 / 7</div>
+            <h1>Design System Creation & UX</h1>
+            <h3>Пользовательские потоки и создание систем дизайна</h3>
+            <p style="font-size: 1.5rem; margin-top: 40px; color: #cbd5e1;">
+                Комплексный подход к проектированию пользовательского опыта
+            </p>
+        </div>
+
+        <!-- Slide 2: Understanding the Product -->
+        <div class="slide">
+            <div class="slide-counter">2 / 10</div>
+            <h2>Понимание продукта</h2>
+            
+            <div class="definition-card">
+                <p>Прежде чем начать UX-дизайн, важно <span class="highlight">глубоко понять продукт</span> — не только его функции, но и бизнес-цели и целевую аудиторию.</p>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🎯 Бизнес-цели</h4>
+                    <p>Понимание целей компании и клиента</p>
+                </div>
+                <div class="flow-step">
+                    <h4>👥 Целевая аудитория</h4>
+                    <p>Демография, боли и предпочтения пользователей</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🗺️ Пользовательское путешествие</h4>
+                    <p>Карта пути от входа до цели</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🔍 Анализ конкурентов</h4>
+                    <p>Изучение сильных и слабых сторон</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🎨 Согласованность бренда</h4>
+                    <p>Цвета, шрифты, темы компании</p>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>📋 Практическое задание в Figma #1</h3>
+                <h4>Создание карты стейкхолдеров</h4>
+                <p><strong>Задача:</strong> Создать визуальную карту всех заинтересованных сторон проекта</p>
+                <p><strong>Инструменты:</strong> Circles, Text, Connector lines</p>
+                <p><strong>Шаги выполнения:</strong></p>
+                <ul>
+                    <li>Создайте новый файл в Figma (Ctrl+N)</li>
+                    <li>Используйте Circle tool (O) для создания кругов разных размеров</li>
+                    <li>Добавьте Text (T) внутрь каждого круга с названием стейкхолдера</li>
+                    <li>Соедините круги линиями (Line tool - L) для показа связей</li>
+                    <li>Используйте цветовое кодирование для разных типов стейкхолдеров</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 3: What is UX -->
+        <div class="slide">
+            <div class="slide-counter">3 / 10</div>
+            <h2>Что такое UX?</h2>
+            
+            <div class="definition-card">
+                <h3>User Experience (UX)</h3>
+                <p><span class="highlight">Пользовательский опыт</span> — это общее впечатление, которое получает пользователь при взаимодействии с продуктом, системой или услугой.</p>
+            </div>
+
+            <h3>Ключевые принципы UX:</h3>
+            <ul>
+                <li><strong>Полезность</strong> — продукт решает реальные проблемы пользователей</li>
+                <li><strong>Удобство использования</strong> — интерфейс интуитивно понятен</li>
+                <li><strong>Доступность</strong> — продукт доступен для всех категорий пользователей</li>
+                <li><strong>Желательность</strong> — дизайн вызывает положительные эмоции</li>
+                <li><strong>Ценность</strong> — продукт приносит пользу бизнесу и пользователям</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Research Strategies -->
+        <div class="slide">
+            <div class="slide-counter">4 / 10</div>
+            <h2>Стратегии исследования продукта</h2>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🎤 Интервью стейкхолдеров</h4>
+                    <p>Общение с менеджерами продукта и владельцами бизнеса</p>
+                </div>
+                <div class="flow-step">
+                    <h4>📊 Пользовательские исследования</h4>
+                    <p>Интервью, опросы, фокус-группы</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🤝 Вовлечение пользователей</h4>
+                    <p>Партисипативный дизайн и юзабилити-тестирование</p>
+                </div>
+                <div class="flow-step">
+                    <h4>📈 Отслеживание трендов</h4>
+                    <p>Актуальные тенденции в UX и технологиях</p>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>📋 Практическое задание в Figma #2</h3>
+                <h4>Создание User Persona</h4>
+                <p><strong>Задача:</strong> Разработать детальную персону пользователя</p>
+                <p><strong>Инструменты:</strong> Frames, Images, Text styles, Components</p>
+                <p><strong>Шаги выполнения:</strong></p>
+                <ul>
+                    <li>Создайте Frame (F) размером 800x600px</li>
+                    <li>Добавьте фото пользователя (Place image - Shift+Ctrl+K)</li>
+                    <li>Создайте секции: Demographics, Goals, Frustrations, Behaviors</li>
+                    <li>Используйте Text styles (создайте в Design system)</li>
+                    <li>Добавьте иконки для визуализации данных</li>
+                    <li>Сохраните как Component (Ctrl+Alt+K) для переиспользования</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: UX Considerations -->
+        <div class="slide">
+            <div class="slide-counter">5 / 10</div>
+            <h2>Как учитывать UX при разработке</h2>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🔍 Исследование</h4>
+                    <p>Изучение потребностей пользователей, анализ конкурентов</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🎯 Целеполагание</h4>
+                    <p>Определение бизнес-целей и пользовательских задач</p>
+                </div>
+                <div class="flow-step">
+                    <h4>📝 Планирование</h4>
+                    <p>Создание архитектуры информации и пользовательских сценариев</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🎨 Проектирование</h4>
+                    <p>Создание wireframes и прототипов интерфейса</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🧪 Тестирование</h4>
+                    <p>Проверка решений с реальными пользователями</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🔄 Итерация</h4>
+                    <p>Улучшение продукта на основе обратной связи</p>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>📋 Практическое задание в Figma #3</h3>
+                <h4>Competitor Analysis Board</h4>
+                <p><strong>Задача:</strong> Создать доску анализа конкурентов</p>
+                <p><strong>Инструменты:</strong> FigJam или Figma board, Screenshots, Sticky notes</p>
+                <p><strong>Шаги выполнения:</strong></p>
+                <ul>
+                    <li>Создайте новый FigJam файл</li>
+                    <li>Разделите доску на секции для каждого конкурента</li>
+                    <li>Добавьте скриншоты интерфейсов (Paste images)</li>
+                    <li>Используйте Sticky notes (S) для комментариев</li>
+                    <li>Создайте цветовую легенду: Strengths (зеленый), Weaknesses (красный)</li>
+                    <li>Добавьте Connector lines для связи идей</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: User Flow -->
+        <div class="slide">
+            <div class="slide-counter">6 / 10</div>
+            <h2>User Flow</h2>
+            
+            <div class="definition-card">
+                <p><span class="highlight">User Flow</span> — это схема, показывающая путь, который проходит пользователь для достижения конкретной цели в продукте.</p>
+            </div>
+
+            <h3>Основные элементы User Flow:</h3>
+            <ul>
+                <li><strong>Точка входа</strong> — откуда пользователь начинает взаимодействие</li>
+                <li><strong>Действия пользователя</strong> — что делает пользователь на каждом этапе</li>
+                <li><strong>Точки принятия решений</strong> — где пользователь выбирает дальнейший путь</li>
+                <li><strong>Конечная цель</strong> — результат, которого хочет достичь пользователь</li>
+                <li><strong>Альтернативные пути</strong> — варианты действий при ошибках или изменении намерений</li>
+            </ul>
+
+            <div class="practice-section">
+                <h3>📋 Практическое задание в Figma #4</h3>
+                <h4>Создание User Flow диаграммы</h4>
+                <p><strong>Задача:</strong> Построить детальный пользовательский поток</p>
+                <p><strong>Инструменты:</strong> Shapes, Connector plugin, Text, Color styles</p>
+                <p><strong>Шаги выполнения:</strong></p>
+                <ul>
+                    <li>Создайте разные формы для разных элементов: овалы (старт/финиш), прямоугольники (действия), ромбы (решения)</li>
+                    <li>Используйте плагин "Autoflow" или рисуйте стрелки вручную (Line tool)</li>
+                    <li>Создайте Color styles для разных типов элементов</li>
+                    <li>Добавьте подписи к каждому элементу</li>
+                    <li>Используйте слои (Layers panel) для организации элементов</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Customer Journey Map -->
+        <div class="slide">
+            <div class="slide-counter">7 / 10</div>
+            <h2>Customer Journey Map</h2>
+            
+            <div class="definition-card">
+                <p><span class="highlight">Customer Journey Map</span> — это визуализация всего пути взаимодействия клиента с брендом или продуктом, включая эмоции и точки контакта.</p>
+            </div>
+
+            <h3>Этапы пути клиента:</h3>
+            <div class="journey-map">
+                <div class="journey-step">
+                    <span class="emoji">🤔</span>
+                    <h4>Осознание</h4>
+                    <p>Клиент понимает, что у него есть потребность</p>
+                </div>
+                <div class="journey-step">
+                    <span class="emoji">🔍</span>
+                    <h4>Исследование</h4>
+                    <p>Поиск информации и вариантов решения</p>
+                </div>
+                <div class="journey-step">
+                    <span class="emoji">⚖️</span>
+                    <h4>Сравнение</h4>
+                    <p>Оценка различных предложений</p>
+                </div>
+                <div class="journey-step">
+                    <span class="emoji">💳</span>
+                    <h4>Покупка</h4>
+                    <p>Принятие решения и совершение действия</p>
+                </div>
+                <div class="journey-step">
+                    <span class="emoji">😊</span>
+                    <h4>Использование</h4>
+                    <p>Опыт использования продукта</p>
+                </div>
+            </div>
+
+            <div class="practice-section">
+                <h3>📋 Практическое задание в Figma #5</h3>
+                <h4>Customer Journey Map с эмоциональной кривой</h4>
+                <p><strong>Задача:</strong> Создать карту путешествия с графиком эмоций</p>
+                <p><strong>Инструменты:</strong> Tables, Charts, Emoji, Pen tool</p>
+                <p><strong>Шаги выполнения:</strong></p>
+                <ul>
+                    <li>Создайте таблицу с этапами пути (используйте Rectangle + Text)</li>
+                    <li>Добавьте строки: Touchpoints, Actions, Emotions, Pain Points</li>
+                    <li>Используйте Pen tool (P) для рисования эмоциональной кривой</li>
+                    <li>Добавьте эмодзи для визуализации эмоций</li>
+                    <li>Выделите критические моменты цветом</li>
+                    <li>Создайте Auto Layout для адаптивности</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8: Practice - Registration Flow -->
+        <div class="slide">
+            <div class="slide-counter">8 / 10</div>
+            <h2>Практика: User Flow для регистрации</h2>
+            
+            <div class="practice-section">
+                <h3>Пользовательский поток регистрации</h3>
+                
+                <div class="registration-flow">
+                    <div class="reg-step">
+                        <span class="emoji">🏠</span>
+                        <h4>Главная страница</h4>
+                        <p>Пользователь видит кнопку "Регистрация"</p>
+                    </div>
+                    <div class="reg-step">
+                        <span class="emoji">📝</span>
+                        <h4>Форма регистрации</h4>
+                        <p>Заполнение email, пароля, имени</p>
+                    </div>
+                    <div class="reg-step">
+                        <span class="emoji">✅</span>
+                        <h4>Валидация</h4>
+                        <p>Проверка корректности данных</p>
+                    </div>
+                    <div class="reg-step">
+                        <span class="emoji">📧</span>
+                        <h4>Подтверждение</h4>
+                        <p>Отправка письма с подтверждением</p>
+                    </div>
+                    <div class="reg-step">
+                        <span class="emoji">🎉</span>
+                        <h4>Успех</h4>
+                        <p>Переход в личный кабинет</p>
+                    </div>
+                </div>
+
+                <h4>Точки принятия решений:</h4>
+                <ul>
+                    <li>Ошибка валидации → возврат к форме с подсказками</li>
+                    <li>Пользователь уже зарегистрирован → переход к входу</li>
+                    <li>Проблемы с email → альтернативные способы связи</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Design System Basics -->
+        <div class="slide">
+            <div class="slide-counter">9 / 10</div>
+            <h2>Основы Design System</h2>
+            
+            <div class="definition-card">
+                <p><span class="highlight">Design System</span> — это набор стандартов, компонентов и руководящих принципов, которые обеспечивают согласованность дизайна во всех продуктах.</p>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🎨 Основы</h4>
+                    <p>Цвета, типографика, сетки, иконки</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🧩 Компоненты</h4>
+                    <p>Кнопки, формы, карточки, навигация</p>
+                </div>
+                <div class="flow-step">
+                    <h4>📝 Паттерны</h4>
+                    <p>Повторяющиеся решения для частых задач</p>
+                </div>
+                <div class="flow-step">
+                    <h4>📖 Руководящие принципы</h4>
+                    <p>Правила использования и best practices</p>
+                </div>
+            </div>
+
+            <h3>Преимущества Design System:</h3>
+            <ul>
+                <li><strong>Согласованность</strong> — единообразный опыт пользователей</li>
+                <li><strong>Эффективность</strong> — быстрая разработка и прототипирование</li>
+                <li><strong>Масштабируемость</strong> — легкое добавление новых функций</li>
+                <li><strong>Коммуникация</strong> — общий язык между командами</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Conclusion -->
+        <div class="slide">
+            <div class="slide-counter">10 / 10</div>
+            <h2>Заключение</h2>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🔍 Понимание продукта</h4>
+                    <p>Основа успешного UX</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🎯 UX — это фокус</h4>
+                    <p>На потребностях пользователей</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🗺️ User Flow — это карта</h4>
+                    <p>Пути к достижению целей</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🚀 Journey Map — это стратегия</h4>
+                    <p>Долгосрочного взаимодействия</p>
+                </div>
+            </div>
+
+            <div class="definition-card">
+                <h3>Ключевые выводы:</h3>
+                <ul>
+                    <li>Всегда начинайте с глубокого понимания продукта и бизнеса</li>
+                    <li>Исследуйте пользователей и анализируйте конкурентов</li>
+                    <li>Визуализируйте пользовательские пути и эмоции</li>
+                    <li>Создавайте согласованные дизайн-системы</li>
+                    <li>Тестируйте решения с реальными пользователями</li>
+                    <li>Итерируйтесь на основе обратной связи</li>
+                </ul>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5rem; margin-top: 40px;">
+                <span class="highlight">Успешный UX = Понимание + Исследование + Итерации</span>
+            </p>
+        </div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Conclusion -->
+        <div class="slide">
+            <div class="slide-counter">7 / 7</div>
+            <h2>Заключение</h2>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">
+                    <h4>🎯 UX — это фокус</h4>
+                    <p>На потребностях пользователей</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🗺️ User Flow — это карта</h4>
+                    <p>Пути к достижению целей</p>
+                </div>
+                <div class="flow-step">
+                    <h4>🚀 Journey Map — это стратегия</h4>
+                    <p>Долгосрочного взаимодействия</p>
+                </div>
+            </div>
+
+            <div class="definition-card">
+                <h3>Ключевые выводы:</h3>
+                <ul>
+                    <li>Всегда начинайте с исследования пользователей</li>
+                    <li>Визуализируйте пользовательские пути</li>
+                    <li>Тестируйте решения с реальными пользователями</li>
+                    <li>Итерируйтесь на основе обратной связи</li>
+                </ul>
+            </div>
+
+            <p style="text-align: center; font-size: 1.5rem; margin-top: 40px;">
+                <span class="highlight">Успешный UX = Довольные пользователи + Достижение бизнес-целей</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Назад</button>
+        <button class="nav-btn" onclick="nextSlide()">Вперед →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+
+        function handleGesture() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                previousSlide();
+            }
+        }
+    </script>
+</body>
+</html>
