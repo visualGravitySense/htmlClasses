@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Мобильный и адаптивный дизайн - Презентация</title>
+    <style>
+        /* Основные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Навигация */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-progress {
+            flex: 1;
+            max-width: 300px;
+            margin: 0 2rem;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* Контейнер презентации */
+        .presentation-container {
+            margin-top: 100px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Слайды */
+        .slide {
+            display: none;
+            min-height: calc(100vh - 140px);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            height: 100%;
+            min-height: calc(100vh - 140px);
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Героический слайд */
+        .hero-slide {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            opacity: 0.8;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Мокап устройства */
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .device-mockup {
+            width: 280px;
+            height: 560px;
+            background: #1f2937;
+            border-radius: 30px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .device-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-interface {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-header {
+            height: 60px;
+            background: var(--primary-color);
+        }
+
+        .app-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .content-block {
+            height: 80px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .content-block.small {
+            height: 40px;
+        }
+
+        .app-navigation {
+            height: 80px;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            width: 30px;
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 50%;
+        }
+
+        .nav-item.active {
+            background: var(--primary-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+            
+            .nav-title {
+                font-size: 1.2rem;
+            }
+            
+            .nav-progress {
+                margin: 0 1rem;
+                max-width: 150px;
+            }
+            
+            .presentation-container {
+                padding: 1rem;
+                margin-top: 80px;
+            }
+            
+            .slide-content {
+                padding: 2rem 1.5rem;
+                min-height: calc(100vh - 120px);
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .hero-slide {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .device-mockup {
+                width: 200px;
+                height: 400px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="nav">
+        <div class="nav-container">
+            <h1 class="nav-title">📱 Mobile Design</h1>
+            <div class="nav-progress">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="nav-controls">
+                <button id="prevBtn" class="nav-btn">‹</button>
+                <span class="slide-counter">1 / 10</span>
+                <button id="nextBtn" class="nav-btn">›</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Контейнер презентации -->
+    <div class="presentation-container">
+        
+        <!-- Слайд 1: Титульный -->
+        <section class="slide active" data-slide="1">
+            <div class="slide-content hero-slide">
+                <div class="hero-content">
+                    <h1 class="hero-title">📱 Мобильный и адаптивный дизайн</h1>
+                    <p class="hero-subtitle">Руководство для UX/UI дизайнеров</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">54.8%</span>
+                            <span class="stat-label">мобильного трафика</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">92.3%</span>
+                            <span class="stat-label">пользователей с мобильных</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">57%</span>
+                            <span class="stat-label">не рекомендуют плохой мобильный сайт</span>
+                        </div>
+                    </div>
+                    <div class="hero-meta">
+                        <span>⏱️ 3 часа</span>
+                        <span>💻 Теория + практика в Figma</span>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <p style="font-size: 1.2rem; font-weight: 600; color: var(--accent-color);">
+                            Мобильный дизайн — это не опция, а необходимость!
+                        </p>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="device-mockup">
+                        <div class="device-screen">
+                            <div class="app-interface">
+                                <div class="app-header"></div>
+                                <div class="app-content">
+                                    <div class="content-block"></div>
+                                    <div class="content-block"></div>
+                                    <div class="content-block small"></div>
+                                </div>
+                                <div class="app-navigation">
+                                    <div class="nav-item active"></div>
+                                    <div class="nav-item"></div>
+                                    <div class="nav-item"></div>
+                                    <div class="nav-item"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 2: Цели урока -->
+        <section class="slide" data-slide="2">
+            <div class="slide-content">
+                <h2 class="slide-title">🎯 Цели урока</h2>
+                <div class="goals-grid">
+                    <div class="goal-card">
+                        <div class="goal-icon">📐</div>
+                        <h3>Принципы мобильного дизайна</h3>
+                        <p>Понимать основные принципы создания мобильных интерфейсов</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="goal-icon">📊</div>
+                        <h3>Breakpoints и сетки</h3>
+                        <p>Работать с адаптивными сетками и точками перелома</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="goal-icon">🎨</div>
+                        <h3>Эффективные интерфейсы</h3>
+                        <p>Создавать удобные мобильные пользовательские интерфейсы</p>
+                    </div>
+                    <div class="goal-card">
+                        <div class="goal-icon">🔄</div>
+                        <h3>Адаптация десктопа</h3>
+                        <p>Адаптировать существующие решения под мобильные устройства</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 3: Mobile First vs Desktop First -->
+        <section class="slide" data-slide="3">
+            <div class="slide-content">
+                <h2 class="slide-title">🔄 Mobile First vs Desktop First</h2>
+                <div class="comparison-container">
+                    <div class="approach-section">
+                        <h3 class="approach-title">✅ Mobile First подход</h3>
+                        <div class="approach-flow">
+                            <div class="device-step">
+                                <span class="device-icon">📱</span>
+                                <span class="device-size">320px</span>
+                                <span class="device-label">Mobile</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="device-step">
+                                <span class="device-icon">📱</span>
+                                <span class="device-size">768px</span>
+                                <span class="device-label">Tablet</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="device-step">
+                                <span class="device-icon">💻</span>
+                                <span class="device-size">1200px</span>
+                                <span class="device-label">Desktop</span>
+                            </div>
+                        </div>
+                        <div class="advantages">
+                            <h4>Преимущества:</h4>
+                            <ul>
+                                <li>Фокус на основном контенте</li>
+                                <li>Лучшая производительность</li>
+                                <li>Упрощенная навигация</li>
+                                <li>Естественное масштабирование</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="approach-section desktop-first">
+                        <h3 class="approach-title">❌ Desktop First подход</h3>
+                        <div class="approach-flow">
+                            <div class="device-step">
+                                <span class="device-icon">💻</span>
+                                <span class="device-size">1200px</span>
+                                <span class="device-label">Desktop</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="device-step">
+                                <span class="device-icon">📱</span>
+                                <span class="device-size">768px</span>
+                                <span class="device-label">Tablet</span>
+                            </div>
+                            <div class="flow-arrow">→</div>
+                            <div class="device-step">
+                                <span class="device-icon">📱</span>
+                                <span class="device-size">320px</span>
+                                <span class="device-label">Mobile</span>
+                            </div>
+                        </div>
+                        <div class="disadvantages">
+                            <h4>Недостатки:</h4>
+                            <ul>
+                                <li>Сложно убирать лишнее</li>
+                                <li>Проблемы с производительностью</li>
+                                <li>Перегруженный интерфейс</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 4: Breakpoints -->
+        <section class="slide" data-slide="4">
+            <div class="slide-content">
+                <h2 class="slide-title">📏 Основные Breakpoints</h2>
+                <div class="breakpoints-container">
+                    <div class="breakpoints-table">
+                        <h3>Стандартные размеры экранов</h3>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Устройство</th>
+                                        <th>Размер</th>
+                                        <th>Breakpoint</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>📱 Mobile S</td>
+                                        <td>320px</td>
+                                        <td><code>@media (min-width: 320px)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>📱 Mobile M</td>
+                                        <td>375px</td>
+                                        <td><code>@media (min-width: 375px)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>📱 Mobile L</td>
+                                        <td>425px</td>
+                                        <td><code>@media (min-width: 425px)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>📱 Tablet</td>
+                                        <td>768px</td>
+                                        <td><code>@media (min-width: 768px)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💻 Laptop</td>
+                                        <td>1024px</td>
+                                        <td><code>@media (min-width: 1024px)</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💻 Desktop</td>
+                                        <td>1440px</td>
+                                        <td><code>@media (min-width: 1440px)</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="frameworks-section">
+                        <div class="framework-card">
+                            <h4>Bootstrap 5</h4>
+                            <div class="framework-sizes">
+                                <span class="size-item">xs: &lt;576px</span>
+                                <span class="size-item">sm: ≥576px</span>
+                                <span class="size-item">md: ≥768px</span>
+                                <span class="size-item">lg: ≥992px</span>
+                                <span class="size-item">xl: ≥1200px</span>
+                                <span class="size-item">xxl: ≥1400px</span>
+                            </div>
+                        </div>
+                        <div class="framework-card">
+                            <h4>Tailwind CSS</h4>
+                            <div class="framework-sizes">
+                                <span class="size-item">sm: 640px</span>
+                                <span class="size-item">md: 768px</span>
+                                <span class="size-item">lg: 1024px</span>
+                                <span class="size-item">xl: 1280px</span>
+                                <span class="size-item">2xl: 1536px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 5: Принципы мобильного дизайна -->
+        <section class="slide" data-slide="5">
+            <div class="slide-content">
+                <h2 class="slide-title">🎨 Принципы мобильного дизайна</h2>
+                <div class="principles-grid">
+                    <div class="principle-card">
+                        <div class="principle-header">
+                            <span class="principle-icon">👆</span>
+                            <h3>Touch-Friendly интерфейс</h3>
+                        </div>
+                        <div class="principle-content">
+                            <div class="touch-example">
+                                <div class="touch-target">
+                                    <span class="touch-size">44px × 44px</span>
+                                    <small>Минимальный размер кнопки</small>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Минимальный размер кнопки: 44px × 44px (iOS) / 48dp (Android)</li>
+                                <li>Отступы между элементами: минимум 8px</li>
+                                <li>Зона комфортного нажатия: 44-57px</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-header">
+                            <span class="principle-icon">📖</span>
+                            <h3>Читаемость текста</h3>
+                        </div>
+                        <div class="principle-content">
+                            <div class="text-example">
+                                <div class="text-size">16px</div>
+                                <small>Минимальный размер шрифта</small>
+                            </div>
+                            <ul>
+                                <li>Минимальный размер шрифта: 16px</li>
+                                <li>Оптимальная длина строки: 45-75 символов</li>
+                                <li>Контраст: минимум 4.5:1 для обычного текста</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-header">
+                            <span class="principle-icon">🧭</span>
+                            <h3>Простая навигация</h3>
+                        </div>
+                        <div class="principle-content">
+                            <div class="thumb-zone">
+                                <div class="phone-outline">
+                                    <div class="thumb-area"></div>
+                                    <span class="thumb-label">Зона большого пальца</span>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Правило большого пальца</li>
+                                <li>Максимум 5 пунктов в главном меню</li>
+                                <li>Хлебные крошки для глубокой навигации</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-header">
+                            <span class="principle-icon">⚡</span>
+                            <h3>Быстрая загрузка</h3>
+                        </div>
+                        <div class="principle-content">
+                            <div class="speed-indicator">
+                                <div class="speed-bar">
+                                    <div class="speed-fill"></div>
+                                </div>
+                                <span class="speed-text">&lt; 3 сек</span>
+                            </div>
+                            <ul>
+                                <li>Цель: менее 3 секунд</li>
+                                <li>Оптимизация изображений: WebP, сжатие</li>
+                                <li>Прогрессивная загрузка контента</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 6: Гайдлайны платформ -->
+        <section class="slide" data-slide="6">
+            <div class="slide-content">
+                <h2 class="slide-title">📋 Гайдлайны платформ</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid #007AFF;">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; font-size: 1.5rem;">
+                            <span style="font-size: 2rem;">🍎</span>
+                            iOS Human Interface Guidelines
+                        </h3>
+                        <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: #007AFF;">Ключевые принципы:</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0;">
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    <strong>Clarity</strong> — четкость и понятность
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    <strong>Deference</strong> — контент важнее интерфейса
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    <strong>Depth</strong> — визуальная иерархия и layering
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius);">
+                            <h4 style="margin-bottom: 1rem; color: #007AFF;">Размеры и отступы:</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0;">
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    Минимальная область нажатия: 44pt × 44pt
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    Стандартные отступы: 16pt, 20pt
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #007AFF;">•</span>
+                                    Безопасная зона: учет округлых углов
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid #4285F4;">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; font-size: 1.5rem;">
+                            <span style="font-size: 2rem;">🤖</span>
+                            Material Design (Android)
+                        </h3>
+                        <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius); margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: #4285F4;">Ключевые принципы:</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0;">
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    <strong>Material is the metaphor</strong> — реалистичные поверхности
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    <strong>Bold, graphic, intentional</strong> — яркость и намеренность
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    <strong>Motion provides meaning</strong> — анимация с смыслом
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: var(--border-radius);">
+                            <h4 style="margin-bottom: 1rem; color: #4285F4;">Размеры и отступы:</h4>
+                            <ul style="list-style: none; margin: 0; padding: 0;">
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    Минимальная область нажатия: 48dp × 48dp
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    Базовая единица: 8dp grid
+                                </li>
+                                <li style="margin-bottom: 0.5rem; padding-left: 1rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #4285F4;">•</span>
+                                    Elevation: тени для создания иерархии
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 7: Адаптивные сетки -->
+        <section class="slide" data-slide="7">
+            <div class="slide-content">
+                <h2 class="slide-title">📐 Адаптивные сетки</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+                    <div>
+                        <h3 style="margin-bottom: 2rem; color: var(--text-primary);">Fluid Grid System</h3>
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <p style="margin-bottom: 1rem; font-family: monospace; color: var(--text-secondary);">
+                                    Контейнер: 100% ширины с максимальным значением<br>
+                                    Колонки: % от ширины контейнера<br>
+                                    Gutters: фиксированные или % отступы
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-bottom: 1rem; color: var(--text-primary);">CSS Grid пример:</h4>
+                        <div style="background: #1f2937; padding: 1.5rem; border-radius: var(--border-radius); color: white; font-family: monospace; font-size: 0.9rem; overflow-x: auto;">
+                            <pre style="margin: 0; color: #e5e7eb;"><span style="color: #f59e0b;">.grid</span> {
+  <span style="color: #10b981;">display</span>: <span style="color: #8b5cf6;">grid</span>;
+  <span style="color: #10b981;">grid-template-columns</span>: <span style="color: #8b5cf6;">repeat(auto-fit, minmax(300px, 1fr))</span>;
+  <span style="color: #10b981;">gap</span>: <span style="color: #8b5cf6;">20px</span>;
+}</pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 2rem; color: var(--text-primary);">12-колоночная сетка</h3>
+                        
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 1rem; color: var(--primary-color);">📱 Mobile:</h4>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;">
+                                    <div style="background: var(--primary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--primary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">1-2 колонки</p>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 1rem; color: var(--primary-color);">📱 Tablet:</h4>
+                                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1rem;">
+                                    <div style="background: var(--secondary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--secondary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--secondary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--secondary-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">2-4 колонки</p>
+                            </div>
+
+                            <div>
+                                <h4 style="margin-bottom: 1rem; color: var(--primary-color);">💻 Desktop:</h4>
+                                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-bottom: 1rem;">
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                    <div style="background: var(--accent-color); height: 40px; border-radius: 4px; opacity: 0.8;"></div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary);">3-6 колонок</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 8: Компоненты мобильного интерфейса -->
+        <section class="slide" data-slide="8">
+            <div class="slide-content">
+                <h2 class="slide-title">🔧 Компоненты мобильного интерфейса</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                    
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius);">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                            <span style="font-size: 1.5rem;">📱</span>
+                            Навигация
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <strong>Tab Bar</strong> — основная навигация (3-5 пунктов)
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                                <strong>Navigation Bar</strong> — заголовок + действия
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                                <strong>Hamburger Menu</strong> — скрытая навигация
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <strong>Bottom Sheet</strong> — дополнительные опции
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius);">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                            <span style="font-size: 1.5rem;">🔘</span>
+                            Кнопки и элементы управления
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="background: var(--primary-color); color: white; padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600;">
+                                Primary Button — основное действие
+                            </div>
+                            <div style="background: white; color: var(--primary-color); padding: 1rem; border-radius: 8px; text-align: center; font-weight: 600; border: 2px solid var(--primary-color);">
+                                Secondary Button — дополнительное действие
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                                <strong>FAB</strong> — главное действие на экране
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <strong>Switches & Toggles</strong> — переключатели
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius);">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                            <span style="font-size: 1.5rem;">📝</span>
+                            Ввод данных
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <input type="text" placeholder="Text Fields — с четкими лейблами" style="border: none; outline: none; width: 100%; font-size: 0.9rem;">
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                                <strong>Pickers</strong> — для выбора из списка
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                                <strong>Sliders</strong> — для диапазонов значений
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                                <strong>Steppers</strong> — для числовых значений
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius);">
+                        <h3 style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                            <span style="font-size: 1.5rem;">📊</span>
+                            Демонстрация Tab Bar
+                        </h3>
+                        <div style="background: white; border-radius: 12px; padding: 1rem; box-shadow: var(--shadow);">
+                            <div style="display: flex; justify-content: space-around; align-items: center; padding: 1rem 0;">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; background: var(--primary-color); border-radius: 4px;"></div>
+                                    <span style="font-size: 0.8rem; color: var(--primary-color); font-weight: 600;">Главная</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; background: var(--border-color); border-radius: 4px;"></div>
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Поиск</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; background: var(--border-color); border-radius: 4px;"></div>
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Избранное</span>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 24px; height: 24px; background: var(--border-color); border-radius: 4px;"></div>
+                                    <span style="font-size: 0.8rem; color: var(--text-secondary);">Профиль</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 9: Чек-лист мобильного дизайна -->
+        <section class="slide" data-slide="9">
+            <div class="slide-content">
+                <h2 class="slide-title">✅ Чек-лист мобильного дизайна</h2>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                    
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-color);">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">📐 Размеры и пропорции</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Минимальный размер touch target: 44px</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Отступы между элементами: минимум 8px</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Размер шрифта: минимум 16px</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Использование 8px grid system</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--secondary-color);">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--secondary-color);">🎨 Визуальная иерархия</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Четкая типографическая иерархия</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Контраст текста минимум 4.5:1</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Использование цвета для выделения</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Достаточное количество белого пространства</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color);">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--accent-color);">🧭 Навигация и UX</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Простая и понятная навигация</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Важные элементы в зоне большого пальца</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Максимум 5 пунктов в главном меню</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Хлебные крошки для глубокой навигации</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border-left: 4px solid var(--success-color);">
+                        <h3 style="margin-bottom: 1.5rem; color: var(--success-color);">⚡ Производительность</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Оптимизированные изображения</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Минимизация HTTP запросов</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Прогрессивная загрузка контента</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--success-color);">
+                                <span>Время загрузки менее 3 секунд</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд 10: Выводы и следующие шаги -->
+        <section class="slide" data-slide="10">
+            <div class="slide-content">
+                <h2 class="slide-title">🎯 Выводы и следующие шаги</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    
+                    <div>
+                        <h3 style="margin-bottom: 2rem; color: var(--primary-color); font-size: 1.5rem;">Ключевые принципы мобильного дизайна:</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary-color);">
+                                <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">1. Mobile First</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Проектируйте сначала для мобильных устройств</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--secondary-color);">
+                                <h4 style="margin-bottom: 0.5rem; color: var(--secondary-color);">2. Content First</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Контент важнее украшений</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--accent-color);">
+                                <h4 style="margin-bottom: 0.5rem; color: var(--accent-color);">3. Touch Friendly</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Все элементы должны быть удобными для касания</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--success-color);">
+                                <h4 style="margin-bottom: 0.5rem; color: var(--success-color);">4. Performance Matters</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Скорость загрузки критически важна</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--error-color);">
+                                <h4 style="margin-bottom: 0.5rem; color: var(--error-color);">5. Test Early, Test Often</h4>
+                                <p style="color: var(--text-secondary); margin: 0;">Тестируйте на реальных устройствах</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 2rem; color: var(--primary-color); font-size: 1.5rem;">Следующие шаги:</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: var(--border-radius); text-align: center;">
+                                <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">📚 Изучение</h4>
+                                <ul style="list-style: none; margin: 0; padding: 0; text-align: left;">
+                                    <li style="margin-bottom: 0.5rem;">• Изучите гайдлайны платформ детальнее</li>
+                                    <li style="margin-bottom: 0.5rem;">• Практикуйтесь в адаптации сложных интерфейсов</li>
+                                    <li style="margin-bottom: 0.5rem;">• Изучите продвинутые техники анимации</li>
+                                    <li>• Освойте инструменты прототипирования</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: var(--bg-secondary); padding: 2rem; border-radius: var(--border-radius); border: 2px solid var(--accent-color);">
+                                <h4 style="margin-bottom: 1rem; color: var(--accent-color);">🎯 Домашнее задание</h4>
+                                <ol style="margin: 0; padding-left: 1.5rem; color: var(--text-secondary);">
+                                    <li style="margin-bottom: 0.5rem;">Проанализируйте 3 популярных мобильных сайта</li>
+                                    <li style="margin-bottom: 0.5rem;">Создайте сравнительную таблицу</li>
+                                    <li style="margin-bottom: 0.5rem;">Предложите улучшения для одного сайта</li>
+                                    <li>Создайте мокап улучшенной версии в Figma</li>
+                                </ol>
+                            </div>
+
+                            <div style="background: linear-gradient(135deg, var(--success-color), var(--accent-color)); color: white; padding: 1.5rem; border-radius: var(--border-radius); text-align: center;">
+                                <h4 style="margin-bottom: 0.5rem;">🚀 Готовы создавать отличные мобильные интерфейсы!</h4>
+                                <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Помните: пользователь всегда в центре дизайна</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Презентация мобильного дизайна - JavaScript
+        class MobileDesignPresentation {
+            constructor() {
+                this.currentSlide = 1;
+                this.totalSlides = 10;
+                this.slides = document.querySelectorAll('.slide');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.progressBar = document.querySelector('.progress-bar');
+                this.slideCounter = document.querySelector('.slide-counter');
+                
+                this.init();
+            }
+            
+            init() {
+                this.updateSlideCounter();
+                this.updateProgressBar();
+                this.updateButtonStates();
+                this.bindEvents();
+                this.addKeyboardNavigation();
+                this.addTouchNavigation();
+            }
+            
+            bindEvents() {
+                this.prevBtn.addEventListener('click', () => this.previousSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+            }
+            
+            addKeyboardNavigation() {
+                document.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            this.previousSlide();
+                            break;
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                            e.preventDefault();
+                            this.nextSlide();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(1);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.totalSlides);
+                            break;
+                    }
+                });
+            }
+            
+            addTouchNavigation() {
+                let startX = 0;
+                let startY = 0;
+                
+                document.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                });
+                
+                document.addEventListener('touchend', (e) => {
+                    if (!startX || !startY) return;
+                    
+                    const endX = e.changedTouches[0].clientX;
+                    const endY = e.changedTouches[0].clientY;
+                    
+                    const diffX = startX - endX;
+                    const diffY = startY - endY;
+                    
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                        if (diffX > 0) {
+                            this.nextSlide();
+                        } else {
+                            this.previousSlide();
+                        }
+                    }
+                    
+                    startX = 0;
+                    startY = 0;
+                });
+            }
+            
+            nextSlide() {
+                if (this.currentSlide < this.totalSlides) {
+                    this.goToSlide(this.currentSlide + 1);
+                }
+            }
+            
+            previousSlide() {
+                if (this.currentSlide > 1) {
+                    this.goToSlide(this.currentSlide - 1);
+                }
+            }
+            
+            goToSlide(slideNumber) {
+                if (slideNumber < 1 || slideNumber > this.totalSlides) return;
+                
+                this.slides[this.currentSlide - 1].classList.remove('active');
+                this.currentSlide = slideNumber;
+                this.slides[this.currentSlide - 1].classList.add('active');
+                
+                this.updateSlideCounter();
+                this.updateProgressBar();
+                this.updateButtonStates();
+            }
+            
+            updateSlideCounter() {
+                this.slideCounter.textContent = `${this.currentSlide} / ${this.totalSlides}`;
+            }
+            
+            updateProgressBar() {
+                const progress = (this.currentSlide / this.totalSlides) * 100;
+                this.progressBar.style.width = `${progress}%`;
+            }
+            
+            updateButtonStates() {
+                this.prevBtn.disabled = this.currentSlide === 1;
+                this.nextBtn.disabled = this.currentSlide === this.totalSlides;
+            }
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            const presentation = new MobileDesignPresentation();
+            window.presentation = presentation;
+            
+            console.log('🎉 Презентация "Мобильный и адаптивный дизайн" загружена!');
+            console.log('📱 Используйте стрелки, пробел или свайпы для навигации');
+        });
+    </script>
+</body>
+</html> 
